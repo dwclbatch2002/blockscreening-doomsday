@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Your order | Avengers: Doomsday (2026)</title>
+<link rel="icon" type="image/png" href="favicon.png?v=1">
+<link rel="apple-touch-icon" href="favicon.png?v=1">
+<meta name="description" content="Your private order page for the Avengers: Doomsday (2026) screening.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Avengers: Doomsday (2026) | Your Order">
+<meta property="og:description" content="Private order page for the Avengers: Doomsday (2026) screening.">
+<meta property="og:url" content="https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-ticket-purchase/order.html">
+<meta property="og:image" content="https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-ticket-purchase/og-image.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Avengers: Doomsday (2026) | Your Order">
+<meta name="twitter:image" content="https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-ticket-purchase/og-image.jpg">
+<link rel="stylesheet" href="app.css?v=21">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="qrcode.js"></script><script src="config.js"></script><script src="modal.js?v=1"></script><script src="common.js?v=16"></script>
+<style>/* scroll smoothness: no live blur behind cards, steady background layer */
+.card{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,18,12,.88)}
+html{background:#040806}body{background:transparent}body::before{inset:0;height:auto;transform:none;backface-visibility:visible}
+.pill{backdrop-filter:none;-webkit-backdrop-filter:none}
+.mq-t.off{animation-play-state:paused}</style>
+<style>
+.tk.lock .lk{max-width:400px;margin:0 auto;padding:26px 20px;border-radius:20px;border:1px dashed rgba(57,255,122,.45);background:linear-gradient(180deg,rgba(57,255,122,.07),rgba(57,255,122,.02));text-align:center}
+.tk.lock .lk .ic{width:54px;height:54px;margin:0 auto;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(57,255,122,.45);background:rgba(57,255,122,.1);color:var(--acc,#39ff7a)}
+.tk.lock .lk b.rf{display:block;margin:10px 0 2px;font-size:1.5rem;letter-spacing:.12em;color:var(--acc,#39ff7a)}
+.tk.lock .lk .mut{display:block;margin-bottom:10px}
+.rfi[hidden]{display:none}#pf.bank .rfl,#pf.bank #gref,#pf.bank #ocrst,#pf.bank #rfc,#pf.bank #zmh{display:none!important}.bknote{margin:0 0 12px;padding:10px 12px;border-radius:10px;border:1px solid rgba(57,255,122,.4);background:rgba(57,255,122,.07);font-size:.92rem}.pml{margin:6px 0 8px;font-weight:600}.pm{display:flex;gap:8px;margin:0 0 16px}.pm button{flex:1;padding:12px 10px;border-radius:10px;border:1.5px solid var(--line,#24503a);background:rgba(0,0,0,.35);color:var(--ink,#e8f1ec);font:inherit;font-weight:700;cursor:pointer}.pm button[aria-pressed=true]{border-color:var(--acc,#39ff7a);background:rgba(57,255,122,.16);color:var(--acc,#39ff7a);box-shadow:0 0 14px rgba(57,255,122,.25)}.pm button:focus-visible{outline:2px solid var(--acc,#39ff7a);outline-offset:2px}
+.bankopt{display:flex;gap:12px;align-items:flex-start;margin:14px 0 10px;padding:12px 14px;border-radius:12px;border:1px solid rgba(57,255,122,.4);background:rgba(57,255,122,.07);font-size:.92rem;line-height:1.45}.bankopt i{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;color:var(--acc,#39ff7a);border:1px solid rgba(57,255,122,.5);background:rgba(57,255,122,.1)}.bankopt p{margin:0}.bankopt b{color:#fff}
+.seated{display:flex;align-items:center;gap:14px;margin:0 0 18px;padding:18px 18px;border-radius:16px;border:2px solid var(--acc,#39ff7a);background:linear-gradient(135deg,rgba(57,255,122,.26),rgba(57,255,122,.1));box-shadow:0 0 26px rgba(57,255,122,.35);font-size:1.15rem;line-height:1.3;animation:seatedIn .5s ease-out both}
+.vrf{position:relative;font-size:1.25rem;padding:22px 20px}.vrf .sck{width:54px;height:54px}.vrf b{font-size:1.7rem}
+.swb{border-color:#ffa31a;background:linear-gradient(135deg,rgba(255,163,26,.3),rgba(255,163,26,.1));box-shadow:0 0 26px rgba(255,163,26,.38)}
+.seated.swb b{color:#ffc266;display:block;font-size:1.25rem;margin-bottom:4px}.seated.swb .sck{background:#ffa31a;color:#2a1700}.swb .sws{display:block;font-size:.98rem;font-weight:400}
+.rjb{border-color:#ff6b81;background:linear-gradient(135deg,rgba(255,77,106,.3),rgba(255,77,106,.1));box-shadow:0 0 26px rgba(255,77,106,.4)}
+.seated.rjb b{color:#ff8fa0}.seated.rjb .sck{background:#ff4d6a;color:#fff}.rjb .rjs{display:block;font-size:.95rem;margin-top:6px;font-weight:400}
+.rjb.new{animation:seatedIn .5s ease-out both,rjShake .5s ease-in-out .5s 1}
+@keyframes rjShake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@media(prefers-reduced-motion:reduce){.rjb.new{animation:none}}
+.vrfx{flex:none;align-self:flex-start;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);background:rgba(0,0,0,.25);color:#fff;display:grid;place-items:center;padding:0;cursor:pointer}
+.vrf.new::after{content:"";position:absolute;inset:-2px;border-radius:inherit;box-shadow:0 0 30px rgba(57,255,122,.6);opacity:0;animation:vrfGlow 1.5s ease-in-out 2;pointer-events:none}
+@keyframes vrfGlow{0%,100%{opacity:0}50%{opacity:1}}
+.btn.rsv{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;max-width:420px;padding:20px 28px;font-size:1.2rem;letter-spacing:.06em;border-radius:14px;box-shadow:0 0 0 1px rgba(57,255,122,.5)}
+.btn.rsv .rsv-ic{flex:none}
+.btn.rsv{box-shadow:0 0 0 1px rgba(57,255,122,.5),0 0 18px rgba(57,255,122,.3)}
+.btn.rsv::after{content:"";position:absolute;inset:-2px;z-index:-1;border-radius:inherit;box-shadow:0 0 34px 6px rgba(57,255,122,.6);opacity:.15;animation:rsvPulse 2.2s ease-in-out infinite;pointer-events:none}   /* pulse runs on opacity only: smooth, no repaint of the page */
+@keyframes rsvPulse{0%,100%{opacity:.15}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.btn.rsv::after{animation:none;opacity:.5}}
+@media(prefers-reduced-motion:reduce){.vrf.new::after{animation:none;opacity:.5}}
+.seated .sck{flex:none;width:46px;height:46px;border-radius:50%;background:var(--acc,#39ff7a);color:#04210f;display:grid;place-items:center}
+.seated b{display:block;font-size:1.4rem;color:var(--acc,#39ff7a);letter-spacing:.01em}
+@keyframes seatedIn{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.seated{animation:none}}
+.rfl{display:flex;align-items:center;gap:6px;margin:16px 0 8px}.rfl label{margin:0}
+.rfi{width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:var(--acc,#39ff7a);display:inline-grid;place-items:center;padding:0;cursor:pointer;flex:none}.rfi:focus-visible{outline:2px solid var(--acc,#39ff7a);outline-offset:2px}
+.rfs{margin:6px 0 0}
+.cpc{display:inline-grid;place-items:center;width:28px;height:28px;margin-left:8px;padding:0;vertical-align:middle;border-radius:8px;border:1px solid rgba(57,255,122,.45);background:rgba(57,255,122,.08);color:var(--acc,#39ff7a);cursor:pointer}
+.cpc:hover,.cpc:focus-visible{background:rgba(57,255,122,.2)}.cpc.ok{background:var(--acc,#39ff7a);color:#04210f}
+.sum b.ocode{display:flex;align-items:center;flex-wrap:wrap}.sum b.ocode .cpc{margin-left:6px}
+.note.keep .kshare{display:block;margin-top:6px;font-weight:400;font-size:.88rem;opacity:.92}
+.note.keep .kbtns{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 100%}
+.note.keep .bic-b{display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:1 1 140px;padding:12px 14px}.note.keep .bic-b .bic{flex:none}
+.pvw .prev{cursor:zoom-in}
+dialog.zm{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;border-radius:0;background:#000;overflow:hidden}
+dialog.zm[open]{display:block}
+.zm-st{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+dialog.zm .zm-st img{display:block;margin:0;border-radius:0;max-width:100%;max-height:100%;width:auto;height:auto;transform-origin:center center;will-change:transform;-webkit-user-drag:none;pointer-events:none}
+.zm-x{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;width:44px;height:44px;border-radius:50%;border:2px solid #4fae78;background:rgba(10,14,12,.85);color:#fff;display:grid;place-items:center;padding:0;cursor:pointer}
+.zm-x:hover{background:rgba(57,255,122,.22)}.zm-x:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.zm-bar{position:absolute;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:8px;background:rgba(10,14,12,.85);border:1px solid #4fae78;border-radius:999px;padding:6px}
+.zm-bar button{min-width:44px;height:40px;border-radius:999px;border:0;background:transparent;color:#fff;font:600 1.1rem system-ui,sans-serif;cursor:pointer;padding:0 14px}.zm-bar button:active{background:rgba(255,255,255,.15)}
+.zm-t{position:absolute;left:12px;top:max(20px,env(safe-area-inset-top));margin:0;color:#e8efe9;font-size:.78rem;pointer-events:none;background:rgba(10,14,12,.8);padding:6px 12px;border-radius:999px;max-width:calc(100% - 84px)}
+.rfc{margin:10px 0 0;padding:12px 14px;border-radius:12px;border:1px solid rgba(57,255,122,.45);background:rgba(57,255,122,.07)}
+.rfcn{font-size:1.5rem;font-weight:700;letter-spacing:.06em;color:var(--acc,#39ff7a);word-break:break-all}
+.rfcq{margin:6px 0 10px;font-weight:600}.rfcb{display:flex;gap:8px}.rfco{margin:6px 0 0;font-weight:700;color:var(--acc,#39ff7a)}
+.rfc.ok .rfcn{font-size:1.15rem}
+.rcw{margin:10px 0 0;padding:10px 14px;border-radius:12px;border:1px solid #ffd83a;background:rgba(255,216,58,.1);color:#ffe27a;font-size:.9rem}.rcw p{margin:4px 0}
+#gref:disabled{opacity:.45;cursor:not-allowed;background:rgba(255,255,255,.06)}
+.pvw{position:relative;display:inline-block;max-width:100%;margin-top:10px}.pvw .prev{display:block;margin:0}
+.pvx{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);background:rgba(10,14,12,.82);color:#fff;display:grid;place-items:center;padding:0;cursor:pointer}
+.pvx:hover,.pvx:focus-visible{background:#c62839;border-color:#fff}
+.rfd h3{margin:0 0 8px}
+.rcp{border-radius:12px;overflow:hidden;background:#0057e6;padding:0 14px 16px;max-width:340px;margin:0 auto;font-family:system-ui,sans-serif}
+.rcp-top{height:30px;position:relative}.rcp-ck{position:absolute;left:50%;top:6px;transform:translateX(-50%);width:34px;height:34px;border-radius:50%;background:#0057e6;border:3px solid #fff;color:#fff;display:grid;place-items:center;font-size:1rem;z-index:1}
+.rcp-card{background:#fff;color:#12295c;border-radius:6px 6px 0 0;padding:26px 14px 0;margin-top:6px}
+.rcp-nm{text-align:center;font-weight:700;color:#0a35b5;font-size:1.05rem}.rcp-sub{text-align:center;color:#7a8296;font-size:.8rem;margin:6px 0 12px}
+.rcp-row{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid #e3e6ee;font-size:.9rem;font-weight:600}.rcp-big{font-size:1rem}.rcp-big span:last-child{font-size:1.15rem}
+.rcp-ref{background:#f3f6fc;margin:6px -14px 0;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.8rem;color:#7a8296}
+.rcp-hl{outline:2.5px solid #ff3b5c;outline-offset:4px;border-radius:8px;padding:2px 4px;color:#7a8296;white-space:nowrap}.rcp-hl b{color:#12295c}
+.rcp-dt{color:#12295c;font-size:.72rem;text-align:right}
+</style>
+<style>.holdbox{margin:16px 0 0;padding:14px 16px;text-align:center;border:2px solid var(--gold);background:rgba(255,216,58,.08);display:flex;flex-direction:column;align-items:center;gap:4px}
+.hb-l{font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.hb-t{font-size:clamp(2.4rem,11vw,3.2rem);line-height:1.05;font-weight:700;letter-spacing:.04em;color:#fff;font-variant-numeric:tabular-nums;text-shadow:0 0 14px rgba(255,216,58,.55)}
+.hb-w{font-size:.86rem;line-height:1.45;color:var(--ink);max-width:34em}
+.hb-w b{color:var(--gold)}
+.holdbox.low{border-color:#ff5b6e;background:rgba(255,59,92,.1)}.holdbox.low .hb-l,.holdbox.low .hb-w b{color:#ff8b9c}.holdbox.low .hb-t{color:#ffe3e9;text-shadow:0 0 14px rgba(255,59,92,.7);animation:hbpulse 1s ease-in-out infinite}
+.holdbox.end{border-color:#ff5b6e;background:rgba(255,59,92,.12)}.holdbox.end .hb-t{color:#ff8b9c;text-shadow:none}.holdbox.end .hb-l{color:#ff8b9c}
+@keyframes hbpulse{50%{opacity:.55}}
+@media(prefers-reduced-motion:reduce){.holdbox.low .hb-t{animation:none}}
+.mgr{color:#ffd83a;font-weight:700}.nmlist{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}.nmlist li{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:8px;padding:8px 8px 8px 12px}.nmr{display:flex;flex-direction:column;gap:2px;min-width:0}.nmr b{letter-spacing:.06em}.nmn{color:var(--mut,#9db3a8);word-break:break-word}</style></head>
+<body><div class="wrap">
+
+<header class="top">
+  <div><div id="brandslot"></div><h1>Your order</h1><p class="sub">Avengers: Doomsday (2026), December 19, 2026 at 1:00 PM, A. Bichara Silverscreens, Cinema 4</p></div>
+  <a class="btn alt sm" id="newBtn" href="index.html" hidden>Buy more tickets</a>
+</header>
+<ol class="steps" id="steps" aria-label="Progress"></ol>
+<div id="view"><div class="sk" role="status"><span class="sr-only">Loading your order…</span><i></i><i></i><i></i></div></div>
+
+</div>
+<script>
+const token = new URLSearchParams(location.search).get('o') || '';
+const view = $('view');
+$('brandslot').outerHTML = BRAND_HTML;
+let O = null, holdEnd = 0, holdTimer = null, pollTimer = null, uploaded = null;
+const imgs = {};
+
+/* ---------- loading ---------- */
+function fail(t) {
+  renderSteps($('steps'), 2);
+  view.innerHTML = `<div class="card">${msgIcon('link', 'bad')}<h2>We can't open this order</h2><p>${esc(t)}</p><p><a class="btn cta" href="index.html">Start a new order</a></p></div>`;
+}
+const HOLD_MIN = 40;                         // minutes a buyer has to pay and send the proof (set by hold-40-upgrade.sql)
+const MSG_URL = 'https://m.me/dwclbatch2002';
+const EXP_TITLE = 'This order has expired, no payment proof was submitted.';
+const GONE_TITLE = 'This order is no longer available.';
+const GONE_TEXT = 'It was either <b>deleted</b> by our team or it <b>expired</b> (no payment proof within ' + HOLD_MIN + ' minutes) and was removed. This link no longer works and no tickets are reserved under it. To buy tickets, please place a new order.';
+const EXP_TEXT = 'Your tickets were <b>not</b> reserved. Orders with no payment proof submitted within ' + HOLD_MIN + ' minutes expire and are removed. Please place a new order to get your tickets.';
+function gone() {                            // the order was cleared for good (it expired and was removed after a few days): nothing to bring back
+  clearInterval(holdTimer); clearInterval(pollTimer);
+  renderSteps($('steps'), 1);
+  view.innerHTML = `<div class="card">${msgIcon('hourglass', 'mut')}<h2>${GONE_TITLE}</h2><p>${GONE_TEXT}</p>
+    <p><a class="btn cta" href="index.html">Place a new order</a></p>
+    <div class="note" style="margin-top:14px"><p style="margin:0">Already sent a payment for this order (GCash or bank transfer)? Please message us directly with your receipt so we can help you, or request a refund.</p>
+    <p style="margin:12px 0 0"><a class="btn alt" href="${MSG_URL}" target="_blank" rel="noopener">Message us on Messenger</a></p></div></div>`;
+}
+function revokedView() {                     // approved earlier, then paused by the organizers: the proof exists, so never show "no payment proof"
+  clearInterval(holdTimer);
+  renderSteps($('steps'), 1);
+  view.innerHTML = `<div class="card"><div class="seated rjb" id="rvBn" role="alert"><span class="sck" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 6v7M12 17.5v.5"/></svg></span><span><b>This order has been revoked, so its tickets are not valid right now.</b></span></div>
+    <p style="margin:14px 0 0">Our team had to pause this order. If you think this is a mistake, or you have already paid, please message us right away and quote your order code <b>${esc(O.code)}</b>. We will review it with you.</p>
+    <p style="margin:14px 0 0"><a class="btn" href="${MSG_URL}" target="_blank" rel="noopener">Message us on Messenger</a></p></div>`;
+}
+function expiredView() {                     // unpaid and the hold time is over: the order is about to be removed, nothing to bring back
+  clearInterval(holdTimer); clearInterval(pollTimer);
+  renderSteps($('steps'), 1);
+  view.innerHTML = `<div class="card">${msgIcon('hourglass', 'warn')}<h2>${EXP_TITLE}</h2><p>${EXP_TEXT}</p>
+    <p><a class="btn cta" href="index.html">Place a new order</a></p>
+    <div class="note" style="margin-top:14px"><p style="margin:0">Already sent a payment for this order (GCash or bank transfer)? Please message us directly with your receipt so we can help you, or request a refund.</p>
+    <p style="margin:12px 0 0"><a class="btn alt" href="${MSG_URL}" target="_blank" rel="noopener">Message us on Messenger</a></p></div></div>`;
+}
+const seatSig = d => (d.tickets || []).map(t => t.ref + ':' + (t.seat || '') + (t.waived ? 'w' : '')).join(',');
+let justApproved = false, justRejected = false, justCancelled = false;
+/* sound when the page updates itself after the organizer decides (browsers allow it once the guest has tapped the page, which they have by uploading) */
+let ac = null;
+/* Two ways to make the sound, so one of them works even if the browser has put the other to sleep (phones do this when the page was in the background or after the file picker):
+   1) Web Audio (instant), 2) a small pre-rendered audio clip that was "primed" on the guest's first tap. */
+const SR = 22050;
+function mkWav(list, type, vol) {
+  const dur = Math.max(...list.map(([f, t, d]) => t + d)) + 0.1, n = Math.ceil(dur * SR), s = new Float32Array(n);
+  list.forEach(([f, t, d]) => {
+    const st = Math.floor(t * SR), len = Math.floor((d + 0.02) * SR);
+    for (let i = 0; i < len && st + i < n; i++) {
+      const x = i / SR, ph = 2 * Math.PI * f * x;
+      const w = type === 'square' ? (Math.sin(ph) >= 0 ? 1 : -1) : type === 'triangle' ? (2 / Math.PI) * Math.asin(Math.sin(ph)) : Math.sin(ph);
+      s[st + i] += w * (x < 0.02 ? x / 0.02 : Math.exp(-5 * (x - 0.02) / d)) * (vol || 0.32);
+    }
+  });
+  const buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf), W = (o, t) => { for (let i = 0; i < t.length; i++) v.setUint8(o + i, t.charCodeAt(i)); };
+  W(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); W(8, 'WAVE'); W(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, SR, true); v.setUint32(28, SR * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); W(36, 'data'); v.setUint32(40, n * 2, true);
+  for (let i = 0; i < n; i++) v.setInt16(44 + i * 2, Math.max(-1, Math.min(1, s[i])) * 32767, true);
+  return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
+}
+const SEATED = [[659, 0, 0.12], [880, 0.11, 0.12], [1319, 0.22, 0.55], [1760, 0.34, 0.4]];      // bright 'ticket confirmed' ding, different from the approval notes
+const SOFT = [[587, 0, 0.16], [440, 0.15, 0.4]];      // gentle two-note 'heads up', much softer than the rejection buzz
+const APPROVED = [[523, 0, 0.14], [659, 0.1, 0.14], [784, 0.2, 0.14], [1047, 0.3, 0.5]], REJECTED = [[466, 0, 0.2], [349, 0.24, 0.2], [233, 0.48, 0.55]];
+let clips = null;
+function makeClips() { if (clips) return; try { clips = { ok: new Audio(mkWav(APPROVED, 'triangle', 0.32)), no: new Audio(mkWav(REJECTED, 'square', 0.22)), seat: new Audio(mkWav(SEATED, 'sine', 0.3)), soft: new Audio(mkWav(SOFT, 'sine', 0.2)) }; Object.values(clips).forEach(a => { a.preload = 'auto'; }); } catch (_) { clips = {}; } }
+function primeClips() { makeClips(); Object.values(clips).forEach(a => { try { a.muted = true; const p = a.play(); (p && p.then ? p : Promise.resolve()).then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; }); } catch (_) {} }); }
+function unlockAudio() { try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); if (ac.state !== 'running') ac.resume(); } catch (_) {} }
+let primed = false;
+let pendingSnd = null;      // a sound the browser refused (page opened by a redirect, no tap yet): it plays on the guest's first tap
+['click', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, () => { unlockAudio(); if (!primed) { primed = true; primeClips(); } if (pendingSnd) { const x = pendingSnd; pendingSnd = null; setTimeout(() => playSound(...x), 120); } }, { passive: true }));
+['visibilitychange', 'focus', 'pageshow'].forEach(ev => addEventListener(ev, () => { if (!document.hidden) unlockAudio(); }));
+function tones(list, type, vol) {
+  try {
+    unlockAudio(); if (!ac) return;
+    list.forEach(([f, t, d]) => {
+      const o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.value = f; o.connect(g); g.connect(ac.destination);
+      const a = ac.currentTime + t; g.gain.setValueAtTime(0.0001, a); g.gain.exponentialRampToValueAtTime(vol || 0.32, a + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, a + d);
+      o.start(a); o.stop(a + d + 0.02);
+    });
+  } catch (_) {}
+}
+function playSound(list, type, vol, key) {
+  unlockAudio();
+  if (ac && ac.state === 'running') return tones(list, type, vol);
+  makeClips(); try { const a = clips[key]; if (a) { a.currentTime = 0; a.volume = 1; const p = a.play(); p && p.catch && p.catch(() => { if (key === 'seat') pendingSnd = [list, type, vol, key]; }); } } catch (_) {}      // Web Audio is asleep: use the clip instead
+}
+const soundApproved = () => playSound(APPROVED, 'triangle', 0.32, 'ok');      // happy rising notes
+const soundSeated = () => playSound(SEATED, 'sine', 0.3, 'seat');            // ding-ding-ding: your seat is reserved
+const soundSoft = () => playSound(SOFT, 'sine', 0.2, 'soft');                // seat reservation was cancelled: calm, not alarming
+const soundRejected = () => playSound(REJECTED, 'square', 0.22, 'no');        // three clear falling buzzes
+let titleT = null; const baseTitle = document.title;
+function flashTitle(t) { if (!document.hidden) return; clearInterval(titleT); let on = false; titleT = setInterval(() => { on = !on; document.title = on ? t : baseTitle; }, 1000); }
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { clearInterval(titleT); document.title = baseTitle; } });
+async function load(force) {
+  if (!token) return fail('This link is missing its order code. Open the full link you saved when you placed the order.');
+  const { data, error } = await sb.rpc('get_order', { p_token: token });
+  if (error && error.message === 'Order not found.') { try { if (localStorage.getItem('tp_order') === token) localStorage.removeItem('tp_order'); } catch (_) {} }   // order was deleted: forget it so the first page stops offering it
+  if (error && error.message === 'Order not found.') return (token && token.length >= 32) ? gone() : fail('We could not find this order. Make sure you opened the complete link.');
+  if (error) return fail(error.message);
+  const changed = !O || O.status !== data.status || seatSig(O) !== seatSig(data);
+  if (O && O.status === 'pending' && data.status === 'approved') { justApproved = true; soundApproved(); flashTitle('✅ Payment approved!'); }   // the page just refreshed itself after approval
+  if (O && O.status === 'pending' && data.status === 'rejected') { justRejected = true; soundRejected(); flashTitle('⚠️ Payment not accepted'); }
+  if (O && O.status !== 'cancelled' && data.status === 'cancelled') { justCancelled = true; soundRejected(); flashTitle('⚠️ Order cancelled'); }
+  if (data.status === 'approved') {      // seat reserved: either we just arrived back from the seat page, or it happened while this page was open
+    const seatedN = d => (d.tickets || []).filter(t => t.seat).length;
+    const arrived = !O && new URLSearchParams(location.search).get('seated') && seatedN(data) > 0, live = O && O.status === 'approved' && seatedN(data) > seatedN(O);
+    if (arrived || live) { let heard = false; const k = 'tp_snd_' + seatSig(data); try { heard = sessionStorage.getItem(k) === '1'; sessionStorage.setItem(k, '1'); } catch (_) {} if (!heard) { soundSeated(); flashTitle('🎟️ Seat reserved!'); } }
+  }
+  if (data.status === 'approved' && data.seat_change_used && O && O.status === 'approved' && !O.seat_change_used) { soundSoft(); flashTitle('⚠️ Seat reservation cancelled'); }      // the organizer cancelled their seats while this page was open
+  if (data.status === 'cancelled') { try { if (localStorage.getItem('tp_order') === token) localStorage.removeItem('tp_order'); } catch (_) {} }
+  O = data;
+  if (force || changed) render();
+}
+
+/* ---------- pieces ---------- */
+const CP_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15"/></svg>', OK_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const codeCopy = () => `<button class="cpc" type="button" data-copycode aria-label="Copy order code" title="Copy order code">${CP_ICON}</button>`;
+document.addEventListener('click', e => {           // dismiss the "Payment verified" banner for good
+  const x = e.target.closest('[data-vrfx]'); if (!x) return;
+  try { localStorage.setItem('tp_vrf_' + String(token || '').slice(0, 16), '1'); } catch (_) {}
+  const bn = $('vrfBn'); if (bn) bn.remove();
+});
+document.addEventListener('click', e => {           // copy icon beside any order code
+  const b = e.target.closest('[data-copycode]'); if (!b || !O) return;
+  copyText(O.code).then(() => { b.innerHTML = OK_ICON; b.classList.add('ok'); setTimeout(() => { b.innerHTML = CP_ICON; b.classList.remove('ok'); }, 1400); });
+});
+const summary = () => `<div class="card sum">
+  <div><span>Order code</span><b class="ocode">${esc(O.code)}${codeCopy()}</b></div>
+  <div><span>Name</span><b>${esc(O.name)}</b></div>
+  <div><span>Tickets</span><b>${O.qty}</b></div>
+  <div><span>Total</span><b>${peso(O.total)}</b></div></div>`;
+const holdersCard = () => {
+  if (!(O.holders && O.holders.length > 1)) return '';
+  return `<div class="card"><h2>Ticket holders</h2>
+  <ol class="hl">${O.holders.map((h, i) => `<li>${esc(h)}</li>`).join('')}</ol>
+  <p class="mut small" style="margin-bottom:0">Each ticket number will be assigned to the person named here, and the name is printed on the ticket.</p></div>`;
+};
+const keepNote = () => `<div class="note keep"><span>⚠ This is your private link. Keep this page's link and don't share it with anyone. It is the only way to open your order and your tickets.<small class="kshare">Share the link to your own Messenger, Viber, Notes, etc. so you always have a copy.</small></span>
+  <span class="kbtns"><button class="btn bic-b" id="copyLink" type="button"><span>Copy link</span><svg class="bic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15"/></svg></button><button class="btn bic-b" id="shareLink" type="button" hidden><span>Share link</span><svg class="bic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.7l7.4-4.3M8.3 13.3l7.4 4.3"/></svg></button></span></div>`;
+
+let lastStatus = null;
+function render() {
+  clearInterval(holdTimer); clearInterval(pollTimer);
+  const s = O.status, changed = s !== lastStatus, firstDraw = lastStatus === null; lastStatus = s;
+  $('newBtn').hidden = s === 'awaiting_payment';       // while paying, "Back to edit my details" is the clean way out
+  renderSteps($('steps'), s === 'approved' ? ((O.tickets || []).length && (O.tickets || []).every(t => t.active === false || t.seat || t.waived) ? 6 : 5) : s === 'pending' ? 4 : s === 'rejected' ? 3 : 2);
+  if (s === 'awaiting_payment' && O.hold_seconds <= 0) expiredView();
+  else if (s === 'awaiting_payment' || s === 'rejected') { viewPay(); if (s === 'rejected' && $('rjBn')) { try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch (_) {} if (!firstDraw) setTimeout(() => $('rjBn') && $('rjBn').scrollIntoView({ block: 'start', behavior: 'smooth' }), 150); } }
+  else if (s === 'pending') { viewPending(); pollTimer = setInterval(() => load(false), 15000); }
+  else if (s === 'revoked') { pollTimer = setInterval(() => load(false), 20000); revokedView(); }
+  else if (s === 'approved') { pollTimer = setInterval(() => load(false), 20000); viewApproved(); const bn = $('seatedBn') || $('vrfBn'); if (bn) setTimeout(() => bn.scrollIntoView({ block: 'start', behavior: 'smooth' }), 150); if ($('vrfBn')) { try { navigator.vibrate && navigator.vibrate([120, 70, 120]); } catch (_) {} } }
+  else {
+    const cNew = justCancelled; justCancelled = false;
+    view.innerHTML = `<div class="seated rjb${cNew ? ' new' : ''}" id="cnBn" role="alert"><span class="sck" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span><b>This order was cancelled</b><span class="rjs">Please contact the organizer if you think this is a mistake.</span></span></div>` + summary();
+    if (cNew) { try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch (_) {} }
+  }
+  if (changed) {                                         // new step: the cards fade in one after another
+    view.classList.remove('fx'); void view.offsetWidth; view.classList.add('fx');
+    if (!firstDraw && s !== 'approved') window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  const c = $('copyLink');
+  if (c) c.onclick = () => copyText(location.href).then(() => {          // swap the label (keep the icon), then put it back
+    const t = c.querySelector('span'); if (!t) return; const old = t.textContent; t.textContent = 'Copied';
+    setTimeout(() => { t.textContent = old; }, 1400);
+  });
+  const sh = $('shareLink');
+  if (sh && navigator.share) {                         // only where the phone/browser has a share menu
+    sh.hidden = false;
+    sh.onclick = () => navigator.share({ title: 'My ticket order ' + (O && O.code || ''), text: 'My private order link (keep it to yourself):', url: location.href }).catch(() => {});
+  }
+}
+
+/* ---------- pay + upload ---------- */
+function viewPay() {
+  const rej = O.status === 'rejected';
+  const rjNew = justRejected; justRejected = false;
+  const rjBanner = `<div class="seated rjb${rjNew ? ' new' : ''}" id="rjBn" role="alert"><span class="sck" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span><b>Payment not accepted</b>${O.reject_reason ? `<span class="rjs">Reason: ${esc(O.reject_reason)}</span>` : ''}<span class="rjs">Please upload a clear screenshot of your GCash receipt again below. If the payment needs to be corrected, send it first.</span></span></div>`;
+  view.innerHTML = `${rej ? rjBanner : '<p style="margin:0 0 12px"><button class="btn alt sm" id="back" type="button">← Back to edit my details</button></p>'}${rej ? '' : `<div class="holdbox" id="holdbox"><span class="hb-l">Time left to pay</span><b class="hb-t" id="hold" aria-live="off">--:--</b><span class="hb-w" id="hmsg">Send your payment and upload the proof before the timer ends. Orders that expire are <b>deleted automatically</b> and the tickets are released to other buyers.</span></div>`}${keepNote()}${summary()}${holdersCard()}
+
+
+  <section class="card">
+    <h2>Pay with GCash</h2>
+    <div class="gcash">
+      <p class="lbl">Send exactly</p>
+      <p class="amount">${peso(O.total)}</p>
+      <p class="lbl">Order code (type it in the GCash message if there is one)</p>
+      <p class="code">${esc(O.code)}${codeCopy()}</p>
+      <div class="qrbox"><img src="qr.png" width="290" height="288" alt="GCash InstaPay QR code for payment"></div>
+      <p class="acct"><span>Account name</span><b>JU***H AL**E B.</b></p>
+      <p class="acct"><span>Mobile number</span><b>+63 917 900 ••••</b></p>
+      <div style="margin:12px 0 0;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+        <a class="btn light sm" href="qr.png" download="gcash-qr.png">Save QR</a>
+        <button class="btn light sm" id="cpamt" type="button">Copy amount</button>
+        <a class="btn sm" id="opgc" href="gcash://" hidden>Open GCash</a>
+      </div>
+      <p class="mut small" id="gchint" style="margin:8px 0 0;text-align:center" hidden>GCash not opening? Make sure the app is installed first, then please open it manually instead.</p>
+    </div>
+    <ol class="how">
+      <li>Open GCash (on a phone, tap <b>Open GCash</b> above) and tap <b>Pay QR</b> (or <b>Scan QR</b>). On a phone, save the QR first, then choose the option to upload it from your gallery. On a computer, scan the QR with your phone.</li>
+      <li>Enter exactly <b>${peso(O.total)}</b> and send the payment.</li>
+      <li>Take a screenshot of the receipt that shows the reference number, then upload it below.</li>
+    </ol>
+    <div class="bankopt"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v8M9.7 10v8M14.3 10v8M19 10v8M3.5 20h17"/></svg></i><p><b>Paying from a bank instead?</b> Bank transfer works too. Most bank apps can pay this same QR: choose <b>Scan QR</b> (or <b>QR Ph</b>), upload the saved QR, and send exactly <b>${peso(O.total)}</b>. Then upload your bank's receipt below and choose <b>Bank transfer</b>. No reference number needed.</p></div>
+    <p class="mut small"><b>NOTE:</b> Transfer fees may apply for some banks.</p>
+  </section>
+
+  <form class="card" id="pf" novalidate>
+    <h2>Upload your payment proof</h2>
+    <p class="pml" id="pml">How did you pay?</p>
+    <div class="pm" role="group" aria-labelledby="pml"><button type="button" id="pmg" aria-pressed="true">GCash</button><button type="button" id="pmb" aria-pressed="false">Bank transfer</button></div>
+    <p class="bknote" id="bknote" hidden>Just upload a screenshot or photo of your bank receipt. You don't need to type a reference number. We check the payment on our side.</p>
+    <label for="file">Screenshot of the payment receipt</label>
+    <input id="file" type="file" accept="image/*">
+    <p class="mut small rfs" id="fmt">JPG or PNG screenshot or photo, up to 5 MB. A screenshot from your phone is best.</p>
+    <div class="pvw" id="pvw" hidden>
+      <img id="prev" class="prev" alt="Preview of your screenshot. Tap to enlarge." role="button" tabindex="0">
+      <button class="pvx" id="pvx" type="button" aria-label="Remove this image" title="Remove image"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg></button>
+    </div>
+    <p class="mut small rfs" id="zmh" hidden>Tap the image to enlarge it and check your reference number.</p>
+    <div class="rfl"><label for="gref">GCash reference number</label>
+      <button class="rfi" id="refinfo" type="button" aria-label="Where do I find the reference number?" title="Where do I find it?"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7.6" r="1.4" fill="currentColor"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button></div>
+    <input id="gref" inputmode="numeric" autocomplete="off" maxlength="16" placeholder="13 digits, filled in from your screenshot">
+    <p class="mut small rfs" id="ocrst" aria-live="polite">We read this from your screenshot. Please check that it matches your receipt.</p>
+    <div class="rfc" id="rfc" hidden>
+      <div class="rfcn" id="rfcn"></div>
+      <p class="rfcq" id="rfcq">Is this the Ref No. on your receipt?</p>
+      <div class="rfcb" id="rfcb"><button class="btn sm" id="rfok" type="button">Looks right</button><button class="btn light sm" id="rfed" type="button">Edit</button></div>
+      <p class="rfco" id="rfco" hidden>✓ Confirmed</p>
+    </div>
+    <div class="rcw" id="rcw" role="alert" hidden></div>
+    <div class="err" id="perr" role="alert" hidden></div>
+    <p><button class="btn cta" id="psend" type="submit">Submit payment proof</button></p>
+  </form>
+  <dialog id="zmdlg" class="zm" aria-label="Your screenshot, enlarged">
+    <div class="zm-st" id="zmst"><img id="zmimg" alt="Your payment screenshot" draggable="false"></div>
+    <div class="zm-bar">
+      <button type="button" id="zmo" aria-label="Zoom out">−</button>
+      <button type="button" id="zmr" aria-label="Reset zoom">Reset</button>
+      <button type="button" id="zmi" aria-label="Zoom in">+</button>
+    </div>
+    <button type="button" class="zm-x" id="zmx" aria-label="Close"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <p class="zm-t">Pinch or double-tap to zoom. Drag to move.</p>
+  </dialog>
+  <dialog id="refdlg" class="rfd" aria-labelledby="rfdt">
+    <h3 id="rfdt">Where is the reference number?</h3>
+    <p class="mut small" style="margin:0 0 10px">After you pay, GCash shows a receipt. The <b>Ref No.</b> is the 13-digit number below the amount, as circled here.</p>
+    <div class="rcp" aria-hidden="true">
+      <div class="rcp-top"><span class="rcp-ck">✓</span></div>
+      <div class="rcp-card">
+        <div class="rcp-nm">JU•••H AL••E B.</div>
+        <div class="rcp-sub">Sent via GCash</div>
+        <div class="rcp-row"><span>Amount</span><span>1.00</span></div>
+        <div class="rcp-row rcp-big"><span>Total Amount Sent</span><span>₱1.00</span></div>
+        <div class="rcp-ref"><span class="rcp-hl">Ref No. <b>1234 567 890 123</b></span><span class="rcp-dt">Oct 8, 2026 10:04 AM</span></div>
+      </div>
+    </div>
+    <p class="mut small" style="margin:10px 0 0">Tip: take a screenshot of this screen and upload it. We fill in the number for you. You can also press and hold the number in GCash to copy it.</p>
+    <p style="margin:12px 0 0;text-align:center"><button class="btn sm" type="button" data-x>Got it</button></p>
+  </dialog>`;
+
+  holdEnd = Date.now() + O.hold_seconds * 1000;
+  const tick = () => {
+    const el = $('hold'); if (!el) return;
+    const t = Math.max(0, Math.round((holdEnd - Date.now()) / 1000)), bx = $('holdbox');
+    el.textContent = t > 0 ? `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}` : '0:00';
+    if (bx) { bx.classList.toggle('low', t > 0 && t <= 300); bx.classList.toggle('end', t <= 0); }
+    if (t <= 0) $('hmsg').innerHTML = 'The time is up. If you have already paid, <b>submit your proof right now</b>. Otherwise this order will be removed in a few minutes.';
+  };
+  tick(); holdTimer = setInterval(tick, 1000);
+
+  // Copy amount + Open GCash (the app link only makes sense on phones/tablets)
+  $('cpamt').onclick = () => copyText(Number(O.total).toFixed(2)).then(() => flash($('cpamt'), 'Copied'));
+  try {
+    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/i.test(navigator.platform))) {
+      const g = $('opgc'); g.hidden = false;
+      g.onclick = () => {
+        const t0 = Date.now();
+        setTimeout(() => { if (!document.hidden && Date.now() - t0 < 4000) $('gchint').hidden = false; }, 1800);
+      };
+    }
+  } catch (_) {}
+  const bk = $('back');
+  if (bk) bk.onclick = async () => {
+    if (!await ui.confirm('Go back and edit your details?\n\nThis order (' + O.code + ') will be removed and its held tickets released. Your details will be filled in again so you can change them and continue.', { title: 'Go back and edit?', ok: 'Remove order and edit', cancel: 'Keep order', danger: true })) return;
+    bk.disabled = true;
+    const r = await sb.rpc('cancel_my_order', { p_token: token });
+    if (r.error) { bk.disabled = false; return ui.alert(r.error.message, { title: 'Could not go back' }); }
+    try { localStorage.removeItem('tp_order'); } catch (_) {}
+    location.href = 'index.html?edit=1';
+  };
+  $('gref').oninput = e => {
+    const d = e.target.value.replace(/\D/g, '').slice(0, 13);
+    e.target.value = [d.slice(0, 4), d.slice(4, 7), d.slice(7, 10), d.slice(10, 13)].filter(Boolean).join(' ');
+  };
+  $('pmg').onclick = () => setPayMode('gcash'); $('pmb').onclick = () => setPayMode('bank');
+  $('file').onchange = e => {
+    const f = e.target.files[0], p = $('prev');
+    if (!f) { $('pvw').hidden = true; $('zmh').hidden = true; return; }
+    p.src = URL.createObjectURL(f); $('pvw').hidden = false; $('zmh').hidden = false;
+    scanRef(f);
+  };
+  $('pvx').onclick = () => {                          // remove the chosen image
+    scanId++; lockRef(false);                         // cancel any scan still running
+    $('file').value = ''; $('pvw').hidden = true; $('zmh').hidden = true; $('prev').removeAttribute('src');
+    const g = $('gref');
+    if (autoRef && g.value.replace(/\s/g, '') === autoRef) g.value = '';   // only clear a number we filled in ourselves
+    resetScanUi(); perr('');
+    $('ocrst').textContent = 'We read this from your screenshot. Please check that it matches your receipt.';
+  };
+  $('gref').addEventListener('input', () => { autoRef = ''; refOk = false; $('rfc').hidden = true; });   // typing by hand means: never overwrite
+  $('rfok').onclick = () => { refOk = true; $('rfc').classList.add('ok'); $('rfcq').hidden = true; $('rfcb').hidden = true; $('rfco').hidden = false; perr(''); };
+  $('rfed').onclick = () => { $('rfc').hidden = true; autoRef = ''; refOk = false; const g = $('gref'); g.focus(); try { g.setSelectionRange(g.value.length, g.value.length); } catch (_) {} };
+  initZoom();
+  prewarm();
+  $('refinfo').onclick = () => { const d = $('refdlg'); if (d.showModal) d.showModal(); else d.setAttribute('open', ''); };
+  const rd = $('refdlg');
+  rd.addEventListener('click', e => { if (e.target === rd || e.target.closest('[data-x]')) rd.close ? rd.close() : rd.removeAttribute('open'); });
+  $('pf').onsubmit = submitProof;
+}
+
+/* ---------- full-screen viewer: pinch / double-tap / wheel to zoom, drag to move ---------- */
+function initZoom() {
+  const dlg = $('zmdlg'), st = $('zmst'), im = $('zmimg');
+  let sc = 1, tx = 0, ty = 0; const ps = new Map(); let pinch = null, lastTap = 0, moved = false;
+  const MAX = 8;
+  const clamp = () => {
+    const w = im.offsetWidth * sc, h = im.offsetHeight * sc;
+    const mx = Math.max(0, (w - st.clientWidth) / 2), my = Math.max(0, (h - st.clientHeight) / 2);
+    tx = Math.min(mx, Math.max(-mx, tx)); ty = Math.min(my, Math.max(-my, ty));
+    if (sc <= 1.001) { sc = 1; tx = 0; ty = 0; }
+  };
+  const apply = () => { clamp(); im.style.transform = `translate(${tx}px,${ty}px) scale(${sc})`; };
+  const zoomAt = (ns, cx, cy) => {                    // keep the point under the fingers where it is
+    ns = Math.min(MAX, Math.max(1, ns));
+    const r = st.getBoundingClientRect(), px = cx - (r.left + r.width / 2), py = cy - (r.top + r.height / 2), k = ns / sc;
+    tx = px - (px - tx) * k; ty = py - (py - ty) * k; sc = ns; apply();
+  };
+  const ctr = () => { const r = st.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+  const dist = () => { const a = [...ps.values()]; return Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y); };
+  const mid = () => { const a = [...ps.values()]; return [(a[0].x + a[1].x) / 2, (a[0].y + a[1].y) / 2]; };
+  window.zmOpen = () => {
+    im.src = $('prev').src; sc = 1; tx = 0; ty = 0; im.style.transform = '';
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+  };
+  const close = () => { dlg.close ? dlg.close() : dlg.removeAttribute('open'); };
+  $('zmx').onclick = close;
+  $('zmi').onclick = () => zoomAt(sc * 1.6, ...ctr());
+  $('zmo').onclick = () => zoomAt(sc / 1.6, ...ctr());
+  $('zmr').onclick = () => { sc = 1; apply(); };
+  st.addEventListener('wheel', e => { e.preventDefault(); zoomAt(sc * Math.exp(-e.deltaY * 0.0022), e.clientX, e.clientY); }, { passive: false });
+  st.addEventListener('pointerdown', e => {
+    try { st.setPointerCapture(e.pointerId); } catch (_) {}
+    ps.set(e.pointerId, { x: e.clientX, y: e.clientY }); moved = false;
+    if (ps.size === 2) pinch = { d: dist(), s: sc };
+  });
+  st.addEventListener('pointermove', e => {
+    const p = ps.get(e.pointerId); if (!p) return;
+    const dx = e.clientX - p.x, dy = e.clientY - p.y; p.x = e.clientX; p.y = e.clientY;
+    if (Math.abs(dx) + Math.abs(dy) > 2) moved = true;
+    if (ps.size === 2 && pinch) { const [mx, my] = mid(); zoomAt(pinch.s * dist() / pinch.d, mx, my); }
+    else if (ps.size === 1 && sc > 1) { tx += dx; ty += dy; apply(); }
+  });
+  const up = e => {
+    const had = ps.has(e.pointerId); ps.delete(e.pointerId);
+    if (ps.size < 2) pinch = null;
+    if (had && ps.size === 0 && !moved && e.type === 'pointerup') {          // a plain tap: double-tap toggles zoom
+      const now = Date.now();
+      if (now - lastTap < 320) { lastTap = 0; zoomAt(sc > 1.05 ? 1 : 3, e.clientX, e.clientY); } else lastTap = now;
+    }
+  };
+  st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up);
+  window.addEventListener('resize', () => { if (dlg.open) apply(); });
+  const pv = $('prev');
+  pv.onclick = window.zmOpen;
+  pv.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.zmOpen(); } };
+}
+
+/* ---------- read the receipt from the screenshot (done on the phone, nothing is sent anywhere) ---------- */
+let PAYM = 'gcash';
+function setPayMode(m) {                      // GCash: 13-digit Ref No. read from the screenshot. Bank transfer: just the receipt image, the organizers check the payment themselves
+  if (m === PAYM) return; PAYM = m; const bank = m === 'bank', g = $('gref');
+  $('pmg').setAttribute('aria-pressed', String(!bank)); $('pmb').setAttribute('aria-pressed', String(bank));
+  $('pf').classList.toggle('bank', bank); $('bknote').hidden = !bank;
+  g.value = ''; scanId++; lockRef(false); resetScanUi(); perr(''); clearFieldErrs();
+  if (!bank && $('file').files[0]) scanRef($('file').files[0]);
+}
+let autoRef = '', refOk = false, scanId = 0, ocrLib = null, ocrWorkerP = null, ocrCb = null, rcpt = null;
+const OCR_JS = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+const OCR_LANG = 'https://cdn.jsdelivr.net/npm/@tesseract.js-data/eng@1.0.0/4.0.0_best_int';
+const fmtRef = d => [d.slice(0, 4), d.slice(4, 7), d.slice(7, 10), d.slice(10, 13)].filter(Boolean).join(' ');
+const withTimeout = (p, ms) => Promise.race([p, new Promise((_, no) => setTimeout(() => no(new Error('slow')), ms))]);
+function loadOcr() {
+  if (window.Tesseract) return Promise.resolve();
+  return ocrLib || (ocrLib = new Promise((ok, no) => {
+    const s = document.createElement('script'); s.src = window.OCR_JS_TEST || OCR_JS; s.onload = ok;
+    s.onerror = () => { ocrLib = null; no(new Error('load')); }; document.head.appendChild(s);
+  }));
+}
+function getWorker() {                       // one shared reader, created once and reused
+  return ocrWorkerP || (ocrWorkerP = loadOcr().then(() =>
+    Tesseract.createWorker('eng', 1, { langPath: window.OCR_LANG_TEST || OCR_LANG, logger: m => { if (ocrCb) ocrCb(m); } })
+  ).catch(e => { ocrWorkerP = null; throw e; }));
+}
+function prewarm() {                         // start downloading the reader quietly while the person is paying
+  try {
+    const c = navigator.connection || {};
+    if (c.saveData || /(^|-)2g$/.test(c.effectiveType || '')) return;
+    const go = () => getWorker().catch(() => {});
+    setTimeout(() => (window.requestIdleCallback ? requestIdleCallback(go, { timeout: 4000 }) : go()), 1500);
+  } catch (_) {}
+}
+function pickRef(text) {
+  const t = String(text || '');
+  const near = t.match(/ref\.?\s*(?:no\.?|number)?[^0-9]{0,6}((?:\d[\s]?){13})/i);   // "Ref No. 2045886211181"
+  if (near) return near[1].replace(/\D/g, '').slice(0, 13);
+  const all = t.match(/\d(?:[ ]?\d){12}/g) || [];                                     // any 13 digits in a row
+  return all.map(x => x.replace(/\D/g, '')).find(x => x.length === 13) || '';
+}
+function parseReceipt(text) {
+  const t = String(text || ''), out = { ref: pickRef(t) };
+  const m = t.match(/total\s*amount\s*sent[^0-9]{0,6}([\d,]+\.\d{2})/i) || t.match(/\bamount\b[^0-9]{0,6}([\d,]+\.\d{2})/i);
+  if (m) out.amount = parseFloat(m[1].replace(/,/g, ''));
+  const d = t.match(/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2})\s*,?\s*(20\d\d)\s+(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+  if (d) {
+    let h = +d[4] % 12; if (/pm/i.test(d[6])) h += 12;
+    const mo = 'janfebmaraprmayjunjulaugsepoctnovdec'.indexOf(d[1].toLowerCase()) / 3 + 1;
+    const dt = new Date(`${d[3]}-${String(mo).padStart(2, '0')}-${String(d[2]).padStart(2, '0')}T${String(h).padStart(2, '0')}:${d[5]}:00+08:00`);   // GCash shows Philippine time
+    if (!isNaN(dt)) out.when = dt;
+  }
+  return out;
+}
+function receiptWarnings(r) {                // soft warnings, never blocks
+  const w = [];
+  if (r && r.amount != null && r.amount + 0.5 < Number(O.total))
+    w.push(`This receipt shows ${peso(r.amount)}, but your order total is ${peso(O.total)}. Please make sure you sent the full amount.`);
+  if (r && r.when && O.hold_seconds > 0) {
+    const created = holdEnd - HOLD_MIN * 60 * 1000;   // the hold lasts HOLD_MIN minutes from the moment the order was placed
+    if (r.when.getTime() < created - 5 * 60 * 1000) w.push('This receipt is dated before you placed this order. Please upload the receipt of this payment.');
+  }
+  return w;
+}
+function lockRef(on) {                       // grey out the field (and Submit) while the screenshot is being read
+  const g = $('gref'), b = $('psend'); if (!g) return;
+  g.disabled = on; if (b && b.textContent === 'Submit payment proof') b.disabled = on;
+  g.dataset.ph = g.dataset.ph || g.placeholder; g.placeholder = on ? 'Reading your screenshot…' : g.dataset.ph;
+}
+function resetScanUi() {
+  autoRef = ''; refOk = false; rcpt = null;
+  $('rfc').hidden = true; $('rcw').hidden = true; $('rcw').innerHTML = '';
+}
+function showConfirm(d) {
+  refOk = false; $('rfc').hidden = false; $('rfc').classList.remove('ok');
+  $('rfcn').textContent = fmtRef(d); $('rfcq').hidden = false; $('rfcb').hidden = false; $('rfco').hidden = true;
+}
+async function scanRef(file) {
+  if (PAYM === 'bank') return;
+  const my = ++scanId, st = $('ocrst'), inp = $('gref');
+  const say = t => { if (my === scanId) st.textContent = t; };
+  if (inp.value && inp.value.replace(/\s/g, '') !== autoRef) { st.textContent = 'Please check that the number matches your receipt.'; return; }   // they typed one already
+  resetScanUi(); say('Reading your screenshot…'); lockRef(true);
+  ocrCb = m => {
+    if (my !== scanId || !m || typeof m.progress !== 'number') return;
+    const pc = Math.round(m.progress * 100);
+    if (/language|traineddata|core/i.test(m.status)) say(`Getting ready for the first time… ${pc}%`);
+    else if (/recogniz/i.test(m.status)) say(`Reading your screenshot… ${pc}%`);
+  };
+  try {
+    const worker = await withTimeout(getWorker(), 120000);
+    const b = await toBitmap(file);
+    const w0 = b.naturalWidth || b.width, h0 = b.naturalHeight || b.height, sc = Math.min(1, 1500 / Math.max(w0, h0));
+    const c = document.createElement('canvas'); c.width = Math.round(w0 * sc); c.height = Math.round(h0 * sc);
+    const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(b, 0, 0, c.width, c.height);
+    const r = await withTimeout(worker.recognize(c), 45000);
+    if (my !== scanId) return;
+    const info = parseReceipt(r.data && r.data.text); rcpt = info;
+    if (info.ref.length === 13) {
+      if (inp.value && inp.value.replace(/\s/g, '') !== autoRef) { say('Please check that the number matches your receipt.'); }
+      else {
+        autoRef = info.ref; inp.value = fmtRef(info.ref); showConfirm(info.ref);
+        say('Filled in from your screenshot. Please check that it matches your receipt, otherwise it will be rejected.');
+      }
+    } else say('We could not read the number. Please type it in. Tap the “i” above to see where it is.');
+    const w = receiptWarnings(info), box = $('rcw');
+    if (w.length) { box.innerHTML = w.map(t => `<p>⚠ ${esc(t)}</p>`).join(''); box.hidden = false; }
+  } catch (_) {
+    say('We could not read the number automatically. Please type it in. Tap the “i” above to see where it is.');
+  } finally { ocrCb = null; if (my === scanId) lockRef(false); }
+}
+
+const perr = t => { const e = $('perr'); e.textContent = t; e.hidden = !t; };
+const randId = () => Array.from(crypto.getRandomValues(new Uint8Array(12)), b => b.toString(16).padStart(2, '0')).join('');
+
+async function toBitmap(file) {
+  if (window.createImageBitmap) { try { return await createImageBitmap(file); } catch (_) {} }
+  return await new Promise((ok, no) => {
+    const i = new Image();
+    i.onload = () => ok(i);
+    i.onerror = () => no(new Error('Please upload a JPG or PNG screenshot.'));
+    i.src = URL.createObjectURL(file);
+  });
+}
+async function compress(file) {              // shrink big phone screenshots before uploading
+  const b = await toBitmap(file);
+  const w0 = b.naturalWidth || b.width, h0 = b.naturalHeight || b.height;
+  const s = Math.min(1, 2000 / Math.max(w0, h0));
+  const c = document.createElement('canvas');
+  c.width = Math.round(w0 * s); c.height = Math.round(h0 * s);
+  const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+  x.drawImage(b, 0, 0, c.width, c.height);
+  const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.86));
+  if (!blob) throw new Error('Please upload a JPG or PNG screenshot.');
+  if (blob.size > 5 * 1024 * 1024) throw new Error('That image is too large. Please crop the screenshot and try again.');
+  return blob;
+}
+
+async function submitProof(e) {
+  e.preventDefault(); perr(''); clearFieldErrs();
+  let ref = $('gref').value.replace(/\s/g, ''), f = $('file').files[0];
+  const bank = PAYM === 'bank';
+  if (!f) return fieldErr($('file'), 'Choose the screenshot of your payment receipt.');
+  if (bank) ref = 'BANK';                       // no number needed: below, the receipt image's fingerprint becomes the reference so the same image can't be used on two orders
+  else if (!/^\d{13}$/.test(ref)) return fieldErr($('gref'), 'Enter the 13-digit GCash reference number from your receipt.');
+  if (!bank && autoRef && ref === autoRef && !refOk) return fieldErr($('rfok'), 'Please check the reference number. Tap “Looks right” if it matches your receipt, or “Edit” to change it.', $('rfc'));
+  const warn = receiptWarnings(rcpt);
+  if (warn.length && !await ui.confirm(warn.join('\n\n') + '\n\nSubmit anyway?', { title: 'Please double-check your receipt', ok: 'Submit anyway', cancel: 'Go back' })) return;
+  const btn = $('psend'); btn.disabled = true; btn.textContent = 'Uploading…';
+  try {
+    const key = [f.name, f.size, f.lastModified].join('|');
+    if (!uploaded || uploaded.key !== key) {          // don't upload the same file twice on a retry
+      const blob = await compress(f);
+      const path = `${O.id}/${randId()}.jpg`;
+      const up = await sb.storage.from('proofs').upload(path, blob, { contentType: 'image/jpeg', upsert: false });
+      if (up.error) { if (/security|policy|not allowed/i.test(up.error.message)) { const chk = await sb.rpc('get_order', { p_token: token }); if (chk.error && chk.error.message === 'Order not found.') return gone(); } throw new Error(/security|policy|not allowed/i.test(up.error.message) ? 'The upload was not accepted. Reload this page and try again.' : up.error.message); }
+      uploaded = { key, path };
+    }
+    if (bank) { const id = await fileId(f); if (id) ref = 'BANK-' + id; }
+    const { error } = await sb.rpc('submit_proof', { p_token: token, p_ref: ref, p_path: uploaded.path });
+    if (error && error.message === 'Order not found.') return gone();      // cleared while the guest was on this page
+    if (error && bank && /already submitted/i.test(error.message)) throw new Error('This receipt image was already used for another order. Please upload the receipt of your own payment.');
+    if (error) throw new Error(error.message);
+    uploaded = null;
+    await load(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (err) {
+    perr(err.message || 'Something went wrong. Please try again.');
+    btn.disabled = false; btn.textContent = 'Submit payment proof';
+  }
+}
+
+/* short fingerprint of the receipt file (same file = same fingerprint), used to stop one bank receipt being reused */
+async function fileId(f) {
+  try { const h = await crypto.subtle.digest('SHA-256', await f.arrayBuffer()); return [...new Uint8Array(h)].slice(0, 8).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase(); } catch (_) { return ''; }
+}
+
+/* ---------- waiting for approval ---------- */
+function viewPending() {
+  const when = O.submitted_at ? new Date(O.submitted_at).toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' }) : '';
+  view.innerHTML = `${keepNote()}${summary()}${holdersCard()}
+  <section class="card state"><h2>Payment sent</h2>
+    <p>We received your payment proof of <b>${peso(O.total)}</b>. Your tickets are <b>not issued yet</b>. They will appear on this page once your payment is verified and approved, so please wait for approval.</p>
+    <div class="note" style="margin-top:14px"><b>Please also message DWCL Batch 2002 on Messenger</b> to let us know your payment has been made. Include your order code <b>${esc(O.code)}</b>${codeCopy()} so we can find it quickly.
+      <p style="margin:12px 0 0"><a class="btn" id="msgBtn" href="https://m.me/dwclbatch2002" target="_blank" rel="noopener">Message DWCL Batch 2002</a></p>
+      <p class="mut small" style="margin:8px 0 0">We copy your order code when you tap the button, so you can paste it into the chat. Messenger not opening? <a href="https://www.facebook.com/dwclbatch2002" target="_blank" rel="noopener" style="color:var(--acc,#39ff7a)">Open our Facebook page instead</a>.</p></div>
+    <p>This page updates by itself when your tickets are approved. You can close it and come back later using your private link.</p>
+    ${when ? `<p class="mut small">Submitted ${esc(when)}.</p>` : ''}</section>`;
+  const mb = $('msgBtn'); if (mb) mb.addEventListener('click', () => { try { copyText(O.code).catch(() => {}); } catch (_) {} });
+}
+
+/* ---------- approved: digital tickets ---------- */
+function viewApproved() {
+  const ok = t => t.active !== false;                 // false = the organizer removed this ticket number
+  if (!O.tickets.length) {
+    view.innerHTML = `${keepNote()}${summary()}<section class="card state"><h2>We can't find the tickets for this order</h2>
+      <p>Your payment was verified, but the ticket numbers are missing on our side. Please contact the organizer and give your order code <b>${esc(O.code)}</b>. They can restore them.</p></section>`;
+    return;
+  }
+  const bad = O.tickets.filter(t => !ok(t));
+  const unlocked = t => !!(t.seat || t.waived), locked = O.tickets.filter(t => ok(t) && !unlocked(t)), ready = O.tickets.filter(t => ok(t) && unlocked(t));
+  const backUrl = new URL('order.html?o=' + token, location.href).href;
+  const seatHref = `${SEAT_URL}?${locked.slice(0, 6).map(t => 'p=' + encodeURIComponent(t.ref + '|' + (t.holder || O.full_name))).join('&')}&back=${encodeURIComponent(backUrl)}`;
+  if (!locked.length && !bad.length) { try { if (localStorage.getItem('tp_order') === token) localStorage.removeItem('tp_order'); } catch (_) {} }   // every seat is reserved: this order is finished, so the first page stops offering it
+  const seatedNote = new URLSearchParams(location.search).get('seated') && ready.length;
+  if (new URLSearchParams(location.search).get('seated')) { try { history.replaceState(null, '', location.pathname + '?o=' + encodeURIComponent(token)); } catch (_) {} }
+  const reserveCard = () => `<section class="card"><h2>${ready.length ? 'Reserve the remaining seats' : 'Reserve your seat to get your ticket'}</h2>
+    <p>${locked.length === 1 ? 'Your ticket is' : 'Your tickets are'} locked until the seat${locked.length === 1 ? ' is' : 's are'} reserved. The button below fills in the names and ticket numbers for you. When you finish, you will come back to this page and the ticket${locked.length === 1 ? '' : 's'} will be ready to download.</p>
+    <ul class="refs">${locked.map(t => `<li>${esc(t.ref)} <span class="mut" style="font-weight:400;letter-spacing:0">${esc(t.holder)}</span><button class="btn alt sm" data-cp="${esc(t.ref)}" type="button">Copy</button></li>`).join('')}</ul>
+    <p style="margin-top:18px"><a class="btn rsv" href="${seatHref}"><span>Reserve seats</span><svg class="rsv-ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11V6.5A2.5 2.5 0 0 1 9.5 4h5A2.5 2.5 0 0 1 17 6.5V11"/><path d="M3.5 12.5a2 2 0 0 1 3.4-1.4l.1.1V16h10v-4.8l.1-.1a2 2 0 1 1 3 2.6V18a1.5 1.5 0 0 1-1.5 1.5h-14A1.5 1.5 0 0 1 3.5 18z"/><path d="M7 19.5V21M17 19.5V21"/></svg></a></p></section>`;
+  const ackKey = 'tp_vrf_' + String(token || '').slice(0, 16);
+  let acked = false; try { acked = localStorage.getItem(ackKey) === '1'; } catch (_) {}
+  const hasSeat = O.tickets.some(t => t.seat), swCancelled = !!O.seat_change_used && locked.length > 0 && !hasSeat, swFinal = !!O.seat_change_used && hasSeat;
+  const showVrf = !seatedNote && !swCancelled && (justApproved || (locked.length > 0 && !acked)), vrfNew = justApproved; justApproved = false;
+  const swBanner = swCancelled ? `<div class="seated swb" id="swBn" role="alert"><span class="sck" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v7"/><path d="M12 17.5v.5"/></svg></span><span style="flex:1"><b>Your seat reservation was cancelled</b>Please choose your new seats now.<span class="sws">This was your one and only seat change. Once you reserve again, your seats are final and cannot be changed.</span></span></div>` : swFinal ? `<div class="note" style="border-left-color:#ffa31a;background:rgba(255,163,26,.1)" id="swFinal"><b>Your seats are final.</b> You already used your one seat change, so these seats can no longer be changed.</div>` : '';
+  view.innerHTML = `${showVrf ? `<div class="seated vrf${vrfNew ? ' new' : ''}" id="vrfBn" role="status"><span class="sck" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span style="flex:1"><b>Payment verified!</b>${vrfNew ? 'Your order was just approved. This page has been updated.' : 'Your order has been approved.'}</span><button class="vrfx" type="button" data-vrfx aria-label="Dismiss" title="Dismiss"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>` : ''}${seatedNote ? `<div class="seated" id="seatedBn" role="status"><span class="sck" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span><b>Seats reserved.</b>Your ${ready.length === 1 ? 'ticket is' : 'tickets are'} ready below.</span></div>` : ''}
+  ${swBanner}${keepNote()}${summary()}
+  <section class="card ok state"><h2>${locked.length ? 'One more step' : 'You\u2019re all set'}</h2>
+    <p>${locked.length ? `Reserve your seat${O.qty === 1 ? '' : 's'} to unlock your ticket${O.qty === 1 ? '' : 's'}.` : `Your ${O.qty === 1 ? 'ticket is' : O.qty + ' tickets are'} ready. Show each ticket on your phone at the entrance. You can come back to this page anytime to see or download ${O.qty === 1 ? 'it' : 'them'} again.`}</p></section>
+  ${locked.length ? reserveCard() : ''}
+  ${namesCard()}
+  ${bad.length ? `<div class="err"><b>${bad.length === 1 ? 'One ticket is' : bad.length + ' tickets are'} not valid right now:</b> ${bad.map(t => esc(t.ref)).join(', ')}. Please contact the organizer and give your order code <b>${esc(O.code)}</b>.</div>` : ''}
+  <div class="tickets" id="tickets">${O.tickets.map(t => !ok(t) ? `<figure class="tk" data-ref="${esc(t.ref)}"><div class="ph" style="aspect-ratio:auto;height:140px;text-align:center">${esc(t.ref)}<br>Not valid right now</div></figure>`
+      : !unlocked(t) ? `<figure class="tk lock" data-ref="${esc(t.ref)}"><div class="lk"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${MICO.lock}</svg></div><b class="rf">${esc(t.ref)}</b><span class="mut">${esc(t.holder)}</span>Reserve your seat to unlock this ticket.</div></figure>`
+      : `<figure class="tk" data-ref="${esc(t.ref)}">
+      <div class="ph">Preparing ticket\u2026</div>
+      <figcaption><button class="btn sm" data-dl="${esc(t.ref)}" type="button">Download</button>
+      <button class="btn alt sm" data-cp="${esc(t.ref)}" type="button">Copy number</button></figcaption></figure>`).join('')}</div>
+  ${ready.length > 1 ? `<p style="text-align:center"><button class="btn alt" id="dlAll" type="button">Download all tickets</button></p>` : ''}`;
+
+  view.onclick = ev => {
+    const b = ev.target.closest('button'); if (!b) return;
+    if (b.dataset.cp) copyText(b.dataset.cp).then(() => flash(b, 'Copied'));
+    if (b.dataset.dl) download(b.dataset.dl);
+    if (b.dataset.rn) editName(b.dataset.rn);
+  };
+  const all = $('dlAll');
+  if (all) all.onclick = async () => { for (const t of ready) { download(t.ref); await new Promise(ok => setTimeout(ok, 500)); } };
+  (async () => {
+    for (const t of ready) {
+      const r = t.ref;
+      const fig = document.querySelector(`.tk[data-ref="${CSS.escape(r)}"]`);
+      try {
+        imgs[r] = await drawTicketImage(r, t.holder, O.code, t.category, t.seat, t.seat_group, t.waived && !t.seat);
+        if (!fig) continue;
+        const im = new Image(); im.src = imgs[r]; im.alt = `Ticket ${r} for ${t.holder}, ${EVENT.title}, ${EVENT.date} at ${EVENT.time}`;
+        fig.replaceChild(im, fig.querySelector('.ph'));
+      } catch (err) {
+        const ph = fig && fig.querySelector('.ph');
+        if (ph) ph.innerHTML = `Could not draw ticket ${esc(r)}.<br><small>${esc(err && err.message || err)}</small><br><small>Reload the page (Ctrl+F5). If it keeps happening, make sure common.js is the latest uploaded version.</small>`;
+      }
+    }
+  })();
+}
+/* ---------- the names printed on the tickets: the buyer may change each one once ---------- */
+const capName = v => v.replace(/(^|[\s-])([a-zà-ÿ])/g, (m, p, c) => p + c.toUpperCase());
+function namesCard() {
+  const ts = O.tickets || [];
+  if (!ts.length || !ts.every(t => 'name_edited' in t)) return '';                  // hidden until name-edit-upgrade.sql has been run
+  return `<section class="card" id="namesCard"><h2>Names on your tickets <span class="mgr">(Moviegoer)</span></h2>
+    <p class="mut small" style="margin-top:0">Each ticket is printed with the name of the <b>moviegoer</b>, the person who will watch the movie. If a ticket is for someone else, you can change its name <b>once</b>. After that, only the organizer can change it.</p>
+    <ul class="nmlist">${ts.map(t => `<li><span class="nmr"><b>${esc(t.ref)}</b><span class="nmn">${esc(t.holder)}</span></span>${t.checked_in ? '<span class="mut small">Checked in</span>' : t.name_edited ? '<span class="mut small">Name changed</span>' : `<button class="btn alt sm" data-rn="${esc(t.ref)}" type="button">Edit name</button>`}</li>`).join('')}</ul></section>`;
+}
+async function editName(ref) {
+  const t = (O.tickets || []).find(x => x.ref === ref); if (!t) return;
+  const raw = await ui.prompt(`New name for ticket ${ref}. This is the name printed on the ticket, so enter it exactly as it should appear.`, { title: 'Change ticket name', value: t.holder, ok: 'Next', maxlength: 80 });
+  if (raw === null) return;
+  const fresh = capName(raw.replace(/\s+/g, ' ').trim());
+  if (fresh.length < 2) return ui.alert('Please enter the full name, at least 2 letters.', { title: 'Name too short' });
+  if (fresh === t.holder) return;
+  if (!await ui.confirm(`Change the name on ticket ${ref} from "${t.holder}" to "${fresh}"?\n\nYou can only do this once for this ticket. After that, only the organizer can change it.`, { title: 'Confirm name change', ok: 'Change name', cancel: 'Go back' })) return;
+  const { error } = await sb.rpc('rename_my_ticket', { p_token: token, p_ref: ref, p_name: fresh });
+  if (error) {
+    await ui.alert(/does not exist|schema cache|Could not find/i.test(error.message) ? 'Changing names is not available right now. Please message us on Messenger.' : error.message, { title: 'Could not change the name' });
+    return load(true);
+  }
+  delete imgs[ref];                                                                  // draw the ticket again with the new name
+  await load(true);
+  const el = document.getElementById('namesCard'); if (el) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+}
+function download(ref) {
+  if (!imgs[ref]) return;
+  const a = document.createElement('a'); a.href = imgs[ref]; a.download = `ticket-${ref}.png`;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+load(true);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && O && O.status !== 'cancelled') load(false); });
+</script></body></html>

@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="favicon.png?v=1">
+<link rel="apple-touch-icon" href="favicon.png?v=1">
+<meta name="description" content="Choose and reserve your seats for the Avengers: Doomsday (2026) screening.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Avengers: Doomsday (2026) | Reserve Your Seat">
+<meta property="og:description" content="Choose and reserve your seats for the Avengers: Doomsday (2026) screening.">
+<meta property="og:url" content="https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-seatreservation-page/index.html">
+<meta property="og:image" content="https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-seatreservation-page/og-image.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Avengers: Doomsday (2026) | Reserve Your Seat">
+<meta name="twitter:image" content="https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-seatreservation-page/og-image.jpg"><title>Avengers: Doomsday (2026) | Reserve Your Seat</title><link rel="stylesheet" href="style.css?v=27">
+<style>
+/* ---- reservation form: name + ticket side by side, stacking on small screens ---- */
+.fields{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:0 16px}
+.fld label{margin-top:0}
+.glab{margin-top:18px}
+input[readonly]{background:rgba(255,255,255,.05)!important;color:#cfe3d8;cursor:default}
+.card input{padding:12px;border-radius:8px}
+.card input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(57,255,122,.2)}
+.guest .btn{display:none}input[readonly]{opacity:.8;cursor:not-allowed}
+.guest{display:flex;gap:10px;margin-top:8px;align-items:stretch}
+@media(max-width:560px){.fields{grid-template-columns:1fr}.fld+.fld label{margin-top:12px}.guest input:nth-child(1),.guest input:nth-child(2){flex:1 1 100%}.guest .btn{width:100%}}
+
+/* ---- reservation form: inline messages, sticky legend, map zoom, phone bar ---- */
+.fe{margin:6px 0 0;font-size:.85rem;color:#ff9aa9;flex:1 1 100%}
+.fe.good{color:var(--acc)}
+input[aria-invalid="true"]{border-color:#ff6b81;box-shadow:0 0 0 3px rgba(255,107,129,.18)}
+#err,#e-seats{scroll-margin-top:72px;scroll-margin-bottom:24px}
+.stick{position:sticky;top:0;z-index:6;background:rgba(5,14,9,.94);backdrop-filter:blur(6px);margin:0 -20px;padding:6px 20px;border-bottom:1px solid rgba(57,255,122,.12)}
+.stick .legend{margin:2px 0;font-size:.88rem;gap:6px 16px}
+.mapctl{display:flex;align-items:center;justify-content:flex-start;gap:20px;margin:18px 0 14px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(57,255,122,.05)}
+.mapctl.on{display:flex}
+.zb{display:flex;gap:10px;flex:none}
+.zb .btn{min-width:40px;padding:6px 10px}
+.mapctl .mut{font-size:.8rem;color:#ffd83a;flex:1;min-width:0;line-height:1.35}
+@media(max-width:700px){
+          .stick{margin:0 -14px;padding:6px 14px}
+  .card{padding:14px}
+  }
+@media(max-width:380px){.stick .legend span{font-size:.78rem}}
+.seat.sel,.seat.sel:hover:not(:disabled){background:var(--sel)!important;transform:none}
+.srow{display:flex;justify-content:space-between;align-items:baseline;gap:4px 16px;flex-wrap:wrap;min-height:2.6em}.srow p{margin:.5em 0}.srow .holdbox{margin:.5em 0;font-size:.95rem;text-align:right;margin-left:auto}
+#sec1.fields{display:grid!important}@media(max-width:560px){#sec1.fields{grid-template-columns:1fr!important}}
+.rdm{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(0,4,2,.55)}
+.rdb{width:100%;max-width:420px;box-sizing:border-box;padding:18px 18px 16px;border-radius:16px;background:#0b1b13;border:1px solid rgba(57,255,122,.45);box-shadow:0 18px 50px rgba(0,0,0,.6);text-align:center;animation:rdin .25s ease-out}
+.rdk{font-weight:700;color:#39ff7a;font-size:1.05rem}
+.rdt{margin:8px 0 12px;color:#cfe0d6}
+.rdt b{display:inline-block;min-width:1ch;color:#ffd83a}
+.rdbar{height:4px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden}
+.rdbar i{display:block;height:100%;width:100%;background:#39ff7a;transform-origin:left;animation:rdbar 5s linear forwards}
+.rda{display:flex;gap:8px;justify-content:center;margin-top:14px}
+@keyframes rdin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes rdbar{to{transform:scaleX(0)}}
+@media(prefers-reduced-motion:reduce){.rdb{animation:none}}
+.seatstats{display:flex;gap:10px;margin:2px 0 12px}
+.seatstats>div{flex:1 1 0;min-width:0;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);text-align:center}
+.seatstats b{display:block;font-size:1.5rem;line-height:1.1;color:#fff}
+.seatstats span{display:block;margin-top:2px;font-size:.78rem;letter-spacing:.04em;color:#9db3a8;text-transform:uppercase}
+.seatstats .av{border-color:rgba(57,255,122,.45);background:rgba(57,255,122,.08)}.seatstats .av b{color:#39ff7a}
+.seatstats .rs b{color:#ff8fa0}
+@media(max-width:520px){.seatstats{gap:8px}.seatstats>div{padding:8px 6px}.seatstats b{font-size:1.25rem}.seatstats span{font-size:.68rem;letter-spacing:.02em}}
+.lockbox h2{margin:0 0 10px}.lockbox a.btn{display:inline-block;text-decoration:none}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="modal.js?v=1"></script><script src="confirm-image.js?v=5"></script></head>
+<body><div class="wrap"><header class="top"><div><div class="brand"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h15A1.5 1.5 0 0 1 21 8.5V10a2 2 0 0 0 0 4v1.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 15.5V14a2 2 0 0 0 0-4z"/><path d="M14 7v10" stroke-dasharray="1.8 2.4"/></svg><span>DWCL Batch 2002 &middot; Block screening</span></div><h1>Avengers: Doomsday (2026) | Reserve Your Seat</h1></div><div class="live" id="live" role="status" hidden><span class="dot"></span><span id="lc"></span></div></header>
+<ol class="steps" id="steps" aria-label="Progress" hidden></ol>
+<div id="done" class="res" hidden></div>
+<section id="lock" class="card lockbox" hidden></section>
+<form id="f" class="card" autocomplete="off" novalidate hidden>
+  <p class="note" id="nmnote" style="font-style:normal" hidden><strong>These are the names printed on your tickets.</strong> They come from your order and cannot be changed on this page. To change a name, open your order page. <a id="nmlink" href="#" style="color:var(--acc);font-weight:700;text-decoration:underline">Open my order page</a></p>
+  <div id="sec1" class="fields">
+    <div class="fld"><label for="name">Name on ticket 1</label><input id="name" required maxlength="80" autocomplete="name" aria-describedby="e-name"><p class="fe" id="e-name" hidden></p></div>
+    <div class="fld"><label for="ticket">Ticket number</label><input id="ticket" required maxlength="30" autocapitalize="characters" aria-describedby="e-ticket"><p class="fe" id="e-ticket" hidden></p></div>
+  </div>
+  <label class="glab" id="glab" hidden>Other tickets on your order</label><div id="guests"></div>
+  <button type="button" class="btn alt" id="addg" hidden>Add a guest</button>
+  <h2 id="sec2">Choose your seats</h2><div class="seatstats" id="seatstats" role="status" aria-live="polite"></div><div class="srow"><p id="status" aria-live="polite"></p><p id="hold" class="holdbox" style="visibility:hidden"></p></div>
+  <div class="stick" id="stick"><div class="legend"><span><i style="background:var(--seat)"></i>Available</span><span><i style="background:var(--sel)"></i>Your selection</span><span><i style="background:#7a5f16"></i>Held by another guest</span><span><i style="background:var(--taken)"></i>Reserved</span></div></div>
+  <p class="note"><strong>Please note:</strong> Seat availability refreshes automatically every 10 seconds. Other guests may reserve a seat while you are choosing, so please complete your reservation as soon as possible. If a seat gets taken, you will be asked to pick another.</p>
+  <p class="fe" id="e-seats" hidden></p>
+  <div class="err" id="err" role="alert" hidden></div>
+  <div class="mapctl" id="mapctl"><span class="zb"><button type="button" class="btn alt sm" id="zout" aria-label="Zoom out">−</button><button type="button" class="btn alt sm" id="zfit">Fit</button><button type="button" class="btn alt sm" id="zin" aria-label="Zoom in">+</button></span><span class="mut" id="zhint">Tap a seat to pick it, or use + to zoom in</span></div>
+  <div class="map" id="mapwrap"><div class="mapin" id="map"></div></div>
+  <p style="margin-top:16px"><button class="btn cta" id="go" type="submit">Reserve seats</button></p>
+</form>
+</div>
+<script>
+const cp=t=>(window.ui?ui.prompt('Select the text below and copy it.',{title:'Copy',value:t,ok:'Done',cancel:'Close'}):Promise.resolve(prompt('Copy this:',t)));
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY),$=id=>document.getElementById(id),MAX=5,KEY='sv1_booked';
+let sel=new Set(),taken=new Set(),held=new Set(),holdUntil=0;
+const rnd=()=>Math.random().toString(36).slice(2)+Date.now().toString(36)+Math.random().toString(36).slice(2);
+const HID=(()=>{try{let h=sessionStorage.getItem('sv1_hold');if(!h){h=rnd();sessionStorage.setItem('sv1_hold',h)}return h}catch(_){return rnd()}})();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const need=()=>1+[...$('guests').children].filter(d=>[...d.querySelectorAll('input')].some(i=>i.value.trim())).length;
+const msg=t=>{$('err').textContent=t;$('err').hidden=!t;if(t)$('err').scrollIntoView({behavior:'smooth',block:'nearest'})};
+const TRE=/^[A-Z0-9-]{3,30}$/,up=v=>v.trim().toUpperCase();
+let tstate={},checkOff=false,zoom=0,fitZ=1,ACCESS=false,TOKEN='';
+/* ---- inline messages ---- */
+const feOf=i=>i.id?$('e-'+i.id):i.closest('.guest').querySelector('.fe');
+function fe(i,t,ok){const p=feOf(i);if(!p)return;p.textContent=t||'';p.hidden=!t;p.classList.toggle('good',!!ok);
+  if(ok||!t)i.removeAttribute('aria-invalid');else i.setAttribute('aria-invalid','true')}
+const tickInputs=()=>[$('ticket'),...[...$('guests').children].map(d=>d.querySelectorAll('input')[1])];
+const nameInputs=()=>[$('name'),...[...$('guests').children].map(d=>d.querySelectorAll('input')[0])];
+function tickMsg(i){const v=up(i.value);
+  if(!v)return['Enter the ticket number.'];
+  if(!TRE.test(v))return['Ticket numbers use letters, numbers and dashes, like ABC-1234.'];
+  const dup=tickInputs().filter(x=>x!==i&&up(x.value)===v);if(dup.length&&tickInputs().indexOf(dup[0])<tickInputs().indexOf(i))return['Each person needs a different ticket number.'];
+  const st=tstate[v];
+  if(st==='unknown')return["We can't find this ticket number. Check it and try again."];
+  if(st==='used')return['This ticket already has a reserved seat.'];
+  if(st==='ok')return['✓ Ticket valid',true];
+  return['']}
+function nameMsg(i){const v=i.value.trim();return v.length<2?['Enter the full name.']:['']}
+let ctimer=0;
+async function checkTickets(){if(checkOff||!ACCESS)return;
+  const want=[...new Set(tickInputs().map(i=>up(i.value)).filter(v=>TRE.test(v)&&!(v in tstate)))];
+  if(!want.length)return;
+  const{data,error}=await sb.rpc('check_tickets',{p_tickets:want,p_token:TOKEN});
+  if(error){checkOff=true;return}                       // the SQL step has not been run yet: skip the live check quietly
+  want.forEach(v=>delete tstate[v]);(data||[]).forEach(r=>tstate[r.ticket]=r.state);
+  tickInputs().forEach(i=>{if(i.dataset.touched)fe(i,...tickMsg(i))});sync()}
+function onTick(i){delete tstate[up(i.value)];i.dataset.touched=1;const v=up(i.value);
+  fe(i,...(TRE.test(v)?(v in tstate?tickMsg(i):['']):['']));clearTimeout(ctimer);ctimer=setTimeout(checkTickets,500);sync()}
+function blurTick(i){i.dataset.touched=1;fe(i,...tickMsg(i));checkTickets()}
+function sync(){}
+/* ---- map zoom (phones) ---- */
+function applyZoom(){const w=$('mapwrap').clientWidth;fitZ=Math.min(1,(w-2)/916);const z=zoom||fitZ;$('map').style.zoom=z;
+  $('zhint').textContent=z<.8?'Tap a seat to pick it, or use + to zoom in':z>fitZ+.02?'Scroll or swipe the map to move around':'Tap + to make the seats bigger'}
+function setZoom(z,at){zoom=z>=fitZ+.02?Math.min(2,z):0;applyZoom();if(at)at.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})}
+let _mapH='';
+function draw(){
+  const mh=Object.entries(L).map(([r,bs])=>(r==='H'?'<div class="gap"></div>':'')+`<div class="row"><span class="rl">${r}</span>`+bs.map(([a,b,w,al])=>`<div class="blk ${al}" style="width:${w*36}px">`+(r==='M'&&a===1?'<span class="tag" style="margin-right:auto">Entrance/Exit</span>':'')+Array.from({length:b-a+1},(_,i)=>{const id=r+(a+i),t=taken.has(id),h=held.has(id);return `<button type="button" class="seat${sel.has(id)?' sel':''}${h?' held':''}" data-seat="${id}"${t||h?` disabled title="${t?'Reserved':'Held by another guest'}"`:''} aria-label="Seat ${id}${t?', reserved':h?', held by another guest':''}">${id}</button>`}).join('')+(r==='M'&&a===12?'<span class="tag" style="margin-left:6px">Entrance/Exit</span>':'')+'</div>').join('')+`<span class="rl rr">${r}</span></div>`).join('')+'<div class="screen">SCREEN</div>';
+  if(mh!==_mapH){_mapH=mh;$('map').innerHTML=mh}      // untouched map = untouched buttons: a tap can no longer land on a button that was swapped out a moment earlier
+  {const total=Object.values(L).reduce((t,bs)=>t+bs.reduce((u,[x,y])=>u+Math.max(0,y-x+1),0),0),res=taken.size,avail=Math.max(0,total-res-[...held].filter(h=>!taken.has(h)).length);
+   $('seatstats').innerHTML=`<div><b>${total}</b><span>Total seats</span></div><div class="av"><b>${avail}</b><span>Available</span></div><div class="rs"><b>${res}</b><span>Reserved</span></div>`}
+  const n=need();$('status').textContent=`Select ${n} seat${n>1?'s':''} (${sel.size} chosen${sel.size?': '+[...sel].join(', '):''}).`;
+  if(sel.size===n)fe2s('');applyZoom();sync();
+}
+const fe2s=t=>{const p=$('e-seats');p.textContent=t;p.hidden=!t;if(t)p.scrollIntoView({behavior:'smooth',block:'nearest'})};
+/* live sync: tell other open pages that seats changed so they refresh right away */
+let sync2=null;const ping=()=>{try{sync2&&sync2.send({type:'broadcast',event:'chg',payload:{}})}catch(_){}};
+const busy=new Set();
+const release=s=>sb.rpc('release_seat',{p_hold:HID,p_seat:s}).then(ping,ping);
+function trim(){const n=need();while(sel.size>n){const s=[...sel].pop();sel.delete(s);release(s)}if(!sel.size)holdUntil=0;draw()}
+async function load(){if(!ACCESS)return;
+  const[a,b]=await Promise.all([sb.rpc('taken_seats',{p_token:TOKEN}),sb.rpc('held_seats',{p_hold:HID,p_token:TOKEN})]);
+  taken=new Set(a.data||[]);held=new Set(b.data||[]);
+  sel.forEach(s=>(taken.has(s)||held.has(s))&&sel.delete(s));draw()}
+let lastDown=null;$('map').addEventListener('pointerdown',e=>{const b=e.target.closest('.seat');lastDown=b?{s:b.dataset.seat,t:Date.now()}:null});
+$('map').onclick=async e=>{let b=e.target.closest('.seat');
+  if(!b&&lastDown&&Date.now()-lastDown.t<900)b=$('map').querySelector(`[data-seat="${lastDown.s}"]`);   // the map was redrawn between finger down and up: use the seat that was touched
+  lastDown=null;if(!b||b.disabled)return;const s=b.dataset.seat,small=(zoom||fitZ)<.8;
+  if(sel.has(s)){sel.delete(s);release(s);if(!sel.size)holdUntil=0;msg('');draw();return}
+  if(sel.size>=need()){msg(`Your order has ${need()} ticket${need()===1?'':'s'}, so you can reserve up to ${need()} seat${need()===1?'':'s'}. To change a seat, tap your selected seat to release it first.`);return}
+  if(busy.has(s))return;busy.add(s);b.classList.add('sel');          // show it green straight away, no red flash while the server confirms
+  const{data,error}=await sb.rpc('hold_seat',{p_hold:HID,p_seat:s,p_token:TOKEN});busy.delete(s);
+  if(error){msg(error.message);load();return}
+  sel.add(s);holdUntil=Date.now()+data*1000;msg('');draw();ping();if(small)setZoom(1,$('map').querySelector(`[data-seat="${s}"]`))};   // one tap picks the seat, then the map zooms in on it
+let ORDER_N=0;   /* tickets in the buyer's order: the seat page never lets you add more people than that */
+const maxG=()=>ORDER_N?Math.min(ORDER_N-1,MAX):MAX;
+const syncAdd=()=>{const b=$('addg'),full=$('guests').children.length>=maxG();b.disabled=full;b.title=full?(ORDER_N===1?'Your order has 1 ticket, so there are no guests to add.':'All the tickets in your order are already listed.'):''};
+$('addg').onclick=()=>{if($('guests').children.length>=maxG())return;const d=document.createElement('div');d.className='guest';
+  d.innerHTML='<input maxlength="80" placeholder="Guest full name" aria-label="Guest name"><input maxlength="30" placeholder="Guest ticket number" aria-label="Guest ticket number" autocapitalize="characters"><button type="button" class="btn alt">Remove</button>';
+  d.insertAdjacentHTML('beforeend','<p class="fe" hidden></p>');
+  const[gn,gt]=d.querySelectorAll('input');
+  gn.oninput=()=>{fe(gn,'');trim()};gn.onblur=()=>{if(gn.value.trim()||gt.value.trim())fe(gn,...nameMsg(gn))};
+  gt.oninput=()=>{onTick(gt);trim()};gt.onblur=()=>{if(gn.value.trim()||gt.value.trim())blurTick(gt)};
+  d.querySelector('button').onclick=()=>{d.remove();trim();checkTickets();syncAdd()};$('guests').appendChild(d);syncAdd();return d};
+$('name').oninput=()=>{fe($('name'),'');sync()};$('name').onblur=()=>fe($('name'),...nameMsg($('name')));
+$('ticket').oninput=()=>onTick($('ticket'));$('ticket').onblur=()=>blurTick($('ticket'));
+$('zin').onclick=()=>setZoom((zoom||fitZ)+.25);$('zout').onclick=()=>setZoom((zoom||fitZ)-.25);$('zfit').onclick=()=>setZoom(0);
+addEventListener('resize',applyZoom);
+/* ---------- confirmation screen + downloadable image ---------- */
+function miniSvg(mine){
+  const m=miniLayout(),set=new Set(mine),H=m.h+1.9,W=m.w+1.5,cx=(m.w+1.5)/2;
+  let o=`<svg class="mini" viewBox="0 0 ${W} ${H}" role="img" aria-label="Seat map with your seats highlighted: ${mine.join(', ')}">`;
+  m.lab.forEach(l=>o+=`<text x="0.55" y="${l.y+.68}" text-anchor="middle" class="ml">${l.r}</text><text x="${m.w+.95}" y="${l.y+.68}" text-anchor="middle" class="ml">${l.r}</text>`);
+  m.pos.forEach(p=>{const me=set.has(p.id);
+    o+=`<rect x="${p.x+.06}" y="${p.y+.08}" width=".88" height=".8" rx=".18" class="${me?'ms':'md'}"/>`;
+    if(me)o+=`<text x="${p.x+.5}" y="${p.y+.64}" text-anchor="middle" class="mt">${p.id}</text>`});
+  o+=`<path d="M${cx-m.w*.38} ${m.h+.55} Q${cx} ${m.h+.05} ${cx+m.w*.38} ${m.h+.55} L${cx+m.w*.38} ${m.h+1.05} Q${cx} ${m.h+.55} ${cx-m.w*.38} ${m.h+1.05}Z" class="scr"/>`;
+  o+=`<text x="${cx}" y="${m.h+1.65}" text-anchor="middle" class="sl">SCREEN</text></svg>`;return o}
+function goBack(){try{sessionStorage.removeItem('sb_back')}catch(_){};const u=new URL(BACK);u.searchParams.set('seated','1');location.replace(u.href)}
+function redirectBack(seats){
+  const go=goBack;
+  const m=document.createElement('div');m.className='rdm';m.setAttribute('role','alertdialog');m.setAttribute('aria-live','polite');
+  m.innerHTML=`<div class="rdb"><div class="rdk">\u2713 Seat${seats.length>1?'s':''} reserved: ${seats.map(esc).join(', ')}</div><p class="rdt">Redirecting back to your purchased ticket page\u2026 <b id="rdn">5</b></p><div class="rdbar"><i></i></div><div class="rda"><button type="button" class="btn sm" id="rdgo">Go now</button><button type="button" class="btn alt sm" id="rdstay">Stay here</button></div></div>`;
+  document.body.appendChild(m);
+  let n=5,t=setInterval(()=>{n--;const e=document.getElementById('rdn');if(e)e.textContent=Math.max(n,0);if(n<=0){clearInterval(t);go()}},1000);
+  document.getElementById('rdgo').onclick=()=>{clearInterval(t);go()};
+  document.getElementById('rdstay').onclick=()=>{clearInterval(t);m.remove()}}
+const PIC={cal:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',pin:'<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>',tk:'<path d="M3.5 8.5V7a1.5 1.5 0 0 1 1.5-1.5h14A1.5 1.5 0 0 1 20.5 7v1.5a2.5 2.5 0 0 0 0 5V17a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 17v-3.5a2.5 2.5 0 0 0 0-5z"/><path d="M14 6.5v1.6M14 11.2v1.6M14 15.9v1.6"/>'};
+const pic=(k,w=22)=>`<svg viewBox="0 0 24 24" width="${w}" height="${w}" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${PIC[k]}</svg>`;
+function showDone(r,restored){
+  const seats=r.seats.slice().sort(seatSort),n=seats.length;
+  const chips=seats.map((id,i)=>`<div class="chip" style="animation-delay:${.25+i*.12}s"><b>${esc(id)}</b><span>Row ${esc(id[0])} \u00b7 Seat ${esc(id.slice(1))}</span></div>`).join('');
+  $('f').hidden=true;$('lock').hidden=true;$('done').hidden=false;
+  const pass=`<div class="pass" aria-label="Show details"><div class="pass-top"><span>${pic('tk',18)}Showtime details</span></div>
+      <div class="pass-grid"><div class="pi"><i>${pic('cal')}</i><div><dt>Date</dt><dd>${EV.date}</dd></div></div>
+      <div class="pi"><i>${pic('clock')}</i><div><dt>Time</dt><dd>${EV.time}</dd></div></div>
+      <div class="pi"><i>${pic('pin')}</i><div><dt>Venue</dt><dd>${EV.venue1}, ${EV.venue2}</dd></div></div></div></div>`;
+  const act=BACK?`<div class="upd" role="region" aria-label="Your ticket"><p class="upd-k">${pic('tk',18)}Your ticket is updated</p>
+      <p class="upd-t">Your seat${n>1?'s are':' is'} now on your ticket.</p>
+      <button type="button" class="btn cta upd-go" id="viewtk">View my updated ticket <span aria-hidden="true">\u2192</span></button>
+      <button type="button" class="btn alt upd-bk" id="bkord">Back to my order page</button>
+      <p class="upd-lost">If you lose your link, contact <a href="https://www.facebook.com/dwclbatch2002" target="_blank" rel="noopener">DWCL Batch 2002</a>.</p></div>`:'';
+  $('done').innerHTML=`<div class="res-head"><div class="res-art"></div>
+    <div class="res-badge"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23" class="rc"/><path d="M15 27l8 8 15-17" class="rk"/></svg></div></div>
+  <div class="res-body">
+    <p class="res-kicker">Reservation confirmed</p>
+    <h2 class="res-title">You're in, ${esc(r.name)}!</h2>
+    <p class="res-sub">${n} seat${n>1?'s':''} reserved for ${EV.title} ${EV.year}</p>
+    <p class="res-lab">Your seat${n>1?'s':''}</p>
+    <div class="chips">${chips}</div>
+    ${pass}
+    ${act}
+    <p class="res-lab">Where you'll sit</p>${miniSvg(seats)}
+    ${BACK?'':'<div class="stub"><p class="res-lab" style="margin:0">Reference code</p><p class="refcode" id="refcode">'+esc(r.ref)+'</p><button type="button" class="btn alt sm" id="cpref">Copy code</button></div>'}
+    ${BACK?'':'<div class="res-acts"><button type="button" class="btn" id="dlimg">Download as image</button><button type="button" class="btn alt" id="again">Reserve another seat</button></div>'}
+    ${BACK?'':'<p class="res-warn"><strong>Save your image now.</strong> This screen is shown only once. Show the image (or the reference code) at the entrance. This ticket can no longer be used to book. If you lose the image, contact <a href="https://www.facebook.com/dwclbatch2002" target="_blank" rel="noopener" style="color:inherit">DWCL Batch 2002</a> and the organizers can send it to you.</p>'}
+    ${BACK?'':'<details class="res-fb"><summary>Image not saving on your phone?</summary><p class="mut">Tap below to open the image, then press and hold it and choose Save to Photos.</p><p><button type="button" class="btn alt sm" id="viewimg">Show image</button></p><div id="imgbox"></div></details>'}
+  </div>`;
+  window.scrollTo({top:0,behavior:restored?'auto':'smooth'});
+  let url=null;const make=async()=>url||(url=await makeImage({...r,seats}));
+  if(BACK){['viewtk','bkord'].forEach(i=>$(i).onclick=goBack);if(!restored)redirectBack(seats)}
+  if($('dlimg'))$('dlimg').onclick=async()=>{const b=$('dlimg');b.disabled=true;
+    try{const u=await make(),a=document.createElement('a');a.href=u;a.download='seat-reservation-'+r.ref+'.png';document.body.appendChild(a);a.click();a.remove()}catch(_){msg('Could not create the image. Please take a screenshot instead.')}
+    b.disabled=false};
+  if($('viewimg'))$('viewimg').onclick=async()=>{const u=await make();$('imgbox').innerHTML=`<img src="${u}" alt="Your seat reservation" style="width:100%;max-width:380px;border-radius:14px">`};
+  if($('cpref'))$('cpref').onclick=()=>{const b=$('cpref'),t=r.ref,ok=()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy code',1400)};
+    try{navigator.clipboard.writeText(t).then(ok,()=>cp(t))}catch(_){cp(t)}};
+  if($('again'))$('again').onclick=()=>{$('done').hidden=true;$('f').hidden=false;$('f').reset();$('guests').innerHTML='';syncAdd();sel=new Set();holdUntil=0;tstate={};document.querySelectorAll('.fe').forEach(p=>p.hidden=true);msg('');load()}}
+$('f').onsubmit=async e=>{e.preventDefault();msg('');
+  const rows=[...$('guests').children].map(d=>{const[a,b]=d.querySelectorAll('input');return{a,b,name:a.value.trim(),ticket:b.value.trim()}}),guests=rows.filter(g=>g.name||g.ticket),n=1+guests.length;
+  await checkTickets();
+  let first=null;const bad=(i,t)=>{fe(i,t);first=first||i};
+  [['name',nameMsg($('name'))],['ticket',tickMsg($('ticket'))]].forEach(([k,m])=>{const i=$(k);if(m[0]&&!m[1])bad(i,m[0]);else if(k==='ticket')fe(i,...m)});
+  guests.forEach(g=>{if(!g.name)bad(g.a,'Enter the guest\'s full name.');else fe(g.a,'');
+    const m=tickMsg(g.b);if(m[0]&&!m[1])bad(g.b,m[0]);else fe(g.b,...m)});
+  if(first){first.scrollIntoView({behavior:'smooth',block:'center'});first.focus({preventScroll:true});return}
+  if(sel.size!==n){fe2s(`Please choose exactly ${n} seat${n>1?'s':''}. You have chosen ${sel.size}.`);return}
+  $('go').disabled=true;
+  const{data,error}=await sb.rpc('book_seats',{p_ticket:$('ticket').value,p_name:$('name').value,p_guests:guests,p_seats:[...sel],p_hold:HID,p_token:TOKEN});
+  $('go').disabled=false;
+  if(error){const m=error.message||'Something went wrong. Please try again.';
+    const tm=m.match(/(?:Ticket number not found|Ticket)\s*:?\s*([A-Z0-9-]{3,30})/i),hit=tm&&tickInputs().find(i=>up(i.value)===tm[1].toUpperCase());
+    if(hit){delete tstate[up(hit.value)];fe(hit,/not found/i.test(m)?"We can't find this ticket number. Check it and try again.":'This ticket already has a reserved seat.');hit.scrollIntoView({behavior:'smooth',block:'center'});hit.focus({preventScroll:true})}
+    else msg(m);load();return}
+  const rec={ref:data,name:$('name').value.trim(),seats:[...sel]};sel=new Set();holdUntil=0;showDone(rec);load();ping()};
+setInterval(()=>{const el=$('hold');
+  if(!sel.size||!holdUntil){el.style.visibility='hidden';return}
+  const t=Math.max(0,Math.round((holdUntil-Date.now())/1000));
+  if(!t){sel=new Set();holdUntil=0;el.style.visibility='hidden';msg('Your seat hold expired. Please choose your seats again.');load();return}
+  el.style.visibility='visible';el.textContent=`Your seats are held for ${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}`;sync()},1000);
+function startPresence(){try{const ch=sb.channel('viewers',{config:{presence:{key:Math.random().toString(36).slice(2)+Date.now()}}});
+const show=()=>{const n=Math.max(Object.keys(ch.presenceState()).length,1);$('lc').textContent=`${n} ${n===1?'person':'people'} viewing now`;$('live').hidden=false};
+ch.on('presence',{event:'sync'},show);
+ch.subscribe(st=>{if(st==='SUBSCRIBED'){const r=ch.track({t:Date.now()});try{Promise.resolve(r).then(()=>setTimeout(show,300))}catch(_){}}})}catch(_){}}
+/* where to send the guest after a successful reservation: their order page on the ticket site (nowhere else) */
+const TICKET_BASE='https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-ticket-purchase/';
+let BACK='';
+try{let b=new URLSearchParams(location.search).get('back');if(b)try{sessionStorage.setItem('sb_back',b)}catch(_){}
+  if(!b)try{b=sessionStorage.getItem('sb_back')}catch(_){}
+  if(b){const u=new URL(b);if((window.TICKET_BASE_TEST||TICKET_BASE)&&u.href.indexOf(window.TICKET_BASE_TEST||TICKET_BASE)===0&&/[?&]o=[A-Za-z0-9_-]{32,}/.test(u.search))BACK=u.href}}catch(_){}
+try{const m=BACK&&BACK.match(/[?&]o=([A-Za-z0-9_-]{32,})/);if(m)TOKEN=m[1]}catch(_){}
+if(BACK){const el=document.getElementById('steps');el.innerHTML=['Details','Pay','Upload proof','Get tickets','Reserve seats'].map((t,i)=>`<li class="${i<4?'done':'cur'}"${i===4?' aria-current="step"':''}><span class="n">${i<4?'\u2713':i+1}</span>${t}</li>`).join('');el.hidden=false}
+/* prefill from the order page: ?p=TICKET|Name (repeat for each person) */
+try{let ps=new URLSearchParams(location.search).getAll('p').slice(0,MAX+1).map(x=>{const k=x.indexOf('|');return k<0?null:[x.slice(0,k).trim().toUpperCase(),x.slice(k+1).trim()]}).filter(Boolean);
+  /* the link's details are removed from the address bar after the first load, so keep them for this tab: a refresh then restores them */
+  if(ps.length)try{sessionStorage.setItem('sb_p',JSON.stringify({t:TOKEN,ps}))}catch(_){}
+  else try{const sv=JSON.parse(sessionStorage.getItem('sb_p')||'null');if(sv&&sv.t===TOKEN&&Array.isArray(sv.ps)&&sv.ps.length&&sv.ps.length<=MAX+1)ps=sv.ps}catch(_){}
+  if(ps.length){ORDER_N=ps.length;try{sessionStorage.setItem('sb_n',String(ps.length))}catch(_){}$('ticket').value=ps[0][0];$('name').value=ps[0][1];$('name').readOnly=true;$('nmnote').hidden=false;if(BACK)$('nmlink').href=BACK;else $('nmlink').hidden=true;
+    ps.slice(1).forEach(([t,n])=>{const d=$('addg').onclick();if(d){const[a,b]=d.querySelectorAll('input');a.value=n;a.readOnly=true;b.value=t;b.readOnly=true}});$('ticket').readOnly=true;$('glab').hidden=ps.length<2;
+    tickInputs().forEach(i=>i.dataset.touched=1);history.replaceState(null,'',location.pathname);trim()}}catch(_){}
+try{if(!ORDER_N){const n=parseInt(sessionStorage.getItem('sb_n')||'0',10);if(n>=1&&n<=MAX+1)ORDER_N=n}}catch(_){}
+syncAdd();
+/* give seats back right away when the guest leaves the page, instead of keeping them held for 5 minutes */
+addEventListener('pagehide',()=>{if(!sel.size)return;
+  [...sel].forEach(seat=>{try{fetch(SUPABASE_URL+'/rest/v1/rpc/release_seat',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json',apikey:SUPABASE_ANON_KEY,Authorization:'Bearer '+SUPABASE_ANON_KEY},body:JSON.stringify({p_hold:HID,p_seat:seat})})}catch(_){}});
+  sel=new Set();holdUntil=0;setTimeout(ping,150)});
+addEventListener('pageshow',e=>{if(e.persisted){msg('');load()}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
+function startLive(){startPresence();try{let t=0;sync2=sb.channel('seatsync');
+  sync2.on('broadcast',{event:'chg'},()=>{clearTimeout(t);t=setTimeout(load,350)});     // short wait so the other device's release has finished
+  sync2.subscribe()}catch(_){sync2=null}
+  load();setInterval(load,10000)}
+/* ---- access gate: this page is only for buyers whose order is approved (the order page link carries the private code) ---- */
+try{history.replaceState(null,'',location.pathname)}catch(_){}
+const LIC={none:['link','bad'],pending:['hourglass','warn'],revoked:['lock','bad'],done:['seat',''],error:['info','mut']};
+const LSV=d=>`<div class="mico ${d[1]}" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${{link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/><path d="M4 4l16 16"/>',hourglass:'<path d="M7 3h10M7 21h10"/><path d="M8 3c0 5 4 5.5 4 9s-4 4-4 9"/><path d="M16 3c0 5-4 5.5-4 9s4 4 4 9"/>',lock:'<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',seat:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.4"/>'}[d[0]]}</svg></div>`;
+function lockScreen(why){
+  const home=BACK||(window.TICKET_BASE_TEST||TICKET_BASE);
+  const T={none:['Seat reservation is for ticket buyers','This page opens from your order page once your payment has been approved. Please use the “Reserve seats” button on your order page.',BACK?'Go to my order':'Go to ticket sales'],
+    pending:['Your payment is not approved yet','Seat reservation opens as soon as your payment is verified. Go back to your order page to check its status; the button appears there once it is approved.','Back to my order'],
+    revoked:['This order has been revoked','Seat reservation is not available because this order was paused by our team. Please open your order page and message us on Messenger if you think this is a mistake.','Back to my order'],
+    done:['All seats for this order are reserved','Nothing left to reserve here. Your tickets are ready on your order page.','Back to my order'],
+    error:['We could not check your order','Please reload the page, or open it again from your order page.',BACK?'Back to my order':'Go to ticket sales']};
+  const[h,p,b]=T[why]||T[['awaiting_payment','pending','rejected','cancelled'].includes(why)?'pending':'none'];
+  const key=T[why]?why:(['awaiting_payment','pending','rejected','cancelled'].includes(why)?'pending':'none');const L=$('lock');L.innerHTML=`${LSV(LIC[key]||LIC.none)}<h2>${esc(h)}</h2><p>${esc(p)}</p><p style="margin-top:16px"><a class="btn" href="${esc(home)}">${esc(b)}</a></p>`;L.hidden=false;$('f').hidden=true}
+(async()=>{
+  if(!TOKEN)return lockScreen('none');
+  let r;try{r=await sb.rpc('seat_access',{p_token:TOKEN})}catch(_){return lockScreen('error')}
+  if(r.error)return lockScreen('error');
+  const d=r.data;if(!d||!d.ok)return lockScreen(d&&d.reason||'none');
+  if(!d.open){                                   // everything is reserved: a refresh shows the same confirmation page (not a dead end)
+    try{const g=await sb.rpc('get_order',{p_token:TOKEN}),o=g.data;
+      const set=new Set();(o&&o.tickets||[]).forEach(t=>{(t.seat_group||[]).forEach(x=>set.add(x));if(t.seat)set.add(t.seat)});
+      if(BACK&&o&&set.size)return showDone({name:o.name,ref:'',seats:[...set]},true)}catch(_){}
+    return lockScreen('done')}
+  ACCESS=true;$('f').hidden=false;startLive();checkTickets()})();
+</script></body></html>

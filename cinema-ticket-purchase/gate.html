@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#040806">
+<title>Gate Check-in | Admin</title>
+<link rel="icon" type="image/png" href="favicon.png?v=1">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="app.css?v=21">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script><script src="jsqr.js"></script><script src="modal.js?v=1"></script>
+<script>window.ui=window.ui||{confirm:async m=>confirm(m),alert:async m=>{alert(m)},prompt:async(m,o)=>prompt(m,o&&o.value||'')};</script>
+<style>/* gate page background */
+body::before{background:linear-gradient(rgba(3,8,5,.3),rgba(3,8,5,.82)),url(doomsday-gate2.webp?v=1) 58% center/cover no-repeat}
+</style>
+<style>/* admin look: hover, strip tabs, header row */
+.btn{transition:background-color .15s,border-color .15s,color .15s,filter .15s}
+.btn.alt:hover:not(:disabled){background:rgba(57,255,122,.12);border-color:#4fae78}
+.btn:not(.alt):hover:not(:disabled){filter:brightness(1.12)}
+.btn.sw:hover:not(:disabled){background:rgba(255,216,58,.12);border-color:#ffd83a}
+.btn.danger.alt:hover:not(:disabled){background:rgba(255,139,156,.14);border-color:#ff8b9c}
+</style>
+<style>
+.g{max-width:560px;margin:0 auto;padding:12px 14px 40px}
+.gtop{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.gtop.pg{flex-wrap:nowrap}.gr{display:flex;align-items:center;gap:10px;margin-left:auto;font-size:.9rem}
+.gr .btn{white-space:nowrap;padding:7px 12px;font-size:.72rem}#net{white-space:nowrap;display:inline-flex;align-items:center}.gtop.pg h1{white-space:nowrap}
+@media(max-width:340px){.gtop.pg{flex-wrap:wrap}}
+@media(max-width:430px){.gtop.pg h1{font-size:1.1rem}.gr{gap:8px;font-size:.84rem}.gr .btn{padding:7px 10px;letter-spacing:.04em}}
+.how{margin-top:16px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.35);padding:12px 14px;font-size:.88rem;color:var(--mut)}
+.how summary{cursor:pointer;font-weight:700;color:var(--ink);font-size:.92rem}
+.how ol{margin:10px 0 0;padding-left:20px;display:grid;gap:8px;line-height:1.45}
+.how b{color:var(--ink)}
+.gtop h1{font-size:1.2rem;margin:0}
+.gtop.pg h1{font-size:1.65rem;line-height:1.2}
+@media(max-width:600px){.gtop.pg h1{font-size:1.35rem}}
+.nd{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff6b81;margin-right:6px}.nd.on{background:var(--acc);box-shadow:0 0 8px var(--acc)}
+.cnt{display:flex;gap:10px;margin:12px 0}
+.cnt div{flex:1;background:var(--panel);border:1px solid rgba(57,255,122,.18);border-radius:12px;padding:8px 12px;text-align:center}
+.cnt b{display:block;font-size:1.7rem;line-height:1.2}.cnt span{font-size:.78rem;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}
+.cnt .warn b{color:var(--gold)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:1/1;border:1px solid var(--line)}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam .fr{position:absolute;inset:18%;border:3px solid rgba(57,255,122,.8);border-radius:18px;box-shadow:0 0 0 999px rgba(0,0,0,.35);pointer-events:none}
+.cam .msg{position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;text-align:center;padding:20px;color:var(--mut)}
+.sr{margin-top:14px}.sr input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.45);color:var(--ink);font:inherit;font-size:1rem}
+.sw{position:relative}.sr input{padding-right:46px}
+.sgo{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:9px;cursor:pointer;padding:0;color:var(--mut)}.sgo svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}.sgo:hover,.sgo:focus-visible{color:var(--acc);background:rgba(57,255,122,.1);outline:0}.sw:focus-within .sgo{color:var(--acc)}
+.sr input:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 3px rgba(57,255,122,.18)}
+.res{list-style:none;margin:8px 0 0;padding:0}
+.res li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.res li b{display:block;font-weight:600}.res li span{font-size:.82rem;color:var(--mut)}
+.tag{font-size:.8rem;color:var(--acc)}
+.foot{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.note2{font-size:.82rem;color:var(--mut);margin-top:10px}
+#sh{position:fixed;inset:0;z-index:40;background:var(--bg);overflow:auto;padding:12px 14px 40px}
+#sh .in{max-width:560px;margin:0 auto}
+.tabs2{display:flex;gap:8px;margin:12px 0}.tabs2 button{flex:1}.tabs2 .on{background:var(--acc);color:#03160b}
+.cnt div.tap{cursor:pointer}
+#ov{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:6px}
+#ov.ok{background:#0a8f3a}#ov.ok .big{color:#ffd83a;text-shadow:0 2px 0 rgba(0,0,0,.25),0 0 24px rgba(0,0,0,.3)}#ov.bad{background:#b3162d}#ov.dup{background:#b36a00}
+#ov .big{font-size:3.2rem;font-weight:700;line-height:1.1;color:#fff}
+#ov .nm{font-size:2rem;font-weight:700;color:#fff;word-break:break-word}
+#ov .sm{font-size:1.1rem;color:rgba(255,255,255,.9)}
+#ov .btns{display:flex;gap:10px;margin-top:22px}
+#ov .btn{background:#fff;color:#000}#ov .btn.alt{background:transparent;color:#fff;border-color:#fff}
+</style>
+<style>
+.xbtn{flex:none;width:36px;height:36px;box-sizing:border-box;border-radius:50%;border:2px solid #4fae78;background:transparent;color:#e8f1ec;cursor:pointer;padding:0;display:inline-grid;place-items:center}
+.xbtn:hover{background:rgba(57,255,122,.12)}
+.xbtn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+</style></head>
+<body><div class="g">
+<div class="gtop pg"><h1>Gate Check-in</h1><div class="gr"><span id="net" class="mut"><i class="nd"></i><span id="nett">Offline</span></span><a class="btn alt sm sw" href="ticket-admin.html">← Ticket sales</a></div></div>
+<div class="err" id="fatal" role="alert" hidden></div>
+
+<form id="login" class="login" autocomplete="on" novalidate hidden>
+  <div class="lk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.2" class="dot"/></svg></div>
+  <h2>Admin sign in</h2>
+  <p class="ls">Needed once to download the ticket list</p>
+  <label for="em">Email</label><input id="em" type="email" autocomplete="username" required>
+  <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required>
+  <div class="err" id="lerr" role="alert" hidden></div>
+  <button class="btn cta" type="submit">Sign in</button>
+</form>
+
+<div id="main" hidden>
+  <div class="cnt"><div class="tap" id="tin"><b id="cin">0</b><span>Checked in</span></div><div><b id="ctot">0</b><span>Tickets</span></div><div id="cpw" class="warn"><b id="cpend">0</b><span>To sync</span></div></div>
+  <div class="cam"><video id="vid" playsinline muted></video><div class="fr" id="fr" hidden></div>
+    <button class="btn alt sm" id="cstop" type="button" hidden style="position:absolute;right:10px;top:10px;z-index:2;background:rgba(0,0,0,.6)">Stop camera</button>
+    <div class="msg" id="cmsg"><span id="cmt">Camera is off</span><button class="btn cta" id="cstart" type="button">Start camera</button></div></div>
+  <div class="sr"><div class="sw"><input id="q" type="search" placeholder="Can't scan? Search name or ticket no." aria-label="Search name or ticket number" autocomplete="off" autocapitalize="off"><button type="button" class="sgo" id="qgo" aria-label="Search" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button></div><ul class="res" id="res"></ul></div>
+  <div class="foot">
+    <button class="btn sm" id="lst" type="button">Checked-in list</button>
+    <button class="btn alt sm" id="upd" type="button">Update list</button>
+    <button class="btn alt sm" id="syn" type="button">Sync now</button>
+    <button class="btn alt sm danger" id="clr" type="button">Clear data</button>
+  </div>
+  <p class="note2" id="info"></p>
+  <details class="how" id="how"><summary>How to use this page offline</summary>
+    <ol>
+      <li><b>Before the event (with internet):</b> open this page, sign in, then press <b>Update list</b>. The counter "Tickets" shows how many tickets were downloaded. Press it again just before doors open so late approvals are included.</li>
+      <li><b>At the gate (no internet needed):</b> scan the QR code or search the name or ticket number. Each check-in is saved on this phone, and the "To sync" number goes up.</li>
+      <li><b>Keep the page open or bookmarked.</b> Open it once while online first, so the phone saves it. Use a normal browser window, not private mode.</li>
+      <li><b>When the signal returns:</b> the status at the top turns to Online and check-ins upload by themselves. You can also press <b>Sync now</b>. Wait until "To sync" shows 0.</li>
+      <li><b>Several phones:</b> each phone only knows its own check-ins until it syncs. After syncing, press <b>Update list</b> so it also sees the others. Until then a ticket already used on another phone can still scan as valid.</li>
+      <li><b>After the event:</b> sync first, then press <b>Clear data</b> to remove the list from the phone. Do not clear while "To sync" is above 0, or those check-ins are lost.</li>
+    </ol>
+  </details>
+</div>
+</div>
+<div id="sh" hidden><div class="in">
+  <div class="gtop"><h1>Checked-in list</h1><button type="button" class="xbtn" id="shx" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg></button></div>
+  <div class="tabs2"><button class="btn alt sm on" id="t1" type="button">Checked in</button><button class="btn alt sm" id="t0" type="button">Not yet</button></div>
+  <input id="shq" type="search" placeholder="Filter by name or ticket no." autocomplete="off" style="width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.45);color:var(--ink);font:inherit">
+  <p class="note2" id="shn"></p>
+  <ul class="res" id="shl"></ul>
+  <div class="foot"><button class="btn sm" id="shcsv" type="button">Save as file (CSV)</button></div>
+  <p class="note2">This list is stored on this phone, so it works with no internet.</p>
+</div></div>
+<div id="ov" hidden></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const sb = (typeof supabase !== 'undefined') ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const K = { roster: 'gate.roster', pend: 'gate.pending', meta: 'gate.meta' };
+const load = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (_) { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) { ui.alert('This phone cannot store the list (private mode?). Use a normal browser window.', { title: 'Cannot save' }); } };
+let roster = load(K.roster, []), pend = load(K.pend, {}), meta = load(K.meta, {});
+let byRef = {};
+const index = () => { byRef = {}; roster.forEach(r => byRef[r.ref] = r); };
+const when = iso => new Date(iso).toLocaleTimeString('en-PH', { hour: 'numeric', minute: '2-digit' });
+const usedAt = r => pend[r.ref] || r.in || null;
+
+window.addEventListener('error', e => { const f = $('fatal'); f.textContent = 'Page error: ' + e.message; f.hidden = false; });
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+
+/* ---------- status ---------- */
+function net() { const on = navigator.onLine; $('net').querySelector('.nd').className = 'nd' + (on ? ' on' : ''); $('nett').textContent = on ? 'Online' : 'Offline'; }
+addEventListener('online', () => { net(); sync(); }); addEventListener('offline', net);
+function counts() {
+  $('ctot').textContent = roster.length;
+  $('cin').textContent = roster.filter(r => usedAt(r)).length;
+  const p = Object.keys(pend).length; $('cpend').textContent = p; $('cpw').style.opacity = p ? 1 : .45;
+  renderSheet();
+  $('info').textContent = meta.at ? `List downloaded ${new Date(meta.at).toLocaleString('en-PH')}. Update it just before doors open so late approvals are included.` : '';
+}
+
+/* ---------- list + sync ---------- */
+async function session() { if (!sb) return null; try { const { data } = await sb.auth.getSession(); return data.session; } catch (_) { return null; } }
+async function sync() {
+  const keys = Object.keys(pend); if (!keys.length || !sb || !navigator.onLine) return true;
+  if (!(await session())) return false;
+  const batch = keys.map(ref => ({ ref, at: pend[ref] }));
+  const { error } = await sb.rpc('gate_sync', { p_checks: batch });
+  if (error) return false;
+  batch.forEach(b => { if (byRef[b.ref] && !byRef[b.ref].in) byRef[b.ref].in = b.at; if (pend[b.ref] === b.at) delete pend[b.ref]; });
+  save(K.pend, pend); save(K.roster, roster); counts(); return true;
+}
+async function update() {
+  if (!navigator.onLine || !sb) { ui.alert('No internet right now. The list on this phone still works.', { title: 'No internet' }); return; }
+  if (!(await session())) { showLogin(); return; }
+  $('upd').textContent = 'Updating…';
+  try {
+    if (!(await sync())) throw new Error('Could not upload the waiting check-ins. Try again.');
+    const { data, error } = await sb.rpc('gate_roster'); if (error) throw error;
+    roster = data || []; meta = { at: new Date().toISOString() }; save(K.roster, roster); save(K.meta, meta); index(); counts(); renderRes();
+  } catch (e) { ui.alert('Update failed: ' + (e.message || e), { title: 'Update failed' }); }
+  $('upd').textContent = 'Update list';
+}
+
+/* ---------- check-in ---------- */
+let ac; function beep(ok) { try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); const o = ac.createOscillator(), g = ac.createGain(); o.connect(g); g.connect(ac.destination); o.frequency.value = ok ? 880 : 220; g.gain.value = .15; o.start(); o.stop(ac.currentTime + (ok ? .12 : .35)); } catch (_) {} try { navigator.vibrate && navigator.vibrate(ok ? 60 : [120, 60, 120]); } catch (_) {} }
+let ovTimer;
+function overlay(kind, big, name, small, undoRef) {
+  const o = $('ov'); clearTimeout(ovTimer);
+  o.className = kind; o.hidden = false;
+  o.innerHTML = `<div class="big">${esc(big)}</div>${name ? `<div class="nm">${esc(name)}</div>` : ''}${small ? `<div class="sm">${small}</div>` : ''}<div class="btns">${undoRef ? `<button class="btn alt" id="undo" type="button">Undo</button>` : ''}<button class="btn" id="next" type="button">Next</button></div>`;
+  $('next').onclick = closeOv; if (undoRef) $('undo').onclick = () => undo(undoRef);
+}
+function closeOv() { clearTimeout(ovTimer); $('ov').hidden = true; lastCode = ''; }
+function details(r) {
+  const grp = roster.filter(x => x.code === r.code), inN = grp.filter(x => usedAt(x)).length;
+  return `<div class="sm" style="margin-top:12px;font-size:1.9rem">${r.seat ? `Seat <b>${esc(r.seat)}</b>` : (r.seat === undefined ? '' : 'No seat reserved yet')}</div>`
+    + `<div class="sm" style="margin-top:12px">${r.buyer && r.buyer !== r.holder ? `Buyer: <b>${esc(r.buyer)}</b><br>` : ''}Order <b>${esc(r.code)}</b></div>`
+    + `<div class="sm" style="margin-top:6px;font-size:1.25rem"><b>${inN} of ${grp.length}</b> ticket${grp.length === 1 ? '' : 's'} from this order checked in</div>`
+    + `<div class="sm" style="margin-top:14px;font-size:.9rem;opacity:.85">Avengers: Doomsday (2026) · Dec 19, 1:00 PM<br>A. Bichara Silverscreens, Cinema 4</div>`;
+}
+function checkIn(code) {
+  const ref = String(code || '').trim().toUpperCase(), r = byRef[ref];
+  if (!r) { beep(false); return overlay('bad', 'NOT VALID', '', `Ticket <b>${esc(ref)}</b> is not on the list.<br>It may be unpaid, revoked, or approved after the last list update.`); }
+  const t = usedAt(r);
+  if (t) { beep(false); return overlay('dup', 'ALREADY USED', r.holder, `Ticket <b>${esc(r.ref)}</b> was checked in at ${when(t)}` + details(r)); }
+  pend[ref] = new Date().toISOString(); save(K.pend, pend); counts(); renderRes(); beep(true);
+  overlay('ok', 'VALID', r.holder, `Ticket <b>${esc(r.ref)}</b>` + details(r), ref);
+  setTimeout(sync, 400);
+}
+async function undo(ref) {
+  const r = byRef[ref];
+  if (pend[ref]) { delete pend[ref]; save(K.pend, pend); }
+  else if (r && r.in) {
+    const { error } = sb && navigator.onLine ? await sb.rpc('gate_undo', { p_ref: ref }) : { error: { message: 'offline' } };
+    if (error) { ui.alert('Already synced, and it can\'t be undone offline. Try again when online.', { title: 'Cannot undo' }); return; }
+    r.in = null; save(K.roster, roster);
+  }
+  counts(); renderRes(); closeOv();
+}
+
+/* ---------- manual search ---------- */
+function renderRes() {
+  const q = $('q').value.trim().toLowerCase(), ul = $('res');
+  if (q.length < 2) { ul.innerHTML = ''; return; }
+  const hits = roster.filter(r => [r.ref, r.holder, r.buyer, r.code].some(v => String(v || '').toLowerCase().includes(q))).slice(0, 20);
+  ul.innerHTML = hits.length ? hits.map(r => { const t = usedAt(r); return `<li><div><b>${r.holder ? esc(r.holder) : esc(r.ref)}</b><span>${r.holder ? esc(r.ref) : ''}${r.buyer !== r.holder ? (r.holder ? ' · ' : '') + 'buyer ' + esc(r.buyer) : ''}</span></div>${t ? `<span class="tag">✓ ${when(t)} <button class="btn alt sm" data-undo="${esc(r.ref)}" type="button">Undo</button></span>` : `<button class="btn sm" data-ref="${esc(r.ref)}" type="button">Check in</button>`}</li>`; }).join('') : '<li><span>No match on this list.</span></li>';
+}
+$('q').oninput = renderRes; $('qgo').onclick = () => { renderRes(); $('q').focus(); };
+$('res').onclick = async e => { const u = e.target.closest('[data-undo]'); if (u) { const r = byRef[u.dataset.undo]; if (r && await ui.confirm(`Undo check-in for ${r.holder} (${r.ref})?`, { title: 'Undo check-in', ok: 'Undo', danger: true })) undo(u.dataset.undo); return; } const b = e.target.closest('[data-ref]'); if (b) checkIn(b.dataset.ref); };
+
+/* ---------- camera ---------- */
+let stream, lastCode = '', wake, idleT;
+const IDLE_MS = 3 * 60 * 1000;      // camera turns itself off after 3 minutes with no scan
+function bumpIdle() { clearTimeout(idleT); idleT = setTimeout(() => stopCam('Camera turned off to save battery.'), IDLE_MS); }
+function stopCam(text) {
+  clearTimeout(idleT);
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  stream = null; $('vid').srcObject = null;
+  try { wake && wake.release(); } catch (_) {} wake = null;
+  $('fr').hidden = true; $('cstop').hidden = true; $('cmsg').hidden = false; $('cmt').textContent = text || 'Camera is off'; $('cstart').hidden = false;
+}
+async function startCam() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 } }, audio: false });
+    const v = $('vid'); v.srcObject = stream; await v.play(); $('cmsg').hidden = true; $('fr').hidden = false; $('cstop').hidden = false; bumpIdle();
+    try { wake = await navigator.wakeLock.request('screen'); } catch (_) {}
+    scanLoop();
+  } catch (e) { $('cmsg').hidden = false; $('fr').hidden = true; $('cmt').textContent = 'Camera is blocked or unavailable. Allow camera access, or use the search box below.'; }
+}
+$('cstart').onclick = startCam;
+$('cstop').onclick = () => stopCam();
+document.addEventListener('visibilitychange', async () => { if (document.hidden && stream) stopCam('Camera turned off. Tap Start camera to scan.'); else if (!document.hidden && stream) { try { wake = await navigator.wakeLock.request('screen'); } catch (_) {} } });
+const cv = document.createElement('canvas'), cx = cv.getContext('2d', { willReadFrequently: true });
+function scanLoop() {
+  const v = $('vid');
+  if (!stream) return;
+  if (v.readyState >= 2 && $('ov').hidden) {
+    const w = 640, h = Math.round(w * v.videoHeight / v.videoWidth) || 480; cv.width = w; cv.height = h;
+    cx.drawImage(v, 0, 0, w, h);
+    const res = jsQR(cx.getImageData(0, 0, w, h).data, w, h, { inversionAttempts: 'dontInvert' });
+    if (res && res.data && res.data !== lastCode) { lastCode = res.data; bumpIdle(); checkIn(res.data); }
+  }
+  setTimeout(() => requestAnimationFrame(scanLoop), 120);
+}
+
+/* ---------- checked-in list (stored on this phone) ---------- */
+let shTab = 1;
+const shOpen = () => !$('sh').hidden;
+function renderSheet() {
+  if (!shOpen()) return;
+  const q = $('shq').value.trim().toLowerCase();
+  let rows = roster.filter(r => !!usedAt(r) === (shTab === 1));
+  const total = rows.length;
+  if (q) rows = rows.filter(r => [r.ref, r.holder, r.buyer].some(v => String(v || '').toLowerCase().includes(q)));
+  if (shTab === 1) rows.sort((a, b) => usedAt(b).localeCompare(usedAt(a))); else rows.sort((a, b) => String(a.holder).localeCompare(String(b.holder)));
+  $('t1').classList.toggle('on', shTab === 1); $('t0').classList.toggle('on', shTab === 0);
+  $('shn').textContent = `${total} ticket(s)${q ? `, showing ${rows.length}` : ''}`;
+  $('shl').innerHTML = rows.length ? rows.map(r => {
+    const t = usedAt(r);
+    return `<li><div><b>${r.holder ? esc(r.holder) : esc(r.ref)}</b><span>${r.holder ? esc(r.ref) : ''}${r.buyer !== r.holder ? (r.holder ? ' · ' : '') + 'buyer ' + esc(r.buyer) : ''}${t ? ` · ${when(t)}${pend[r.ref] ? ' · <i style="color:var(--gold)">waiting to sync</i>' : ' · synced'}` : ''}</span></div>${t ? `<button class="btn alt sm" data-undo="${esc(r.ref)}" type="button">Undo</button>` : `<button class="btn sm" data-ref="${esc(r.ref)}" type="button">Check in</button>`}</li>`;
+  }).join('') : '<li><span>Nothing here.</span></li>';
+}
+$('lst').onclick = $('tin').onclick = () => { $('sh').hidden = false; renderSheet(); };
+$('shx').onclick = () => { $('sh').hidden = true; };
+$('t1').onclick = () => { shTab = 1; renderSheet(); }; $('t0').onclick = () => { shTab = 0; renderSheet(); };
+$('shq').oninput = renderSheet;
+$('shl').onclick = async e => {
+  const u = e.target.closest('[data-undo]');
+  if (u) { const r = byRef[u.dataset.undo]; if (r && await ui.confirm(`Undo check-in for ${r.holder} (${r.ref})?`, { title: 'Undo check-in', ok: 'Undo', danger: true })) undo(u.dataset.undo); return; }
+  const b = e.target.closest('[data-ref]'); if (b) { $('sh').hidden = true; checkIn(b.dataset.ref); }
+};
+$('shcsv').onclick = () => {
+  const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+  const lines = [['Ticket', 'Holder', 'Buyer', 'Order', 'Checked in', 'Synced'].map(q).join(',')].concat(
+    roster.map(r => { const t = usedAt(r); return [r.ref, r.holder, r.buyer, r.code, t ? new Date(t).toLocaleString('en-PH') : '', t ? (pend[r.ref] ? 'no' : 'yes') : ''].map(q).join(','); }));
+  const blob = new Blob(['\ufeff' + lines.join('\r\n')], { type: 'text/csv' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'gate-checkins-' + new Date().toISOString().slice(0, 10) + '.csv'; document.body.appendChild(a); a.click(); a.remove();
+};
+
+/* ---------- buttons ---------- */
+$('upd').onclick = update;
+$('syn').onclick = async () => { const ok = await sync(); ui.alert(!Object.keys(pend).length ? 'Everything is synced.' : ok ? 'Nothing sent.' : 'Could not sync yet (no signal). It will retry automatically.', { title: 'Sync' }); };
+$('clr').onclick = async () => {
+  if (Object.keys(pend).length && !await ui.confirm('Some check-ins are not synced yet and will be lost. Continue?', { title: 'Unsynced check-ins', ok: 'Continue', danger: true })) return;
+  if (!await ui.confirm('Remove the ticket list from this phone? Do this after the event.', { title: 'Remove ticket list', ok: 'Remove', danger: true })) return;
+  [K.roster, K.pend, K.meta].forEach(k => { try { localStorage.removeItem(k); } catch (_) {} });
+  roster = []; pend = {}; meta = {}; index(); counts(); renderRes();
+  try { sb && await sb.auth.signOut(); } catch (_) {}
+  location.reload();
+};
+$('login').onsubmit = async e => {
+  e.preventDefault(); const le = $('lerr'); le.hidden = true;
+  if (!$('em').value.trim() || !$('pw').value) { le.textContent = 'Enter your email and password.'; le.hidden = false; return; }
+  if (!sb) { le.textContent = 'Internet needed to sign in.'; le.hidden = false; return; }
+  const { error } = await sb.auth.signInWithPassword({ email: $('em').value.trim(), password: $('pw').value });
+  if (error) { le.textContent = 'Login failed. Check your email and password.'; le.hidden = false; return; }
+  $('login').hidden = true; await update(); showMain();
+};
+function showLogin() { $('main').hidden = true; $('login').hidden = false; }
+function showMain() { $('login').hidden = true; $('main').hidden = false; index(); counts(); }
+
+net();
+(async function boot() {
+  if (roster.length) { showMain(); setInterval(sync, 30000); return; }
+  if (await session()) { await update(); if (roster.length) { showMain(); setInterval(sync, 30000); } else showMain(); }
+  else showLogin();
+})();
+</script></body></html>
