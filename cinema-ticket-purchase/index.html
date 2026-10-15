@@ -582,16 +582,22 @@ $('f').onsubmit = async e => {
     $('trlt').textContent = fmt(cur); $('trld').textContent = fmt(dur); $('trlpg').setAttribute('aria-valuenow', Math.round(r * 100));
   }
   function state(st) {
-    var playing = st === 1 || st === 3;
+    if (st === 1) stalled = false;
+    var playing = st === 1 || (st === 3 && !stalled);
     box.classList.toggle('is-play', playing); box.classList.toggle('ended', st === 0);
-    box.classList.toggle('paused', st === 2 || st === 5);
+    box.classList.toggle('paused', st === 2 || st === 5 || (stalled && st !== 1 && st !== 0));
     $('trlpp').setAttribute('aria-label', playing ? 'Pause' : 'Play');
     if (playing) wake(); else { box.classList.remove('idle'); clearTimeout(idleT); }
     paint();
   }
   var isMu = true;                                      // our own record of mute state, so the icon never lags behind YouTube's answer
   function muteUi() { box.classList.toggle('muted', isMu); }
-  function toggle() { if (!ready) return; var st = P.getPlayerState(); if (st === 1 || st === 3) P.pauseVideo(); else P.playVideo(); }
+  var stalled = false, wdT = null, IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  function toggle() { if (!ready) return; var st = P.getPlayerState(); if (st === 1 || (st === 3 && !stalled)) P.pauseVideo(); else { stalled = false; P.playVideo(); } }
+  function watch() {                                    // if the trailer has not started a moment after we asked, show the play button instead of an endless spinner
+    clearTimeout(wdT);
+    wdT = setTimeout(function () { if (dead || !ready) return; try { var st = P.getPlayerState(); if (st !== 1 && st !== 2 && st !== 0) { stalled = true; state(st); P.playVideo(); } } catch (_) {} }, 2500);
+  }
   function toggleMute() {
     if (!ready) return; userMu = true; isMu = !isMu;
     try { if (isMu) P.mute(); else { P.unMute(); P.setVolume(100); if (P.getPlayerState() !== 1 && P.getPlayerState() !== 3) P.playVideo(); } } catch (_) {}
@@ -602,12 +608,16 @@ $('f').onsubmit = async e => {
   function autoUnmute() {
     if (dead || !ready || !tapAt) return;
     held = false;
-    try { var st = P.getPlayerState(); if (st !== 1 && st !== 3 && !box.classList.contains('ended')) P.playVideo(); } catch (_) {}   // start the trailer now, unless the visitor already did
-    if (!isMu || userMu) return;
+    try { var st = P.getPlayerState(); if (st !== 1 && !box.classList.contains('ended')) P.playVideo(); } catch (_) {}   // start the trailer now, unless it is already playing
+    watch();
+    if (!isMu || userMu || IOS) return;                 // iPhone/iPad never allow sound without a tap on the speaker button, so it stays muted there
     isMu = false;
     try { P.unMute(); P.setVolume(100); } catch (_) {}
     muteUi();
     setTimeout(function () { try { if (ready && P.isMuted() !== isMu) { isMu = P.isMuted(); muteUi(); } } catch (_) {} }, 700);
+    setTimeout(function () {                            // the browser refused the sound and stopped the video: go back to muted playback
+      try { var st = P.getPlayerState(); if (dead || !ready || userMu || box.classList.contains('ended') || st === 1) return; P.mute(); isMu = true; muteUi(); P.playVideo(); } catch (_) {}
+    }, 1600);
   }
   function schedAuto() { clearTimeout(autoT); var w = tapAt ? Math.max(0, tapAt + window.__trlDelay - Date.now()) : 0; autoT = setTimeout(autoUnmute, w); }
   window.__trlTap = function (delay) { tapAt = Date.now(); window.__trlDelay = delay; if (ready) { try { P.seekTo(0, true); } catch (_) {} } if (delay > 0) { held = true; if (ready) { try { P.mute(); P.pauseVideo(); } catch (_) {} } } if (ready) schedAuto(); };
@@ -619,7 +629,7 @@ $('f').onsubmit = async e => {
       videoId: VID, width: '100%', height: '100%',
       playerVars: { autoplay: 1, mute: 1, controls: 0, playsinline: 1, rel: 0, modestbranding: 1, iv_load_policy: 3, disablekb: 1, fs: 0, cc_load_policy: 0 },
       events: {
-        onReady: function () { ready = true; try { P.mute(); if (!held) P.playVideo(); } catch (_) {} isMu = true; muteUi(); if (tapAt) schedAuto(); paint(); tm = setInterval(function () { if (!seeking) paint(); }, 250); setTimeout(function () { if (!dead && !box.classList.contains('is-play') && !box.classList.contains('ended')) box.classList.add('paused'); }, 3000); },
+        onReady: function () { ready = true; try { P.mute(); if (!held) { P.playVideo(); watch(); } } catch (_) {} isMu = true; muteUi(); if (tapAt) schedAuto(); paint(); tm = setInterval(function () { if (!seeking) paint(); }, 250); setTimeout(function () { if (!dead && !box.classList.contains('is-play') && !box.classList.contains('ended')) box.classList.add('paused'); }, 3000); },
         onStateChange: function (e) { state(e.data); },
         onError: function () { ready = false; try { P.destroy(); } catch (_) {} P = null; plain(); }
       }
@@ -638,7 +648,7 @@ $('f').onsubmit = async e => {
   pg.addEventListener('pointerup', function () { seeking = false; }); pg.addEventListener('pointercancel', function () { seeking = false; });
   pg.addEventListener('keydown', function (e) { if (!ready) return; var d = e.key === 'ArrowRight' ? 5 : e.key === 'ArrowLeft' ? -5 : 0; if (d) { e.preventDefault(); try { P.seekTo(P.getCurrentTime() + d, true); } catch (_) {} paint(); } });
   box.addEventListener('pointermove', wake); box.addEventListener('keydown', wake);
-  window.__trlStop = function () { dead = true; clearInterval(tm); clearTimeout(idleT); try { if (P) P.destroy(); } catch (_) {} P = null; };
+  window.__trlStop = function () { dead = true; clearInterval(tm); clearTimeout(wdT); clearTimeout(idleT); try { if (P) P.destroy(); } catch (_) {} P = null; };
   window.onYouTubeIframeAPIReady = build;
   if (window.YT && YT.Player) build(); else { var sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; sc.async = true; sc.onerror = plain; document.head.appendChild(sc); }
   setTimeout(function () { if (!ready && !dead) plain(); }, 7000);
@@ -710,11 +720,11 @@ $('f').onsubmit = async e => {
   })();
   var snd = null, sndT = 0;                              // opening sound (a short file); plays only where the browser allows it
   try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { snd = new Audio('hud-open-v2.mp3'); snd.preload = 'auto'; snd.volume = 0.8; } } catch (_) { snd = null; }
-  function playSnd() { if (!snd || Date.now() - sndT > 600) return; try { var pr = snd.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (_) {} }
+  function playSnd() { if (!snd) return; try { var pr = snd.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (_) {} }   // called straight from the tap: iPhone only allows play() inside the tap itself
   d.addEventListener('close', function () { document.documentElement.classList.remove('trl-open'); try { if (snd) snd.pause(); } catch (_) {} });
   d.addEventListener('touchmove', function (e) { if (d.scrollHeight <= d.clientHeight + 1) e.preventDefault(); }, { passive: false });   // older iPhones: nothing to scroll here, so don't let the page behind move
   function enter() {
-    d.showModal(); var rm = false; try { rm = matchMedia('(prefers-reduced-motion:reduce)').matches; } catch (_) {} if (window.__trlTap) window.__trlTap(rm ? 0 : 2000); sndT = Date.now(); if (snd) { if (snd.readyState >= 3) playSnd(); else snd.addEventListener("canplaythrough", playSnd, { once: true }); }
+    d.showModal(); var rm = false; try { rm = matchMedia('(prefers-reduced-motion:reduce)').matches; } catch (_) {} if (window.__trlTap) window.__trlTap(rm ? 0 : 2000); sndT = Date.now(); if (snd) { playSnd(); setTimeout(function () { try { if (snd.currentTime < 0.05) snd.pause(); } catch (_) {} }, 1500); }   // if the file is still not playing after 1.5s, skip it rather than play it late
     d.scrollTop = 0; document.getElementById("trlb").focus({ preventScroll: true });
   }
   /* "Tap to enter" start screen: the tap lets the browser play the opening sound together with the animation */
