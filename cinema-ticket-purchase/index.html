@@ -325,6 +325,9 @@ dialog.trl{border-radius:0;outline:0}
  .trl-stub{order:3}
  .trl-pr{order:4}
 }
+/* 3D strip: stronger red/cyan (the colours of the 3D glasses) */
+.trl-box .trl-pr{background:linear-gradient(90deg,rgba(255,59,92,.62),rgba(150,70,170,.42) 50%,rgba(39,211,255,.62));border:1px solid rgba(255,255,255,.4);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.55);box-shadow:-10px 0 24px -10px rgba(255,59,92,.55),10px 0 24px -10px rgba(39,211,255,.55),inset 0 0 0 1px rgba(255,255,255,.05)}
+.trl-box .trl-pr em{color:#ffe14d}
 </style></head>
 <body><script>/* "Tap to enter" screen goes up first thing, before the page behind it can paint (the trailer script further down wires up the button) */
 (function(){try{
