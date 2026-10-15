@@ -72,6 +72,7 @@ dialog.trl .trl-logo{margin:0;max-height:none;max-width:none}
 .trl-c.d{top:10px;left:10px;border-top-width:2px;border-left-width:2px;border-top-left-radius:6px}.trl-c.a{top:10px;right:10px;border-top-width:2px;border-right-width:2px;border-top-right-radius:6px}.trl-c.b{bottom:10px;left:10px;border-bottom-width:2px;border-left-width:2px;border-bottom-left-radius:6px}.trl-c.c{bottom:10px;right:10px;border-bottom-width:2px;border-right-width:2px;border-bottom-right-radius:6px}
 .trl-3d{position:absolute;top:22px;left:22px;z-index:4;display:flex;align-items:center;gap:8px;padding:5px 12px 5px 9px;border-radius:4px;background:rgba(3,10,7,.78);border:1px solid rgba(255,255,255,.18);pointer-events:none}
 .trl-3d b{font-size:1.25rem;font-weight:800;letter-spacing:.04em;color:#fff;text-shadow:-2px 0 #ff3b5c,2px 0 #27d3ff}
+.trl-3dm{display:none}
 .trl-3d i{font-style:normal;font-size:.72rem;font-weight:700;letter-spacing:.14em;color:#e8f1ec;text-transform:uppercase}
 .trl-stub{display:grid;grid-template-columns:auto 1fr;align-items:stretch;margin-top:14px;border-radius:4px 16px 4px 16px;border:1px solid rgba(57,255,122,.3);background:linear-gradient(120deg,rgba(57,255,122,.14),rgba(57,255,122,.04))}
 .trl-cd{padding:14px 18px;border-right:2px dashed rgba(57,255,122,.38);text-align:center}
@@ -221,6 +222,9 @@ dialog.trl .trl-lg img{margin:0;max-height:none;max-width:none}
  .trl-stub .trl-l2{width:100px;height:auto}
  .trl-stub .trl-cin{width:40px;height:auto;transform:translateY(6px)}
  .trl-mrow .trl-lg{display:none}
+ .trl-3d{display:none}
+ .trl-3dm{display:flex;align-items:center;gap:7px;padding:5px 11px 5px 9px;border-radius:4px;background:rgba(3,10,7,.78);border:1px solid rgba(255,255,255,.18);margin-left:auto}
+ .trl-3dm b{font-size:1.1rem;font-weight:800;letter-spacing:.04em;line-height:1;color:#fff;text-shadow:-2px 0 #ff3b5c,2px 0 #27d3ff}
  .trl-hd .trl-tag{display:none}
  .trl-mrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px}
  .trl-mrow .trl-lg{margin:0;gap:8px}
@@ -518,7 +522,7 @@ $('f').onsubmit = async e => {
     </div>
     <p class="trl-eb">DWCL Batch 2002 in collaboration with A. Bichara Silverscreens</p>
     <div class="trl-hd"><span class="trl-tag"><i></i>Official trailer</span><h2 class="trl-h trl-sr" id="trlh">Avengers: Doomsday (2026)</h2><button type="button" class="trl-go" id="trlgo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/><path d="M14 7v10" stroke-dasharray="2 2"/></svg>Book your tickets <span aria-hidden="true">→</span></button></div>
-    <div class="trl-mrow" aria-hidden="true"><span class="trl-tag"><i></i>Official trailer</span><div class="trl-lg"><img class="trl-l2" src="2002-theme.png" alt="" onerror="this.style.display='none'"><img class="trl-cin" src="cinema-logo.webp" alt=""></div></div>
+    <div class="trl-mrow" aria-hidden="true"><span class="trl-tag"><i></i>Official trailer</span><div class="trl-lg"><img class="trl-l2" src="2002-theme.png" alt="" onerror="this.style.display='none'"><img class="trl-cin" src="cinema-logo.webp" alt=""></div><div class="trl-3dm"><svg viewBox="0 0 48 24" width="30" height="15" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M3 6h42" stroke="#e8f1ec" stroke-width="3"/><rect x="3" y="6" width="19" height="14" rx="5" fill="#ff3b5c" stroke="#e8f1ec" stroke-width="2.5"/><rect x="26" y="6" width="19" height="14" rx="5" fill="#27d3ff" stroke="#e8f1ec" stroke-width="2.5"/></svg><b>3D</b></div></div>
     <div class="trl-v"><span class="trl-c a"></span><span class="trl-c b"></span><span class="trl-c c"></span><span class="trl-c d"></span><div class="trl-3d" aria-hidden="true"><svg viewBox="0 0 48 24" width="30" height="15" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M3 6h42" stroke="#e8f1ec" stroke-width="3"/><rect x="3" y="6" width="19" height="14" rx="5" fill="#ff3b5c" stroke="#e8f1ec" stroke-width="2.5"/><rect x="26" y="6" width="19" height="14" rx="5" fill="#27d3ff" stroke="#e8f1ec" stroke-width="2.5"/></svg><b>3D</b><i>Experience</i></div><div id="trlv" style="position:absolute;inset:0"></div>
       <div class="trl-sh" id="trlsh"></div>
       <button type="button" class="trl-big" id="trlbig" aria-label="Play trailer"><svg class="" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l11-6.8a1 1 0 0 0 0-1.72l-11-6.8A1 1 0 0 0 8 5.2z"/></svg></button>
