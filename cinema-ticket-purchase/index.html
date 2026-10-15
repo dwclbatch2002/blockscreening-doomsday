@@ -610,17 +610,21 @@ $('f').onsubmit = async e => {
     held = false;
     try { var st = P.getPlayerState(); if (st !== 1 && !box.classList.contains('ended')) P.playVideo(); } catch (_) {}   // start the trailer now, unless it is already playing
     watch();
-    if (!isMu || userMu || IOS) return;                 // iPhone/iPad never allow sound without a tap on the speaker button, so it stays muted there
-    isMu = false;
-    try { P.unMute(); P.setVolume(100); } catch (_) {}
-    muteUi();
+    if (userMu) return;
+    if (isMu) {                                          // normal browsers: unmute now. iPhone/iPad only allow it inside the tap itself (see __trlTap), so there it stays muted
+      if (IOS && window.__trlDelay > 0) return;
+      isMu = false;
+      try { P.unMute(); P.setVolume(100); } catch (_) {}
+      muteUi();
+    }
     setTimeout(function () { try { if (ready && P.isMuted() !== isMu) { isMu = P.isMuted(); muteUi(); } } catch (_) {} }, 700);
     setTimeout(function () {                            // the browser refused the sound and stopped the video: go back to muted playback
       try { var st = P.getPlayerState(); if (dead || !ready || userMu || box.classList.contains('ended') || st === 1) return; P.mute(); isMu = true; muteUi(); P.playVideo(); } catch (_) {}
     }, 1600);
   }
   function schedAuto() { clearTimeout(autoT); var w = tapAt ? Math.max(0, tapAt + window.__trlDelay - Date.now()) : 0; autoT = setTimeout(autoUnmute, w); }
-  window.__trlTap = function (delay) { tapAt = Date.now(); window.__trlDelay = delay; if (ready) { try { P.seekTo(0, true); } catch (_) {} } if (delay > 0) { held = true; if (ready) { try { P.mute(); P.pauseVideo(); } catch (_) {} } } if (ready) schedAuto(); };
+  /* iPhone: the tap is the one moment sound may be switched on, so it is done inside __trlTap; autoUnmute() falls back to muted playback if iOS still refuses */
+  window.__trlTap = function (delay) { tapAt = Date.now(); window.__trlDelay = delay; if (ready) { try { P.seekTo(0, true); } catch (_) {} } if (delay > 0) { held = true; if (ready) { try { if (IOS && !userMu) { P.unMute(); P.setVolume(100); isMu = false; muteUi(); } else P.mute(); P.pauseVideo(); } catch (_) {} } } if (ready) schedAuto(); };
   function seekTo(x) { var rc = $('trlpg').getBoundingClientRect(), r = Math.min(1, Math.max(0, (x - rc.left) / rc.width)); try { P.seekTo(r * P.getDuration(), true); } catch (_) {} paint(); }
   function build() {
     if (dead || !window.YT || !YT.Player) return;
