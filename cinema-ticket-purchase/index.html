@@ -101,7 +101,11 @@ dialog.trl .trl-logo{margin:0;max-height:none;max-width:none}
 .trl-v{background:#000 url(https://i.ytimg.com/vi/irVNGjRFZGk/hqdefault.jpg) center/cover no-repeat}
 .trl-v:fullscreen{border-radius:0;aspect-ratio:auto;width:100%;height:100%}
 .trl-sh{position:absolute;inset:0;z-index:3;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.trl-big{position:absolute;left:50%;top:50%;z-index:5;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;border:2px solid rgba(255,255,255,.85);background:rgba(3,14,8,.55);color:#fff;display:grid;place-items:center;cursor:pointer;padding:0;opacity:0;pointer-events:none;transform:scale(.8);transition:opacity .25s,transform .25s}
+.trl-v.pfs{position:fixed;left:0;top:0;right:0;bottom:0;width:100%;height:100vh;height:100dvh;max-width:none;aspect-ratio:auto;margin:0;z-index:60;border-radius:0!important;box-shadow:none;background:#000}
+.trl-box.pfs-host,html:not(.trl-lite) dialog.trl:not(.out) .trl-box.pfs-host{animation:none!important;transform:none!important;will-change:auto!important}
+.trl-v.pfs .trl-c,.trl-v.pfs .trl-3d{display:none}
+.trl-v.pfs .trl-bar{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+.trl-big{position:absolute;left:50%;top:50%;z-index:5;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;border:2px solid rgba(255,255,255,.85);background:#06150c;box-shadow:0 0 0 6px #06150c;color:#fff;display:grid;place-items:center;cursor:pointer;padding:0;opacity:0;pointer-events:none;transform:scale(.8);transition:opacity .25s,transform .25s}
 .trl-big::before{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid rgba(57,255,122,.6);animation:trl-ring 2s ease-out infinite}
 @keyframes trl-ring{from{transform:scale(.85);opacity:.9}to{transform:scale(1.35);opacity:0}}
 .trl-big svg{width:30px;height:30px;margin-left:4px}
@@ -135,7 +139,7 @@ dialog.trl .trl-logo{margin:0;max-height:none;max-width:none}
 .trl-rep:hover{background:rgba(57,255,122,.3)}.trl-rep svg{width:18px;height:18px}
 .trl-v:not(.is-play.idle):not(.plain):not(.ended) .trl-c.b,.trl-v:not(.is-play.idle):not(.plain):not(.ended) .trl-c.c{bottom:52px}
 .trl-v.plain .trl-sh,.trl-v.plain .trl-bar,.trl-v.plain .trl-big,.trl-v.plain .trl-snd,.trl-v.plain .trl-end{display:none}
-@media(max-width:520px){.trl-big{width:62px;height:62px;margin:-31px 0 0 -31px}.trl-bar{gap:4px;padding:22px 6px 6px}.trl-bar button{width:32px;height:32px}.trl-snd span{display:none}.trl-snd{padding:8px}}
+@media(max-width:520px){.trl-big{width:76px;height:76px;margin:-38px 0 0 -38px}.trl-bar{gap:4px;padding:22px 6px 6px}.trl-bar button{width:32px;height:32px}.trl-snd span{display:none}.trl-snd{padding:8px}}
 @media(prefers-reduced-motion:reduce){.trl-big::before,.trl-snd{animation:none}.trl-bar,.trl-big{transition:none}}
 .trl-hd{display:flex;align-items:center;justify-content:space-between;gap:10px 22px;flex-wrap:nowrap;margin-bottom:16px}
 .trl-hd .trl-h{margin:0;flex:1 1 0;min-width:0;font-size:clamp(1.3rem,3.3vw,2.05rem)}
@@ -663,8 +667,11 @@ $('f').onsubmit = async e => {
   $('trlbig').onclick = toggle; $('trlpp').onclick = function () { toggle(); wake(); }; $('trlmu').onclick = toggleMute; $('trlsnd').onclick = toggleMute;
   $('trlrep').onclick = function () { if (!ready) return; P.seekTo(0, true); P.playVideo(); };
   var fsOk = !!(box.requestFullscreen || box.webkitRequestFullscreen);
-  if (!fsOk) $('trlfs').style.display = 'none';
-  $('trlfs').onclick = function () { var el = document.fullscreenElement || document.webkitFullscreenElement; if (el) (document.exitFullscreen || document.webkitExitFullscreen).call(document); else (box.requestFullscreen || box.webkitRequestFullscreen).call(box); };
+  // iPhones can't make a page element full screen, so there the button stretches the video over the whole screen instead (turn the phone sideways for the full picture)
+  function setPfs(on) { box.classList.toggle('pfs', on); if (on) box.parentNode.classList.add('pfs-host');   // stays on afterwards: the opening animation has already played, and a running one would trap the full-screen video inside the box
+    document.documentElement.classList.toggle('trl-pfs', on); $('trlfs').setAttribute('aria-label', on ? 'Exit full screen' : 'Full screen'); }
+  d.addEventListener('close', function () { setPfs(false); });
+  $('trlfs').onclick = function () { if (!fsOk) { setPfs(!box.classList.contains('pfs')); wake(); return; } var el = document.fullscreenElement || document.webkitFullscreenElement; if (el) (document.exitFullscreen || document.webkitExitFullscreen).call(document); else (box.requestFullscreen || box.webkitRequestFullscreen).call(box); };
   var pg = $('trlpg');
   pg.addEventListener('pointerdown', function (e) { if (!ready) return; seeking = true; try { pg.setPointerCapture(e.pointerId); } catch (_) {} seekTo(e.clientX); wake(); });
   pg.addEventListener('pointermove', function (e) { if (seeking) seekTo(e.clientX); });
