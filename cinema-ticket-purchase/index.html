@@ -298,15 +298,16 @@ dialog.trl{border-radius:0;outline:0}
 @media(max-height:440px){.trl-gate{padding:12px}.trl-gate-in{gap:12px;padding-bottom:0}.trl-gate-in img{width:min(210px,36vh*3)}.trl-gate-sub{margin-top:-6px}.trl-gate-btn{width:104px;height:104px}}
 /* phones: 20px above and below the frame */
 @media(max-width:640px){dialog.trl{padding-top:20px!important;padding-bottom:20px!important}}
-/* phone upright: 32px of background, then the logo sitting on top of the frame; same 32px at the bottom */
+/* phone upright: 32px of background, then the logo overlapping the top of the frame; same 32px at the bottom */
 @media(max-width:640px) and (orientation:portrait){
- dialog.trl{--lw:min(280px,calc((100vw - 20px)*.76));padding-top:calc(32px + var(--lw)*.385 - 6px)!important;padding-bottom:32px!important}
+ dialog.trl{--lw:min(280px,62vw);--lh:calc(var(--lw)*.385);padding-top:calc(32px + var(--lh)*.64)!important;padding-bottom:32px!important}
+ .trl-box{--ip:calc(var(--lh)*.36 + 16px);padding-top:var(--ip)!important}
  .trl-bw{position:absolute;order:0;left:0;right:0;top:0;height:0;margin:0}
- .trl-brand{width:var(--lw);margin:0;transform:translateY(calc(-100% + 6px))}
- .trl-top{position:absolute;order:0;top:20px;right:18px;margin:0;min-height:0;z-index:10}
+ .trl-brand{width:var(--lw);margin:0;transform:translateY(-64%)}
+ .trl-top{position:absolute;order:0;top:var(--ip);right:18px;margin:0;min-height:0;z-index:10}
  .trl-eb{order:-2;margin:0 0 14px;padding-right:50px;min-height:38px;display:flex;align-items:center;text-align:left}
  .trl-v{order:1}
- .trl-hd .trl-go{order:2;margin-top:14px;margin-bottom:0}
+ .trl-hd .trl-go{order:2;margin-top:16px;margin-bottom:0;z-index:8}
  .trl-stub{order:3}
  .trl-pr{order:4}
 }
