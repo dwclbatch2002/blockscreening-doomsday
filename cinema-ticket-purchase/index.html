@@ -295,11 +295,21 @@ html.trl-open{background:#020805}
 .trl-gate{border-radius:0;background-color:#020805;-webkit-backdrop-filter:none;backdrop-filter:none}
 dialog.trl{border-radius:0;outline:0}
 /* phone upright: leave a strip of the lightning background above the modal at first sight */
-@media(max-width:640px) and (orientation:portrait){dialog.trl{padding-top:clamp(56px,10vh,92px)!important}}
 @media(max-height:440px){.trl-gate{padding:12px}.trl-gate-in{gap:12px;padding-bottom:0}.trl-gate-in img{width:min(210px,36vh*3)}.trl-gate-sub{margin-top:-6px}.trl-gate-btn{width:104px;height:104px}}
 /* phones: 20px above and below the frame */
 @media(max-width:640px){dialog.trl{padding-top:20px!important;padding-bottom:20px!important}}
-@media(max-width:640px) and (orientation:portrait){dialog.trl{padding-top:clamp(56px,10vh,92px)!important}}
+/* phone upright: 32px of background, then the logo sitting on top of the frame; same 32px at the bottom */
+@media(max-width:640px) and (orientation:portrait){
+ dialog.trl{--lw:min(280px,calc((100vw - 20px)*.76));padding-top:calc(32px + var(--lw)*.385 - 6px)!important;padding-bottom:32px!important}
+ .trl-bw{position:absolute;order:0;left:0;right:0;top:0;height:0;margin:0}
+ .trl-brand{width:var(--lw);margin:0;transform:translateY(calc(-100% + 6px))}
+ .trl-top{position:absolute;order:0;top:20px;right:18px;margin:0;min-height:0;z-index:10}
+ .trl-eb{order:-2;margin:0 0 14px;padding-right:50px;min-height:38px;display:flex;align-items:center;text-align:left}
+ .trl-v{order:1}
+ .trl-hd .trl-go{order:2;margin-top:14px;margin-bottom:0}
+ .trl-stub{order:3}
+ .trl-pr{order:4}
+}
 </style></head>
 <body><script>/* "Tap to enter" screen goes up first thing, before the page behind it can paint (the trailer script further down wires up the button) */
 (function(){try{
