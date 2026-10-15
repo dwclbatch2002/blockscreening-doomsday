@@ -228,3 +228,7 @@ input[aria-invalid="true"]{border-color:#ff6b81;box-shadow:0 0 0 3px rgba(255,10
 /* while a pop-up is open the page behind must not scroll (stops the page moving on phones) */
 html:has(dialog[open]){overflow:hidden}
 dialog{overscroll-behavior:contain}
+/* admin sign-in button: same green pill as the ticket sales admin and gate pages (beats the yellow .adm .btn rules) */
+.adm .btn.cta:not(.alt){background:linear-gradient(180deg,rgba(57,255,122,.24),rgba(57,255,122,.06));color:#fff}
+.adm .btn.cta:not(.alt):not(:disabled):hover{background:linear-gradient(180deg,#5cff93,#2fe270);color:#03160b}
+.adm .login .btn.cta{box-shadow:inset 0 0 18px rgba(57,255,122,.25)}
