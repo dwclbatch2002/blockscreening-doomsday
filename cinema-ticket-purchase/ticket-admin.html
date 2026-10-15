@@ -170,7 +170,7 @@ body::before{background:linear-gradient(rgba(3,8,5,.62),rgba(3,8,5,.9)),url(doom
   <div class="lk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.2" class="dot"/></svg></div>
   <h2>Admin sign in</h2>
   <p class="ls">Authorized access only</p>
-  <label for="em">Email</label><input id="em" type="email" autocomplete="username" required>
+  <label for="em">Username</label><input id="em" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
   <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required>
   <div class="err" id="lerr" role="alert" hidden></div>
   <button class="btn cta" type="submit">Sign in</button>
@@ -282,13 +282,15 @@ async function boot() {
     if (data && data.session) start();
   } catch (e) { fatal(e); }
 }
+const ADMIN_LOGIN_EMAIL='admin@dwclbatch2002.github.io',adminEmail=u=>u.trim().toLowerCase()==='admin'?ADMIN_LOGIN_EMAIL:'';
 $('login').onsubmit = async e => {
   e.preventDefault(); $('lerr').hidden = true;
-  const emp=!$('em').value.trim()||!$('pw').value;if(emp){const le=$('lerr');le.textContent='Enter your email and password.';le.hidden=false;return}
+  const emp=!$('em').value.trim()||!$('pw').value;if(emp){const le=$('lerr');le.textContent='Enter your username and password.';le.hidden=false;return}
+  const ae=adminEmail($('em').value);if(!ae){const le=$('lerr');le.textContent='Login failed. Check your username and password.';le.hidden=false;return}
   unlockAudio();                                                       // signing in counts as a tap, so sound and pop-ups work right away
   try { if (alertsOn && 'Notification' in window && Notification.permission === 'default') Notification.requestPermission(); } catch (_) {}
-  const { error } = await sb.auth.signInWithPassword({ email: $('em').value.trim(), password: $('pw').value });
-  if (error) { $('lerr').textContent = error.message; $('lerr').hidden = false; return; }
+  const { error } = await sb.auth.signInWithPassword({ email: ae, password: $('pw').value });
+  if (error) { $('lerr').textContent = 'Login failed. Check your username and password.'; $('lerr').hidden = false; return; }
   start();
 };
 $('logout').onclick = async () => { clearInterval(timer); await sb.auth.signOut(); location.reload(); };

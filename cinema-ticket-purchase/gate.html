@@ -77,7 +77,7 @@ body::before{background:linear-gradient(rgba(3,8,5,.3),rgba(3,8,5,.82)),url(doom
   <div class="lk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.2" class="dot"/></svg></div>
   <h2>Admin sign in</h2>
   <p class="ls">Needed once to download the ticket list</p>
-  <label for="em">Email</label><input id="em" type="email" autocomplete="username" required>
+  <label for="em">Username</label><input id="em" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
   <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required>
   <div class="err" id="lerr" role="alert" hidden></div>
   <button class="btn cta" type="submit">Sign in</button>
@@ -297,12 +297,14 @@ $('clr').onclick = async () => {
   try { sb && await sb.auth.signOut(); } catch (_) {}
   location.reload();
 };
+const ADMIN_LOGIN_EMAIL='admin@dwclbatch2002.github.io',adminEmail=u=>u.trim().toLowerCase()==='admin'?ADMIN_LOGIN_EMAIL:'';
 $('login').onsubmit = async e => {
   e.preventDefault(); const le = $('lerr'); le.hidden = true;
-  if (!$('em').value.trim() || !$('pw').value) { le.textContent = 'Enter your email and password.'; le.hidden = false; return; }
+  if (!$('em').value.trim() || !$('pw').value) { le.textContent = 'Enter your username and password.'; le.hidden = false; return; }
+  const ae = adminEmail($('em').value); if (!ae) { le.textContent = 'Login failed. Check your username and password.'; le.hidden = false; return; }
   if (!sb) { le.textContent = 'Internet needed to sign in.'; le.hidden = false; return; }
-  const { error } = await sb.auth.signInWithPassword({ email: $('em').value.trim(), password: $('pw').value });
-  if (error) { le.textContent = 'Login failed. Check your email and password.'; le.hidden = false; return; }
+  const { error } = await sb.auth.signInWithPassword({ email: ae, password: $('pw').value });
+  if (error) { le.textContent = 'Login failed. Check your username and password.'; le.hidden = false; return; }
   $('login').hidden = true; await update(); showMain();
 };
 function showLogin() { $('main').hidden = true; $('login').hidden = false; }
