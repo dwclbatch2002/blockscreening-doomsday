@@ -290,9 +290,16 @@ html.pg-in .card{animation:pg-rise .85s cubic-bezier(.2,.7,.2,1) .34s backwards}
 /* trailer window: 40px of space under the frame, so it never sits on the bottom edge */
 dialog.trl{padding-bottom:40px!important}
 /* short landscape screens: tighten the tap screen so everything stays visible */
+/* square edges: both full-screen layers are plain rectangles, and the page colour behind them matches, so no corner shape can show (phone landscape) */
+html.trl-open{background:#020805}
+.trl-gate{border-radius:0;background-color:#020805;-webkit-backdrop-filter:none;backdrop-filter:none}
+dialog.trl{border-radius:0;outline:0}
+/* phone upright: leave a strip of the lightning background above the modal at first sight */
+@media(max-width:640px) and (orientation:portrait){dialog.trl{padding-top:clamp(56px,10vh,92px)!important}}
 @media(max-height:440px){.trl-gate{padding:12px}.trl-gate-in{gap:12px;padding-bottom:0}.trl-gate-in img{width:min(210px,36vh*3)}.trl-gate-sub{margin-top:-6px}.trl-gate-btn{width:104px;height:104px}}
 /* phones: 20px above and below the frame */
 @media(max-width:640px){dialog.trl{padding-top:20px!important;padding-bottom:20px!important}}
+@media(max-width:640px) and (orientation:portrait){dialog.trl{padding-top:clamp(56px,10vh,92px)!important}}
 </style></head>
 <body><script>/* "Tap to enter" screen goes up first thing, before the page behind it can paint (the trailer script further down wires up the button) */
 (function(){try{
@@ -731,6 +738,10 @@ $('f').onsubmit = async e => {
   function enter() {
     d.showModal(); var rm = false; try { rm = matchMedia('(prefers-reduced-motion:reduce)').matches; } catch (_) {} if (window.__trlTap) window.__trlTap(rm ? 0 : 2000); sndT = Date.now(); if (snd) { playSnd(); setTimeout(function () { try { if (snd.currentTime < 0.05) snd.pause(); } catch (_) {} }, 1500); }   // if the file is still not playing after 1.5s, skip it rather than play it late
     d.scrollTop = 0; document.getElementById("trlb").focus({ preventScroll: true });
+    // keep the pop-up pinned to the very top until the visitor scrolls it themselves (some phones shift it while the page settles)
+    var moved = false, pin = function () { if (!moved) d.scrollTop = 0; };
+    ['touchstart', 'wheel', 'keydown'].forEach(function (ev) { d.addEventListener(ev, function () { moved = true; }, { once: true, passive: true }); });
+    requestAnimationFrame(pin); [120, 400, 900, 1600].forEach(function (t) { setTimeout(pin, t); });
   }
   /* "Tap to enter" start screen: the tap lets the browser play the opening sound together with the animation */
   var g = document.querySelector('.trl-gate');
