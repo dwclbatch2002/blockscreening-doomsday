@@ -283,8 +283,11 @@ html.pg-in .card{animation:pg-rise .85s cubic-bezier(.2,.7,.2,1) .34s backwards}
 @keyframes trl-gpulse{50%{box-shadow:0 0 40px rgba(57,255,122,.75),inset 0 0 28px rgba(57,255,122,.34)}}
 .trl-gate-btn:focus-visible{outline:3px solid #fff;outline-offset:6px}
 .trl-gate-sub{margin:-14px 0 0;max-width:88vw;font-family:Metropolis,"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.22em;line-height:1.5;text-transform:uppercase;color:#ffd83a;text-wrap:balance}
-.trl-gate-in p{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#c4d3ca}
+.trl-gate-in{padding-bottom:20px}
+.trl-gate-in p{margin:0;font-size:.68rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:#c4d3ca}
 @media(prefers-reduced-motion:reduce){.trl-gate,.trl-gate-btn,.trl-gate-btn i{animation:none!important}.trl-gate.out{opacity:0}}
+/* trailer window: 40px of space under the frame, so it never sits on the bottom edge */
+dialog.trl{padding-bottom:40px!important}
 </style></head>
 <body><script>/* "Tap to enter" screen goes up first thing, before the page behind it can paint (the trailer script further down wires up the button) */
 (function(){try{
