@@ -1,7 +1,7 @@
 // Keeps the gate page working with no internet.
 // Network first (so pages are never stale when online), saved copy only when the network is slow or offline.
-const C = 'gate-v18';
-const FILES = ['gate.html', 'jsqr.js', 'modal.js', 'config.js', 'app.css', 'favicon.png', 'bg.webp', 'doomsday-gate2.webp', 'manifest.webmanifest',
+const C = 'gate-v19';
+const FILES = ['gate.html', 'jsqr.js', 'sfx.js', 'modal.js', 'config.js', 'app.css', 'favicon.png', 'bg.webp', 'doomsday-gate2.webp', 'manifest.webmanifest',
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(C).then(c => Promise.all(FILES.map(u => c.add(new Request(u, u.startsWith('http') ? { mode: 'no-cors' } : { cache: 'reload' })).catch(() => {})))).then(() => self.skipWaiting()));

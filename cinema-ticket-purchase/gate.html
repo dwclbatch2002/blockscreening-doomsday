@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="app.css?v=21">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script><script src="jsqr.js"></script><script src="modal.js?v=1"></script>
+<script src="config.js"></script><script src="jsqr.js"></script><script src="modal.js?v=1"></script><script src="sfx.js?v=1"></script>
 <script>window.ui=window.ui||{confirm:async m=>confirm(m),alert:async m=>{alert(m)},prompt:async(m,o)=>prompt(m,o&&o.value||'')};</script>
 <style>/* gate page background */
 body::before{background:linear-gradient(rgba(3,8,5,.3),rgba(3,8,5,.82)),url(doomsday-gate2.webp?v=1) 58% center/cover no-repeat}
@@ -300,11 +300,11 @@ $('clr').onclick = async () => {
 const ADMIN_LOGIN_EMAIL='admin@dwclbatch2002.github.io',adminEmail=u=>u.trim().toLowerCase()==='admin'?ADMIN_LOGIN_EMAIL:'';
 $('login').onsubmit = async e => {
   e.preventDefault(); const le = $('lerr'); le.hidden = true;
-  if (!$('em').value.trim() || !$('pw').value) { le.textContent = 'Enter your username and password.'; le.hidden = false; return; }
-  const ae = adminEmail($('em').value); if (!ae) { le.textContent = 'Login failed. Check your username and password.'; le.hidden = false; return; }
-  if (!sb) { le.textContent = 'Internet needed to sign in.'; le.hidden = false; return; }
+  if (!$('em').value.trim() || !$('pw').value) { le.textContent = 'Enter your username and password.'; le.hidden = false; try{errSound()}catch(_){} return; }
+  const ae = adminEmail($('em').value); if (!ae) { le.textContent = 'Login failed. Check your username and password.'; le.hidden = false; try{errSound()}catch(_){} return; }
+  if (!sb) { le.textContent = 'Internet needed to sign in.'; le.hidden = false; try{errSound()}catch(_){} return; }
   const { error } = await sb.auth.signInWithPassword({ email: ae, password: $('pw').value });
-  if (error) { le.textContent = 'Login failed. Check your username and password.'; le.hidden = false; return; }
+  if (error) { le.textContent = 'Login failed. Check your username and password.'; le.hidden = false; try{errSound()}catch(_){} return; }
   $('login').hidden = true; await update(); showMain();
 };
 function showLogin() { $('main').hidden = true; $('login').hidden = false; }

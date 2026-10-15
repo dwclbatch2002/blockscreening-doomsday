@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="app.css?v=21">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
-<script src="config.js"></script><script src="modal.js?v=2"></script><script src="common.js?v=16"></script>
+<script src="config.js"></script><script src="modal.js?v=2"></script><script src="common.js?v=16"></script><script src="sfx.js?v=1"></script>
 <style>.bname{font-weight:600;color:#f1f6f3;line-height:1.35}</style>
 <style>/* admin look: hover, strip tabs, header row */
 .btn{transition:background-color .15s,border-color .15s,color .15s,filter .15s}
@@ -285,12 +285,12 @@ async function boot() {
 const ADMIN_LOGIN_EMAIL='admin@dwclbatch2002.github.io',adminEmail=u=>u.trim().toLowerCase()==='admin'?ADMIN_LOGIN_EMAIL:'';
 $('login').onsubmit = async e => {
   e.preventDefault(); $('lerr').hidden = true;
-  const emp=!$('em').value.trim()||!$('pw').value;if(emp){const le=$('lerr');le.textContent='Enter your username and password.';le.hidden=false;return}
-  const ae=adminEmail($('em').value);if(!ae){const le=$('lerr');le.textContent='Login failed. Check your username and password.';le.hidden=false;return}
+  const emp=!$('em').value.trim()||!$('pw').value;if(emp){const le=$('lerr');le.textContent='Enter your username and password.';le.hidden=false;try{errSound()}catch(_){};return}
+  const ae=adminEmail($('em').value);if(!ae){const le=$('lerr');le.textContent='Login failed. Check your username and password.';le.hidden=false;try{errSound()}catch(_){};return}
   unlockAudio();                                                       // signing in counts as a tap, so sound and pop-ups work right away
   try { if (alertsOn && 'Notification' in window && Notification.permission === 'default') Notification.requestPermission(); } catch (_) {}
   const { error } = await sb.auth.signInWithPassword({ email: ae, password: $('pw').value });
-  if (error) { $('lerr').textContent = 'Login failed. Check your username and password.'; $('lerr').hidden = false; return; }
+  if (error) { $('lerr').textContent = 'Login failed. Check your username and password.'; $('lerr').hidden = false; try{errSound()}catch(_){} return; }
   start();
 };
 $('logout').onclick = async () => { clearInterval(timer); await sb.auth.signOut(); location.reload(); };

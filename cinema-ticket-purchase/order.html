@@ -16,7 +16,8 @@
 <meta name="twitter:image" content="https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-ticket-purchase/og-image-v2.jpg">
 <link rel="stylesheet" href="app.css?v=21">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="qrcode.js"></script><script src="config.js"></script><script src="modal.js?v=1"></script><script src="common.js?v=16"></script>
+<script src="qrcode.js"></script><script src="config.js"></script><script src="modal.js?v=1"></script><script src="common.js?v=16"></script><script src="sfx.js?v=1"></script>
+<script>(function(){var f=window.fieldErr;if(f)window.fieldErr=function(){try{errSound()}catch(_){};return f.apply(this,arguments)}})()</script>
 <style>/* scroll smoothness: no live blur behind cards, steady background layer */
 .card{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,18,12,.88)}
 html{background:#040806}body{background:transparent}body::before{inset:0;height:auto;transform:none;backface-visibility:visible}
@@ -603,7 +604,7 @@ async function scanRef(file) {
   } finally { ocrCb = null; if (my === scanId) lockRef(false); }
 }
 
-const perr = t => { const e = $('perr'); e.textContent = t; e.hidden = !t; };
+const perr = t => { const e = $('perr'); e.textContent = t; e.hidden = !t; if (t) { try{errSound()}catch(_){} } };
 const randId = () => Array.from(crypto.getRandomValues(new Uint8Array(12)), b => b.toString(16).padStart(2, '0')).join('');
 
 async function toBitmap(file) {
