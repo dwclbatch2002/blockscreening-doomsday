@@ -14,7 +14,7 @@
 <meta name="twitter:title" content="Admin | Avengers: Doomsday Seat Reservation">
 <meta name="twitter:image" content="https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-seatreservation-page/og-image.jpg"><title>Seat reservations | Admin</title><link rel="stylesheet" href="style.css?v=28">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script><script src="modal.js?v=1"></script><script src="confirm-image.js?v=5"></script><style>/* admin look: hover, strip tabs, header row */
+<script src="config.js"></script><script src="modal.js?v=1"></script><script src="confirm-image.js?v=5"></script><script src="sfx.js?v=1"></script><style>/* admin look: hover, strip tabs, header row */
 .btn{transition:background-color .15s,border-color .15s,color .15s,filter .15s}
 .btn.alt:hover:not(:disabled){background:rgba(57,255,122,.12);border-color:#4fae78}
 .btn:not(.alt):hover:not(:disabled){filter:brightness(1.12)}
@@ -167,7 +167,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-show]');if
 $('flt').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;FLT=b.dataset.f;LIM.tb=STEP;draw()};
 {const sp=new URLSearchParams(location.search).get('q');if(sp)$('q').value=sp}
 const ADMIN_LOGIN_EMAIL='admin@dwclbatch2002.github.io',adminEmail=u=>u.trim().toLowerCase()==='admin'?ADMIN_LOGIN_EMAIL:'';
-$('login').onsubmit=async e=>{e.preventDefault();$('lerr').hidden=true;const emp=!$('em').value.trim()||!$('pw').value;if(emp){const le=$('lerr');le.textContent='Enter your username and password.';le.hidden=false;return}const ae=adminEmail($('em').value);if(!ae){const le=$('lerr');le.textContent='Login failed. Check your username and password.';le.hidden=false;return}const{error}=await sb.auth.signInWithPassword({email:ae,password:$('pw').value});if(error){$('lerr').textContent='Login failed. Check your username and password.';$('lerr').hidden=false}else render()};
+$('login').onsubmit=async e=>{e.preventDefault();$('lerr').hidden=true;const emp=!$('em').value.trim()||!$('pw').value;if(emp){const le=$('lerr');le.textContent='Enter your username and password.';le.hidden=false;try{errSound()}catch(_){};return}const ae=adminEmail($('em').value);if(!ae){const le=$('lerr');le.textContent='Login failed. Check your username and password.';le.hidden=false;try{errSound()}catch(_){};return}const{error}=await sb.auth.signInWithPassword({email:ae,password:$('pw').value});if(error){$('lerr').textContent='Login failed. Check your username and password.';$('lerr').hidden=false;try{errSound()}catch(_){}}else render()};
 $('rf').onclick=async()=>{const b=$('rf');b.disabled=true;b.textContent='Refreshing…';await Promise.all([load(),new Promise(r=>setTimeout(r,600))]);b.disabled=false;b.textContent='Refresh'};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!$('panel').hidden)load()});
 $('out').onclick=async()=>{await sb.auth.signOut();render()};
