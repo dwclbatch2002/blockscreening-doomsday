@@ -305,6 +305,22 @@ html.pg-in .card{animation:pg-rise .85s cubic-bezier(.2,.7,.2,1) .34s backwards}
 p.trl-disc{margin:12px 0 0;font-size:.62rem;line-height:1.5;letter-spacing:.03em;text-align:center;color:#8aa093;order:5}
 .trl-credit{margin-top:4px;order:6}.trl-credit b{font-weight:700;color:#aebfb5}
 .trl-gate-in p.trl-credit{margin:10px auto 0;padding-top:10px;border-top:1px solid rgba(138,160,147,.18);order:6}
+/* start screen: faint drifting cloud layers (sliding only, no blur) and the credit pinned to the bottom */
+.trl-gate{overflow:hidden}
+.trl-gate-pat{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.trl-gate-pat i{position:absolute;left:0;top:0;background-repeat:repeat;will-change:transform;opacity:.4}
+.trl-gate-pat .sa{width:calc(100% + 1024px);height:calc(100% + 1024px);background-image:url(cloud-a.webp);background-size:1024px;animation:trl-cA 228s linear infinite}
+.trl-gate-pat .sb{width:calc(100% + 1536px);height:calc(100% + 1536px);background-image:url(cloud-b.webp);background-size:1536px;animation:trl-cB 307s linear infinite}
+.trl-gate-pat .gl,.trl-gate-pat .gv{inset:0;width:auto;height:auto;opacity:1;will-change:auto}
+.trl-gate-pat .gl{background:radial-gradient(ellipse 60% 42% at 50% 0%,rgba(150,235,185,.035),transparent 70%)}
+.trl-gate-pat .gv{background:radial-gradient(ellipse 80% 66% at 50% 46%,transparent 50%,rgba(0,0,0,.45) 100%)}
+@keyframes trl-cA{from{transform:translate3d(0,-1024px,0)}to{transform:translate3d(-1024px,0,0)}}
+@keyframes trl-cB{from{transform:translate3d(-1536px,0,0)}to{transform:translate3d(0,-1536px,0)}}
+@media(prefers-reduced-motion:reduce){.trl-gate-pat i{animation:none!important}}
+.trl-gate-in{position:relative;z-index:1}
+.trl-gate>p.trl-credit{position:absolute;left:0;right:0;bottom:max(16px,env(safe-area-inset-bottom));margin:0;padding:0 16px;border:0;order:0;text-align:center;font-size:.6rem;line-height:1.6;letter-spacing:.03em;color:#8aa093;z-index:1}
+.trl-gate>p.trl-credit b{font-weight:700;color:#aebfb5}
+@media(max-height:440px){.trl-gate>p.trl-credit{position:static;margin-top:8px}}
 @media(prefers-reduced-motion:reduce){.trl-gate,.trl-gate-btn,.trl-gate-btn i{animation:none!important}.trl-gate.out{opacity:0}}
 /* trailer window: 40px of space under the frame, so it never sits on the bottom edge */
 dialog.trl{padding-bottom:40px!important}
@@ -346,7 +362,7 @@ dialog.trl{border-radius:0;outline:0}
 .smdlg::backdrop{background:rgba(0,0,0,.78)}
 .smbox{padding:16px 16px 18px;overflow:auto;max-height:calc(100dvh - 22px);box-sizing:border-box;text-align:left}
 .smhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.smhd h2{margin:0}
-.smx{width:44px;height:44px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:1.6rem;line-height:1;cursor:pointer;border-radius:0}.smx:hover{border-color:var(--acc);color:var(--acc)}
+.smx{width:48px;height:48px;border:0;background:transparent;color:var(--ink);font-size:2.4rem;line-height:1;cursor:pointer;border-radius:0;padding:0}.smx:hover{color:var(--acc)}.smx:focus,.smx:focus-visible{outline:0}
 .smnote{margin:0 0 12px;color:var(--mut);font-size:.88rem;line-height:1.5}
 .smdlg .seatstats{display:flex;gap:10px;margin:2px 0 12px}
 .smdlg .seatstats>div{flex:1 1 0;min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);text-align:center}
@@ -403,7 +419,7 @@ dialog.trl{border-radius:0;outline:0}
 (function(){try{
   if(typeof HTMLDialogElement!=='function'||new URLSearchParams(location.search).has('edit')||sessionStorage.getItem('tp_trailer')==='1')return;
   var g=document.createElement('div');g.className='trl-gate';g.setAttribute('role','dialog');g.setAttribute('aria-label','Avengers: Doomsday block screening');
-  g.innerHTML='<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p><p class="trl-disc trl-credit">Designed by <b>Michael Ablong</b><br>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</p></div>';
+  g.innerHTML='<div class="trl-gate-pat" aria-hidden="true"><i class="sb"></i><i class="sa"></i><i class="gl"></i><i class="gv"></i></div><div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p></div><p class="trl-disc trl-credit">Designed by <b>Michael Ablong</b><br>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</p>';
   document.body.appendChild(g);document.documentElement.classList.add('trl-open');
   setTimeout(function(){if(!window.__trlReady&&g.parentNode){g.parentNode.removeChild(g);document.documentElement.classList.remove('trl-open')}},8000);   // safety net: never leave the page locked if the main script fails
 }catch(_){}})();</script><div class="wrap">
@@ -911,7 +927,7 @@ $('f').onsubmit = async e => {
   var g = document.querySelector('.trl-gate');
   if (!g) {
   var g = document.createElement('div'); g.className = 'trl-gate'; g.setAttribute('role', 'dialog'); g.setAttribute('aria-label', 'Avengers: Doomsday block screening');
-  g.innerHTML = '<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p><p class="trl-disc trl-credit">Designed by <b>Michael Ablong</b><br>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</p></div>';
+  g.innerHTML = '<div class="trl-gate-pat" aria-hidden="true"><i class="sb"></i><i class="sa"></i><i class="gl"></i><i class="gv"></i></div><div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p></div><p class="trl-disc trl-credit">Designed by <b>Michael Ablong</b><br>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</p>';
   document.body.appendChild(g);
   }
   document.documentElement.classList.add('trl-open'); window.__trlReady = true;

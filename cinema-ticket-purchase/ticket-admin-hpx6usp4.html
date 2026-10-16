@@ -292,7 +292,8 @@ $('login').onsubmit = async e => {
   if (error) { $('lerr').textContent = 'Login failed. Check your username and password.'; $('lerr').hidden = false; try{errSound()}catch(_){} return; }
   start();
 };
-$('logout').onclick = async () => { clearInterval(timer); await sb.auth.signOut(); location.reload(); };
+let leaving = false;                                           // true once Log out is pressed: no "signed out" message should flash on the way out
+$('logout').onclick = async () => { leaving = true; clearInterval(timer); showLogin(); try { await sb.auth.signOut(); } catch (_) {} location.reload(); };
 $('refresh').onclick = async () => {
   const b = $('refresh'); b.disabled = true; b.textContent = 'Refreshing…';
   await Promise.all([loadAll(), new Promise(r => setTimeout(r, 600))]);      // keep the label visible long enough to notice
@@ -316,7 +317,7 @@ async function start() {
 function showLogin(msg) {
   clearInterval(timer);
   document.body.classList.add('lo'); $('app').hidden = true; $('topbtns').hidden = true; $('sw').hidden = true; $('login').hidden = false;
-  if (msg) { $('lerr').textContent = msg; $('lerr').hidden = false; }
+  if (msg && !leaving) { $('lerr').textContent = msg; $('lerr').hidden = false; }
 }
 // Make sure we are really signed in (renews an expired login) before asking the database for anything
 async function ensureSession() {
