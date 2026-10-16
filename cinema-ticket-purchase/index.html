@@ -558,6 +558,17 @@ $('f').onsubmit = async e => {
   }
   if (!$('agree').checked) return fieldErr($('agree'), 'Please tick this box to continue.', $('agree').closest('label'));
   $('go').disabled = true;
+  // An unpaid order (no proof sent) started earlier in this browser is removed quietly when a new order is placed, so abandoned orders don't pile up.
+  try {
+    const oldTok = localStorage.getItem('tp_order');
+    if (oldTok) {
+      const { data: od } = await sb.rpc('get_order', { p_token: oldTok });
+      if (od && od.status === 'awaiting_payment') {
+        await sb.rpc('cancel_my_order', { p_token: oldTok });
+        try { localStorage.removeItem('tp_order'); } catch (_) {}
+      }
+    }
+  } catch (_) {}
   const senior = Array.from({ length: q }, () => false);          // no Senior/PWD category any more; kept so the server call stays the same
   const { data, error } = await sb.rpc('create_order', { p_name: name, p_email: email, p_phone: phone, p_qty: q, p_guests: guests, p_senior: senior });
   if (error) { $('go').disabled = false; return msg(error.message || 'Something went wrong. Please try again.'); }

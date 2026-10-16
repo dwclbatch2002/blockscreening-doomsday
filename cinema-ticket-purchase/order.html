@@ -344,6 +344,9 @@ function viewPay() {
       <div class="rfcb" id="rfcb"><button class="btn sm" id="rfok" type="button">Looks right</button><button class="btn light sm" id="rfed" type="button">Edit</button></div>
       <p class="rfco" id="rfco" hidden>✓ Confirmed</p>
     </div>
+    <div class="amtw"><label for="amt">Amount you paid</label>
+      <input id="amt" inputmode="decimal" autocomplete="off" placeholder="As shown on your receipt, for example 480.00">
+      <p class="mut small rfs">Type the amount from your receipt. It must match this order: ${O.qty} ticket${O.qty === 1 ? '' : 's'}, ${peso(O.total)}.</p></div>
     <div class="rcw" id="rcw" role="alert" hidden></div>
     <div class="err" id="perr" role="alert" hidden></div>
     <p><button class="btn cta" id="psend" type="submit">Submit payment proof</button></p>
@@ -398,7 +401,7 @@ function viewPay() {
   } catch (_) {}
   const bk = $('back');
   if (bk) bk.onclick = async () => {
-    if (!await ui.confirm('Go back and edit your details?\n\nThis order (' + O.code + ') will be removed and its held tickets released. Your details will be filled in again so you can change them and continue.', { title: 'Go back and edit?', ok: 'Remove order and edit', cancel: 'Keep order', danger: true })) return;
+    if (!await ui.confirm('Going back removes this order (' + O.code + ') and releases its held tickets.\n\nOnly continue if you have NOT sent any payment for this order yet. If you already paid, stay on this page and upload your payment screenshot instead.\n\nPaid for the wrong number of tickets? Message us on Messenger before going back.', { title: 'Have you already paid?', ok: 'I have not paid, go back', cancel: 'Stay here', danger: true, countdown: 4 })) return;
     bk.disabled = true;
     const r = await sb.rpc('cancel_my_order', { p_token: token });
     if (r.error) { bk.disabled = false; return ui.alert(r.error.message, { title: 'Could not go back' }); }
@@ -638,6 +641,9 @@ async function submitProof(e) {
   if (bank) ref = 'BANK';                       // no number needed: below, the receipt image's fingerprint becomes the reference so the same image can't be used on two orders
   else if (!/^\d{13}$/.test(ref)) return fieldErr($('gref'), 'Enter the 13-digit GCash reference number from your receipt.');
   if (!bank && autoRef && ref === autoRef && !refOk) return fieldErr($('rfok'), 'Please check the reference number. Tap “Looks right” if it matches your receipt, or “Edit” to change it.', $('rfc'));
+  const paid = parseFloat(String($('amt').value).replace(/[^\d.]/g, ''));      // the amount typed from the receipt must match this order
+  if (!isFinite(paid) || paid <= 0) return fieldErr($('amt'), 'Enter the amount you paid, as shown on your receipt.');
+  if (Math.abs(paid - Number(O.total)) > 0.005) return fieldErr($('amt'), `This order is for ${O.qty} ticket${O.qty === 1 ? '' : 's'} (${peso(O.total)}), but you entered ${peso(paid)}. If you have not paid yet, tap “Back to edit my details” and choose the right number of tickets. If you already paid ${peso(paid)}, please message us on Messenger before going back, and do not pay again.`);
   const warn = receiptWarnings(rcpt);
   if (warn.length && !await ui.confirm(warn.join('\n\n') + '\n\nSubmit anyway?', { title: 'Please double-check your receipt', ok: 'Submit anyway', cancel: 'Go back' })) return;
   const btn = $('psend'); btn.disabled = true; btn.textContent = 'Uploading…';
