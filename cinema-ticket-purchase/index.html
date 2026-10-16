@@ -316,7 +316,7 @@ p.trl-disc{margin:12px 0 0;font-size:.62rem;line-height:1.5;letter-spacing:.03em
 .trl-gate-pat .gv{background:radial-gradient(ellipse 80% 66% at 50% 46%,transparent 50%,rgba(0,0,0,.45) 100%)}
 @keyframes trl-cA{from{transform:translate3d(0,-1024px,0)}to{transform:translate3d(-1024px,0,0)}}
 @keyframes trl-cB{from{transform:translate3d(-1536px,0,0)}to{transform:translate3d(0,-1536px,0)}}
-@media(prefers-reduced-motion:reduce){.trl-gate-pat i{animation:none!important}}
+.trl-lite .trl-gate-pat i{animation:none!important}@media(prefers-reduced-motion:reduce){.trl-gate-pat i{animation:none!important}}
 .trl-gate-in{position:relative;z-index:1}
 .trl-gate>p.trl-credit{position:absolute;left:0;right:0;bottom:max(16px,env(safe-area-inset-bottom));margin:0;padding:0 16px;border:0;order:0;text-align:center;font-size:.6rem;line-height:1.6;letter-spacing:.03em;color:#8aa093;z-index:1}
 .trl-gate>p.trl-credit b{font-weight:700;color:#aebfb5}
@@ -932,7 +932,7 @@ $('f').onsubmit = async e => {
   }
   document.documentElement.classList.add('trl-open'); window.__trlReady = true;
   var entered = false;
-  function go() { if (entered) return; entered = true; g.classList.add('out'); enter(); setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); }, 380); }
+  function go() { if (entered) return; entered = true; var pt = g.querySelector('.trl-gate-pat'); if (pt && pt.parentNode) pt.parentNode.removeChild(pt); g.classList.add('out'); enter(); setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); }, 380); }
   g.querySelector('button').addEventListener('click', go);
 })();
 </script>
