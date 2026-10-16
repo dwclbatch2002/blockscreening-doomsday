@@ -301,6 +301,8 @@ html.pg-in .card{animation:pg-rise .85s cubic-bezier(.2,.7,.2,1) .34s backwards}
 .trl-gate-sub{margin:-14px 0 0;max-width:88vw;font-family:Metropolis,"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.22em;line-height:1.5;text-transform:uppercase;color:#ffd83a;text-wrap:balance}
 .trl-gate-in{padding-bottom:40px}
 .trl-gate-in p{margin:0;font-size:.68rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:#c4d3ca}
+.trl-gate-in p.trl-disc{max-width:300px;margin:-12px auto 0;font-size:.6rem;font-weight:400;letter-spacing:.03em;line-height:1.5;text-transform:none;color:#8aa093}
+p.trl-disc{margin:12px 0 0;font-size:.62rem;line-height:1.5;letter-spacing:.03em;text-align:center;color:#8aa093;order:5}
 @media(prefers-reduced-motion:reduce){.trl-gate,.trl-gate-btn,.trl-gate-btn i{animation:none!important}.trl-gate.out{opacity:0}}
 /* trailer window: 40px of space under the frame, so it never sits on the bottom edge */
 dialog.trl{padding-bottom:40px!important}
@@ -329,20 +331,61 @@ dialog.trl{border-radius:0;outline:0}
 /* 3D strip: stronger red/cyan (the colours of the 3D glasses) */
 .trl-box .trl-pr{background:linear-gradient(90deg,rgba(255,59,92,.62),rgba(150,70,170,.42) 50%,rgba(39,211,255,.62));border:1px solid rgba(255,255,255,.4);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.55);box-shadow:-10px 0 24px -10px rgba(255,59,92,.55),10px 0 24px -10px rgba(39,211,255,.55),inset 0 0 0 1px rgba(255,255,255,.05)}
 .trl-box .trl-pr em{color:#ffe14d}
-</style></head>
+</style><style id="smcss">
+.lrow{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap}
+.smbtn{cursor:pointer;font:inherit;font-size:.9rem;color:var(--ink);background:rgba(255,216,58,.1);border-color:var(--gold);transition:background .15s}
+.smbtn:hover{background:rgba(255,216,58,.2)}.smbtn:focus-visible{outline:3px solid #fff;outline-offset:3px}.smbtn svg{flex:none}
+.smdlg{border:1px solid var(--acc);border-radius:0;padding:0;background:#06120c;color:var(--ink);width:min(960px,calc(100vw - 20px));max-height:calc(100dvh - 20px);box-shadow:0 0 40px rgba(57,255,122,.25)}
+.smdlg::backdrop{background:rgba(0,0,0,.78)}
+.smbox{padding:16px 16px 18px;overflow:auto;max-height:calc(100dvh - 22px);box-sizing:border-box;text-align:left}
+.smhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.smhd h2{margin:0}
+.smx{width:44px;height:44px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:1.6rem;line-height:1;cursor:pointer;border-radius:0}.smx:hover{border-color:var(--acc);color:var(--acc)}
+.smnote{margin:0 0 12px;color:var(--mut);font-size:.88rem;line-height:1.5}
+.smdlg .seatstats{display:flex;gap:10px;margin:2px 0 12px}
+.smdlg .seatstats>div{flex:1 1 0;min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);text-align:center}
+.smdlg .seatstats b{display:block;font-size:1.5rem;line-height:1.1;color:#fff}
+.smdlg .seatstats span{display:block;margin-top:2px;font-size:.74rem;letter-spacing:.04em;color:#9db3a8;text-transform:uppercase}
+.smdlg .seatstats .av{border-color:rgba(57,255,122,.45);background:rgba(57,255,122,.08)}.smdlg .seatstats .av b{color:#39ff7a}
+.smleg{display:flex;gap:6px 16px;flex-wrap:wrap;margin:4px 0 8px;color:var(--mut);font-size:.88rem}
+.smleg i{display:inline-block;width:16px;height:14px;vertical-align:-2px;margin-right:6px;border-radius:3px}
+.smleg .a,.smin .ss{background:#b9c4cb}.smleg .h,.smin .ss.h{background:#7a5f16}
+.smleg .r,.smin .ss.r{background:#6b2330 repeating-linear-gradient(135deg,rgba(255,255,255,.16) 0 3px,transparent 3px 7px)}
+.smerr{margin:0 0 8px;padding:8px 10px;border:1px solid var(--gold);color:var(--gold);font-size:.86rem}
+.smwrap{overflow-x:auto;padding:10px 0}
+.smin{min-width:916px;width:max-content;margin:0 auto}
+.smin .row{display:flex;align-items:center;margin:4px 0}
+.smin .rl{width:26px;text-align:center;color:var(--mut);font-weight:700;margin-right:10px}.smin .rl.rr{margin-left:-26px;margin-right:0}
+.smin .blk{display:flex;gap:2px;margin-right:34px}.smin .blk.e{justify-content:flex-end}
+.smin .ss{flex:none;width:34px;height:30px;border-radius:6px;color:#0a140e;font-weight:700;font-size:10px;display:flex;align-items:center;justify-content:center}
+.smin .ss.r{color:#d9a0a8;opacity:.85}.smin .ss.h{color:#f1dc9a}
+.smin .gap{height:26px}
+.smin .tag{flex:none;align-self:center;white-space:nowrap;font-size:9px;font-weight:700;letter-spacing:.04em;padding:4px 6px;border-radius:3px;background:#1c8a46;color:#fff;text-transform:uppercase}
+.smin .screen{margin:18px auto 0;width:70%;text-align:center;padding:8px;border-radius:4px 4px 30px 30px;background:linear-gradient(#d5dde0,#76828a);color:#0b3a1c;font-weight:700;letter-spacing:.5em;box-shadow:0 -14px 34px rgba(190,230,255,.22)}
+.smzc{display:flex;align-items:center;gap:8px;margin:4px 0 2px}.smzc[hidden]{display:none}.smzc button{min-width:44px;height:44px;border:1px solid var(--line);background:rgba(57,255,122,.06);color:var(--ink);font:inherit;font-size:1rem;cursor:pointer;border-radius:0}.smzc button:hover{border-color:var(--acc);color:var(--acc)}.smzh{flex:1;min-width:0;color:var(--mut);font-size:.8rem;line-height:1.3}
+</style>
+</head>
 <body><script>/* "Tap to enter" screen goes up first thing, before the page behind it can paint (the trailer script further down wires up the button) */
 (function(){try{
   if(typeof HTMLDialogElement!=='function'||new URLSearchParams(location.search).has('edit')||sessionStorage.getItem('tp_trailer')==='1')return;
   var g=document.createElement('div');g.className='trl-gate';g.setAttribute('role','dialog');g.setAttribute('aria-label','Avengers: Doomsday block screening');
-  g.innerHTML='<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p></div>';
+  g.innerHTML='<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p></div>';
   document.body.appendChild(g);document.documentElement.classList.add('trl-open');
   setTimeout(function(){if(!window.__trlReady&&g.parentNode){g.parentNode.removeChild(g);document.documentElement.classList.remove('trl-open')}},8000);   // safety net: never leave the page locked if the main script fails
 }catch(_){}})();</script><div class="wrap">
 
 <header class="top">
   <div><div id="brandslot"></div><h1>Buy your tickets now and step into the 3D cinema</h1><p class="sub">Avengers: Doomsday (2026)</p></div>
-  <div class="pill" id="left" role="status" hidden><span class="pdot"></span><span id="leftTxt"></span></div>
+  <div class="lrow"><div class="pill" id="left" role="status" hidden><span class="pdot"></span><span id="leftTxt"></span></div><button type="button" class="pill smbtn" id="smOpen" hidden><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14v9H5zM3 17h18M7 20h10"/></svg><span>View seat map</span></button></div>
 </header>
+<dialog class="smdlg" id="smdlg" aria-labelledby="smt"><div class="smbox">
+  <div class="smhd"><h2 id="smt">Seat map</h2><button type="button" class="smx" id="smx" aria-label="Close seat map">&times;</button></div>
+  <p class="smnote">View only. You will choose your seats after your payment is confirmed. Seats are first come, first served.</p>
+  <div class="seatstats" id="smstats" role="status" aria-live="polite"></div>
+  <div class="smleg"><span><i class="a"></i>Available</span><span><i class="h"></i>On hold</span><span><i class="r"></i>Reserved</span></div>
+  <p class="smerr" id="smerr" hidden>Live availability can&rsquo;t be shown right now. The layout below is for reference only.</p>
+  <div class="smzc" id="smzc" hidden><button type="button" id="smzo" aria-label="Zoom out">&minus;</button><button type="button" id="smzf">Fit</button><button type="button" id="smzi" aria-label="Zoom in">+</button><span id="smzh"></span></div>
+  <div class="smwrap" id="smwrap"><div class="smin" id="smmap"></div></div>
+</div></dialog>
 
 <div class="mq" aria-hidden="true"><div class="mq-t"><div class="mq-g"><span>3D Cinema Experience</span><span>Avengers: Doomsday</span><span>3D Cinema Experience</span><span>Avengers: Doomsday</span><span>3D Cinema Experience</span><span>Avengers: Doomsday</span></div><div class="mq-g"><span>3D Cinema Experience</span><span>Avengers: Doomsday</span><span>3D Cinema Experience</span><span>Avengers: Doomsday</span><span>3D Cinema Experience</span><span>Avengers: Doomsday</span></div></div></div>
 
@@ -446,6 +489,7 @@ recalc();
     if (error || !data) return;
     const r = data.remaining;
     $('left').hidden = false;
+    $('smOpen').hidden = false;
     if (r <= 0) {
       $('leftTxt').textContent = 'Sold out'; $('left').classList.add('warn');
       $('go').disabled = true; msg('All tickets have been sold.', true);
@@ -539,6 +583,7 @@ $('f').onsubmit = async e => {
       <div class="trl-inf"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span><small>Date</small>December 19, 2026</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span><small>Time</small>1:00 PM</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><span><small>Venue</small>A. Bichara Silverscreens, Cinema 4</span></div></div>
     <div class="trl-lg"><img class="trl-l2" src="2002-theme.png" alt="DWCL Divinians Batch 2002" onerror="this.style.display='none'"><img class="trl-cin" src="cinema-logo.webp" alt="A. Bichara Silverscreens Entertainment Center"></div></div>
     <p class="trl-pr"><svg viewBox="0 0 48 24" width="40" height="20" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M3 6h42" stroke="#e8f1ec" stroke-width="3"/><rect x="3" y="6" width="19" height="14" rx="5" fill="#ff3b5c" stroke="#e8f1ec" stroke-width="2.5"/><rect x="26" y="6" width="19" height="14" rx="5" fill="#27d3ff" stroke="#e8f1ec" stroke-width="2.5"/></svg><span>Experience it in stunning <em>3D</em> at Cinema 4</span></p>
+    <p class="trl-disc">Avengers: Doomsday and related marks &copy; Marvel Studios / Disney. A fundraising event by DWCL Batch 2002 in collaboration with A. Bichara Silverscreens. Not affiliated with or endorsed by Marvel or Disney.</p>
     <svg class="trl-hud glow" id="trlg" aria-hidden="true"></svg><svg class="trl-hud" id="trlh2" aria-hidden="true"></svg><svg class="trl-hud dots" id="trld" aria-hidden="true"></svg>
   </div>
 </dialog>
@@ -784,7 +829,7 @@ $('f').onsubmit = async e => {
   var g = document.querySelector('.trl-gate');
   if (!g) {
   var g = document.createElement('div'); g.className = 'trl-gate'; g.setAttribute('role', 'dialog'); g.setAttribute('aria-label', 'Avengers: Doomsday block screening');
-  g.innerHTML = '<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p></div>';
+  g.innerHTML = '<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p></div>';
   document.body.appendChild(g);
   }
   document.documentElement.classList.add('trl-open'); window.__trlReady = true;
@@ -796,4 +841,34 @@ $('f').onsubmit = async e => {
 <script>/* pause the scrolling banner while it is off-screen so scrolling stays smooth */
 (function(){try{var t=document.querySelector('.mq-t'),m=document.querySelector('.mq');if(!t||!m||!window.IntersectionObserver)return;
 new IntersectionObserver(function(e){t.classList.toggle('off',!e[0].isIntersecting)}).observe(m)}catch(_){}})();</script>
+<script>(function(){
+var $=function(i){return document.getElementById(i)},dlg=$('smdlg');if(!dlg||!dlg.showModal)return;
+var L={},r,i;for(i of'PON')L[i]=[[1,6,6,'s'],[7,14,8,'s'],[15,20,6,'s']];
+for(i of'MLKJ')L[i]=[[1,3,6,'e'],[4,11,8,'s'],[12,14,6,'s']];
+L.I=[[1,3,6,'e'],[4,10,8,'s'],[11,13,6,'s']];
+for(i of'HGFEDCB')L[i]=[[1,6,6,'s'],[7,14,8,'s'],[15,20,6,'s']];
+L.A=[[1,5,6,'e'],[6,5,8,'s'],[6,10,6,'s']];
+var total=0;Object.keys(L).forEach(function(k){L[k].forEach(function(b){total+=Math.max(0,b[1]-b[0]+1)})});
+var res={},held={},live=false,timer=0,mapH='',fitZ=1,zoom=0;
+function draw(){
+  var h=Object.keys(L).map(function(rw){var bs=L[rw];
+    return (rw==='H'?'<div class="gap"></div>':'')+'<div class="row"><span class="rl">'+rw+'</span>'+bs.map(function(b){var a=b[0],z=b[1];
+      var seats='';for(var n=a;n<=z;n++){var id=rw+n,c=res[id]?' r':held[id]?' h':'';seats+='<span class="ss'+c+'" aria-label="Seat '+id+(res[id]?', reserved':held[id]?', on hold':live?', available':'')+'">'+id+'</span>'}
+      return '<div class="blk '+b[3]+'" style="width:'+b[2]*36+'px">'+(rw==='M'&&a===1?'<span class="tag" style="margin-right:auto">Entrance/Exit</span>':'')+seats+(rw==='M'&&a===12?'<span class="tag" style="margin-left:6px">Entrance/Exit</span>':'')+'</div>'}).join('')+'<span class="rl rr">'+rw+'</span></div>'}).join('')+'<div class="screen">SCREEN</div>';
+  if(h!==mapH){mapH=h;$('smmap').innerHTML=h}
+  var nr=Object.keys(res).length,nh=Object.keys(held).length;
+  $('smstats').innerHTML=live?'<div><b>'+total+'</b><span>Total seats</span></div><div class="av"><b>'+Math.max(0,total-nr-nh)+'</b><span>Available</span></div><div><b>'+nr+'</b><span>Reserved</span></div>':'<div><b>'+total+'</b><span>Total seats</span></div>';
+  $('smerr').hidden=live;fit()}
+function fit(){var w=$('smwrap').clientWidth;if(!w)return;fitZ=Math.min(1,(w-2)/916);var small=fitZ<.95;$('smzc').hidden=!small;if(!small)zoom=0;var z=zoom||fitZ;$('smmap').style.zoom=z;$('smzh').textContent=!small?'':z>fitZ+.02?'Swipe the map to move around':'Tap + to make the seats bigger'}
+function load(){
+  return sb.rpc('public_seat_map').then(function(x){
+    if(x.error||!x.data){live=false}else{live=true;res={};held={};(x.data.reserved||[]).forEach(function(s){res[s]=1});(x.data.held||[]).forEach(function(s){held[s]=1})}
+    draw()}).catch(function(){live=false;draw()})}
+function close(){clearInterval(timer);timer=0;if(dlg.open)dlg.close()}
+$('smzi').onclick=function(){zoom=Math.min(1.3,(zoom||fitZ)*1.5);fit()};$('smzo').onclick=function(){var z=(zoom||fitZ)/1.5;zoom=z<=fitZ+.02?0:z;fit()};$('smzf').onclick=function(){zoom=0;fit();$('smwrap').scrollLeft=0};
+$('smOpen').onclick=function(){zoom=0;draw();try{dlg.showModal()}catch(_){return}fit();load();clearInterval(timer);timer=setInterval(function(){if(!document.hidden)load()},10000);$('smx').focus()};
+$('smx').onclick=close;dlg.addEventListener('close',function(){clearInterval(timer);timer=0});
+dlg.addEventListener('click',function(e){if(e.target===dlg)close()});
+window.addEventListener('resize',function(){if(dlg.open)fit()});
+})();</script>
 <script>{const b=document.getElementById("brandslot");if(b&&typeof BRAND_HTML==="string")b.outerHTML=BRAND_HTML}</script></body></html>
