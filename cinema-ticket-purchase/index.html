@@ -356,7 +356,7 @@ dialog.trl{border-radius:0;outline:0}
 .smleg .r,.smin .ss.r{background:#6b2330 repeating-linear-gradient(135deg,rgba(255,255,255,.16) 0 3px,transparent 3px 7px)}
 .smerr{margin:0 0 8px;padding:8px 10px;border:1px solid var(--gold);color:var(--gold);font-size:.86rem}
 .smwrap{overflow-x:auto;padding:10px 0}
-.smin{min-width:916px;width:max-content;margin:0 auto}
+.smin{width:max-content;margin:0 auto}
 .smin .row{display:flex;align-items:center;margin:4px 0}
 .smin .rl{width:26px;text-align:center;color:var(--mut);font-weight:700;margin-right:10px}.smin .rl.rr{margin-left:-26px;margin-right:0}
 .smin .blk{display:flex;gap:2px;margin-right:34px}.smin .blk.e{justify-content:flex-end}
@@ -876,7 +876,7 @@ function draw(){
   var nr=Object.keys(res).length,nh=Object.keys(held).length;
   $('smstats').innerHTML=live?'<div><b>'+total+'</b><span>Total seats</span></div><div class="av"><b>'+Math.max(0,total-nr-nh)+'</b><span>Available</span></div><div><b>'+nr+'</b><span>Reserved</span></div>':'<div><b>'+total+'</b><span>Total seats</span></div>';
   $('smerr').hidden=live;fit()}
-function fit(){var w=$('smwrap').clientWidth;if(!w)return;fitZ=Math.min(1,(w-2)/916);var small=fitZ<.95;$('smzc').hidden=!small;if(!small)zoom=0;var z=zoom||fitZ;$('smmap').style.zoom=z;$('smzh').textContent=!small?'':z>fitZ+.02?'Swipe the map to move around':'Tap + to make the seats bigger'}
+function fit(){var w=$('smwrap').clientWidth;if(!w)return;var m=$('smmap');m.style.zoom=1;var cw=(m.firstElementChild&&m.firstElementChild.offsetWidth)||916;fitZ=Math.min(1,(w-2)/cw);var small=fitZ<.95;$('smzc').hidden=!small;if(!small)zoom=0;var z=zoom||fitZ;$('smmap').style.zoom=z;$('smzh').textContent=!small?'':z>fitZ+.02?'Swipe the map to move around':'Tap + to make the seats bigger'}
 function load(){
   return sb.rpc('public_seat_map').then(function(x){
     if(x.error||!x.data){live=false}else{live=true;res={};held={};(x.data.reserved||[]).forEach(function(s){res[s]=1});(x.data.held||[]).forEach(function(s){held[s]=1})}
