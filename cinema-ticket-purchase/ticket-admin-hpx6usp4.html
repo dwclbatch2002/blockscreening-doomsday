@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="app.css?v=21">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
-<script src="config.js"></script><script src="modal.js?v=2"></script><script src="common.js?v=16"></script><script src="sfx.js?v=1"></script>
+<script src="config.js"></script><script src="modal.js?v=2"></script><script src="common.js?v=20"></script><script src="sfx.js?v=1"></script>
 <style>.bname{font-weight:600;color:#f1f6f3;line-height:1.35}</style>
 <style>/* admin look: hover, strip tabs, header row */
 .btn{transition:background-color .15s,border-color .15s,color .15s,filter .15s}
@@ -593,7 +593,7 @@ function drawCore() {
     if (o.status === 'cancelled' && o.proof_path && !ots.length) a.push(`<button class="btn alt sm gold" data-act="reopen" data-id="${o.id}" type="button" title="Cancelled with a payment proof: reopen it as Pending so you can approve it again">Reopen as pending</button>`);
     a.push(`<button class="ib" data-tip="Copy link" aria-label="Copy link" data-act="link" data-id="${o.id}" type="button"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg></button>`);
     if (o.status === 'approved') a.push(`<button class="ib bad" data-tip="Revoke" aria-label="Revoke" data-act="revoke" data-id="${o.id}" type="button"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>`);
-    if (o.status === 'cancelled' || o.status === 'rejected' || o.status === 'revoked') a.push(`<button class="ib bad" data-tip="Delete data" aria-label="Delete data" data-act="delete" data-id="${o.id}" type="button"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/><path d="M10 11v5M14 11v5"/></svg></button>`);
+    if (o.status === 'cancelled' || o.status === 'rejected' || o.status === 'revoked' || o.status === 'awaiting_payment') a.push(`<button class="ib bad" data-tip="Delete data" aria-label="Delete data" data-act="delete" data-id="${o.id}" type="button"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/><path d="M10 11v5M14 11v5"/></svg></button>`);
     const others = orders.filter(x => x.id !== o.id && x.status !== 'cancelled' && ((x.email && o.email && x.email.toLowerCase() === o.email.toLowerCase()) || (digits(x.phone).length > 6 && digits(x.phone).slice(-9) === digits(o.phone).slice(-9)))).length;
     const dupRef = o.gcash_ref ? orders.filter(x => x.id !== o.id && x.gcash_ref && x.gcash_ref === o.gcash_ref) : [];
     const wmin = o.status === 'pending' ? Math.max(0, Math.round((now - new Date(o.submitted_at || o.created_at)) / 60000)) : null;
@@ -816,7 +816,7 @@ async function askDelete(o) {
   if (!chk.data) { await fail('This order is already gone. Refreshing the list.', 'Already deleted', true); return loadAll(); }
   if (!['cancelled', 'rejected', 'awaiting_payment', 'revoked'].includes(chk.data.status)) { await fail('This order is now ' + chk.data.status + ' and cannot be deleted.', 'Could not delete the order'); return loadAll(); }
   const live = o.status === 'awaiting_payment' && new Date(o.hold_until) > Date.now();
-  $('ddinfo').innerHTML = `<b>${esc(o.code)}</b>, ${esc(o.full_name)}<br><span class="mut">${o.qty} ticket(s), ${peso(o.total)}, ${esc(LABEL[o.status] || o.status)}</span>${live ? `<br><b style="color:#ffd83a">This buyer is still inside the 60-minute payment window (until ${esc(fmt(o.hold_until))}). Deleting now releases their tickets and their link stops working.</b>` : ''}`;
+  $('ddinfo').innerHTML = `<b>${esc(o.code)}</b>, ${esc(o.full_name)}<br><span class="mut">${o.qty} ticket(s), ${peso(o.total)}, ${esc(LABEL[o.status] || o.status)}</span>${live ? `<br><b style="color:#ffd83a">This buyer is still inside the payment window (until ${esc(fmt(o.hold_until))}). Deleting now releases their tickets and their link stops working.</b>` : ''}`;
   const yes = $('ddyes'); let n = 5; yes.disabled = true; yes.textContent = `Yes, delete (${n})`; $('ddmsg').textContent = '';
   clearInterval(delTimer);
   delTimer = setInterval(() => { n--; if (n <= 0) { clearInterval(delTimer); yes.disabled = false; yes.textContent = 'Yes, delete'; } else yes.textContent = `Yes, delete (${n})`; }, 1000);
@@ -832,10 +832,14 @@ async function askDelete(o) {
   $('ddel').showModal();
 }
 
+let proofSeq = 0;                                              // lets a late answer for an earlier proof be ignored
+const clearProof = () => { const im = $('dimg'); im.onload = im.onerror = null; im.hidden = true; im.removeAttribute('src'); };   // drop the old picture so it can never flash
 async function viewProof(o) {
+  const mine = ++proofSeq;
+  clearProof();
   $('dtitle').textContent = `${o.code}: ${o.full_name}`;
   $('dinfo').textContent = `${o.qty} ticket(s), ${peso(o.total)}. Payment ${isBank(o) ? 'by bank transfer' : 'ref ' + (o.gcash_ref || 'none')}. Submitted ${fmt(o.submitted_at)}.`;
-  $('dimg').hidden = true; $('dmsg').textContent = 'Loading…';
+  $('dmsg').textContent = 'Loading…';
   const acts = $('dacts'); acts.innerHTML = '';
   if (o.status === 'pending') {
     acts.innerHTML = `<button class="btn" data-act="approve" data-id="${o.id}" type="button">Approve</button><button class="btn alt" data-act="reject" data-id="${o.id}" type="button">Reject</button>`;
@@ -843,9 +847,14 @@ async function viewProof(o) {
   acts.onclick = e => { const b = e.target.closest('[data-act]'); if (b) act(b.dataset.act, b.dataset.id, b); };
   $('dlg').showModal();
   const { data, error } = await sb.storage.from('proofs').createSignedUrl(o.proof_path, 300);
+  if (mine !== proofSeq) return;                              // another proof was opened meanwhile
   if (error || !data) { $('dmsg').textContent = 'Could not load the image: ' + (error ? error.message : 'unknown error'); return; }
-  $('dimg').src = data.signedUrl; $('dimg').hidden = false; $('dmsg').textContent = '';
+  const im = $('dimg');
+  im.onload = () => { if (mine === proofSeq) { im.hidden = false; $('dmsg').textContent = ''; } };      // show it only once it has fully loaded
+  im.onerror = () => { if (mine === proofSeq) $('dmsg').textContent = 'The image could not be loaded. Close this and try again.'; };
+  im.src = data.signedUrl;
 }
+$('dlg').addEventListener('close', () => { proofSeq++; clearProof(); });
 $('dclose').onclick = () => $('dlg').close();
 $('dlg').addEventListener('click', e => { if (e.target === $('dlg')) $('dlg').close(); });          // tapping outside the box closes it too
 

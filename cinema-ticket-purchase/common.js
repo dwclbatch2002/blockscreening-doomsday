@@ -68,7 +68,8 @@ function fitText(x, text, maxW) {
 }
 async function drawTicketImage(ref, holder, code, cat, seat, group, tba) {
   try { await Promise.all([document.fonts.load('700 40px Metropolis'), document.fonts.load('400 40px Metropolis')]); } catch (_) {}
-  const art = await new Promise(ok => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = 'og-image.jpg?v=1'; });
+  // The ticket has its own artwork file (ticket-art.webp), separate from the link-preview image, so changing or removing og-image files never blanks the tickets. The others are only backups.
+  const art = await (async () => { for (const f of ['ticket-art.webp?v=1', 'ticket-art.jpg?v=1', 'og-image-v3.jpg', 'og-image-v2.jpg', 'og-image.jpg?v=1']) { const i = await new Promise(ok => { const m = new Image(); m.onload = () => ok(m); m.onerror = () => ok(null); m.src = f; }); if (i) return i; } return null; })();
   const c = document.createElement('canvas'); c.width = TW; c.height = TH;
   const x = c.getContext('2d');
   const F = (w, s) => `${w} ${s}px Metropolis, "Trebuchet MS", Verdana, sans-serif`;
@@ -76,11 +77,12 @@ async function drawTicketImage(ref, holder, code, cat, seat, group, tba) {
   rr(x, 0, 0, TW, TH, 44); x.fillStyle = '#050d09'; x.fill();
   x.save(); rr(x, 0, 0, TW, TH, 44); x.clip();
   if (art) { const r = Math.max(TW / art.width, 520 / art.height), w = art.width * r, h = art.height * r; x.drawImage(art, (TW - w) / 2, (520 - h) / 2, w, h); }
-  const g = x.createLinearGradient(0, 170, 0, 520); g.addColorStop(0, 'rgba(5,13,9,0)'); g.addColorStop(1, '#050d09');
+  const g = x.createLinearGradient(0, 450, 0, 520); g.addColorStop(0, 'rgba(5,13,9,0)'); g.addColorStop(1, '#050d09');      // only the last bit of the picture fades out, so the logo stays visible
   x.fillStyle = g; x.fillRect(0, 0, TW, 520);
   x.restore();
 
-  // "3D EXPERIENCE" badge
+  // "3D EXPERIENCE" badge (smaller, tucked in the top-left corner so it stays off the face)
+  x.save(); x.translate(60, 26); x.scale(.82, .82); x.translate(-70, -64);
   { const bx = 70, by = 64, bh = 68; x.font = F(800, 44); const w3 = x.measureText('3D').width; x.font = F(700, 26);
     try { x.letterSpacing = '5px'; } catch (_) {}
     const wt = x.measureText('EXPERIENCE').width; const bw = 28 + w3 + 22 + wt + 24;
@@ -89,13 +91,16 @@ async function drawTicketImage(ref, holder, code, cat, seat, group, tba) {
     x.font = F(800, 44); x.fillStyle = '#ff3b5c'; x.fillText('3D', bx + 28 - 3, by + 49); x.fillStyle = '#27d3ff'; x.fillText('3D', bx + 28 + 3, by + 49); x.fillStyle = '#fff'; x.fillText('3D', bx + 28, by + 49);
     x.font = F(700, 26); x.fillStyle = '#e8f1ec'; x.fillText('EXPERIENCE', bx + 28 + w3 + 22, by + 45);
     try { x.letterSpacing = '0px'; } catch (_) {} }
+  x.restore();
 
   x.textAlign = 'center'; x.textBaseline = 'alphabetic';
-  x.fillStyle = '#fff'; x.shadowColor = 'rgba(57,255,122,.7)'; x.shadowBlur = 26;
-  let fs = 68; x.font = F(700, fs);
-  while (x.measureText('AVENGERS: DOOMSDAY').width > 800 && fs > 40) { fs -= 2; x.font = F(700, fs); }
-  x.fillText('AVENGERS: DOOMSDAY', TW / 2, 535); x.shadowBlur = 0;
-  x.fillStyle = '#9db3a8'; x.font = F(400, 34); x.fillText('(2026)   Admit one', TW / 2, 585);
+  if (!art) {                                                     // no picture: write the title instead (the picture itself carries the logo)
+    x.fillStyle = '#fff'; x.shadowColor = 'rgba(57,255,122,.7)'; x.shadowBlur = 26;
+    let fs = 68; x.font = F(700, fs);
+    while (x.measureText('AVENGERS: DOOMSDAY').width > 800 && fs > 40) { fs -= 2; x.font = F(700, fs); }
+    x.fillText('AVENGERS: DOOMSDAY', TW / 2, 535); x.shadowBlur = 0;
+  }
+  x.fillStyle = '#9db3a8'; x.font = F(400, 34); x.fillText('(2026)   Admit one', TW / 2, art ? 572 : 585);
 
   // perforation + notches
   x.strokeStyle = 'rgba(255,255,255,.28)'; x.lineWidth = 3; x.setLineDash([14, 12]);
