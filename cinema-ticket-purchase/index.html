@@ -333,8 +333,13 @@ dialog.trl{border-radius:0;outline:0}
 .trl-box .trl-pr em{color:#ffe14d}
 </style><style id="smcss">
 .lrow{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap}
-.smbtn{cursor:pointer;font:inherit;font-size:.9rem;color:var(--ink);background:rgba(255,216,58,.1);border-color:var(--gold);transition:background .15s}
-.smbtn:hover{background:rgba(255,216,58,.2)}.smbtn:focus-visible{outline:3px solid #fff;outline-offset:3px}.smbtn svg{flex:none}
+#left,.smbtn{font-family:Orbitron,Metropolis,"Trebuchet MS",Verdana,sans-serif;font-weight:800;font-size:.7rem;letter-spacing:.07em;line-height:1.2;text-transform:uppercase}
+#left{border-radius:0;border:0;padding:5px 10px;gap:7px;background:var(--acc);color:#04210f}
+#left .pdot{width:7px;height:7px;background:#04210f;box-shadow:none}
+#left.warn{background:var(--gold);color:#2a2100}#left.warn .pdot{background:#2a2100;box-shadow:none}
+.smbtn{cursor:pointer;color:#fff;background:rgba(255,216,58,.1);border:1.5px solid var(--gold);padding:6px 13px;box-shadow:0 0 10px rgba(255,216,58,.55),inset 0 0 8px rgba(255,216,58,.25);text-shadow:0 0 6px rgba(255,216,58,.6);transition:background .15s,box-shadow .15s}
+.smbtn:hover{background:rgba(255,216,58,.22);box-shadow:0 0 16px rgba(255,216,58,.8),inset 0 0 10px rgba(255,216,58,.35)}.smbtn:focus-visible{outline:3px solid #fff;outline-offset:3px}.smbtn svg{flex:none}
+@media(max-width:380px){#left,.smbtn{font-size:.62rem;letter-spacing:.04em}#left{padding:5px 8px;gap:6px}.smbtn{padding:6px 10px;gap:6px}}
 .smdlg{border:1px solid var(--acc);border-radius:0;padding:0;background:#06120c;color:var(--ink);width:min(960px,calc(100vw - 20px));max-height:calc(100dvh - 20px);box-shadow:0 0 40px rgba(57,255,122,.25)}
 .smdlg::backdrop{background:rgba(0,0,0,.78)}
 .smbox{padding:16px 16px 18px;overflow:auto;max-height:calc(100dvh - 22px);box-sizing:border-box;text-align:left}
@@ -375,7 +380,7 @@ dialog.trl{border-radius:0;outline:0}
 
 <header class="top">
   <div><div id="brandslot"></div><h1>Buy your tickets now and step into the 3D cinema</h1><p class="sub">Avengers: Doomsday (2026)</p></div>
-  <div class="lrow"><div class="pill" id="left" role="status" hidden><span class="pdot"></span><span id="leftTxt"></span></div><button type="button" class="pill smbtn" id="smOpen" hidden><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14v9H5zM3 17h18M7 20h10"/></svg><span>View seat map</span></button></div>
+  <div class="lrow"><div class="pill" id="left" role="status" hidden><span class="pdot"></span><span id="leftTxt"></span></div><button type="button" class="pill smbtn" id="smOpen" hidden><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14v9H5zM3 17h18M7 20h10"/></svg><span>View seat map</span></button></div>
 </header>
 <dialog class="smdlg" id="smdlg" aria-labelledby="smt"><div class="smbox">
   <div class="smhd"><h2 id="smt">Seat map</h2><button type="button" class="smx" id="smx" aria-label="Close seat map">&times;</button></div>
@@ -440,14 +445,14 @@ dialog.trl{border-radius:0;outline:0}
   <label class="chk" for="agree"><input type="checkbox" id="agree" aria-required="true">
     <span><b class="req">Required:</b> I understand my tickets are issued only after my GCash payment is verified. I agree that my name, email, mobile number and payment screenshot are used to process this purchase.</span></label>
 
-  <input class="hp" id="hp" name="hp_check" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <input class="hp" id="hp" name="website_url" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" readonly inputmode="none" data-lpignore="true" data-1p-ignore="true" data-form-type="other">
   <div class="err" id="err" role="alert" hidden></div>
   <p><button class="btn cta" id="go" type="submit">Continue to payment</button></p>
 </form>
 
 </div>
 <script>
-const t0 = Date.now();
+let t0 = Date.now(), hpHits = 0;
 const qtyEl = $('qty');
 let maxQty = MAX_PER_ORDER;
 renderSteps($('steps'), 1);
@@ -539,11 +544,13 @@ document.addEventListener('input', e => {
 });
 $('f').onsubmit = async e => {
   e.preventDefault(); msg(''); clearFieldErrs();
-  if ($('hp').value || Date.now() - t0 < 2500) return msg('Please try again.');
+  // Bot check. The hidden field is read-only, so phone autofill can't fill it; if it still has text, clear it once and let the person retry.
+  if ($('hp').value) { $('hp').value = ''; if (hpHits++ > 0) return; return msg('Please tap Continue to payment once more.'); }
+  if (Date.now() - t0 < 2500) return msg('Please wait a moment, then tap Continue to payment again.');
   const name = capName($('name').value.replace(/\s+/g, ' ').trim()), email = $('email').value.trim(), phone = $('phone').value.trim(), q = +qtyEl.value;
   if (name.length < 2) return fieldErr($('name'), 'Enter your full name.');
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fieldErr($('email'), 'Enter a valid email address.');
-  if (!/^(\+63|63|0)9\d{9}$/.test(phone.replace(/[\s\-()]/g, ''))) return fieldErr($('phone'), 'Enter a valid Philippine mobile number, for example 0917 123 4567.');
+  if (!/^(\+63|63|0)9\d{9}$/.test(phone.replace(/[^\d+]/g, ''))) return fieldErr($('phone'), 'Enter a valid Philippine mobile number, for example 0917 123 4567.');
   const guests = [];
   for (let i = 0; i < q - 1; i++) {
     const g = capName(($('g' + i).value || '').replace(/\s+/g, ' ').trim());
