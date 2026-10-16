@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://dwclbatch2002.github.io/blockscreening-doomsday/cinema-ticket-purchase/og-image-v3.jpg">
 <link rel="stylesheet" href="app.css?v=21">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script><script src="modal.js?v=1"></script><script src="common.js?v=20"></script><script src="sfx.js?v=1"></script>
+<script src="config.js"></script><script src="modal.js?v=1"></script><script src="common.js?v=21"></script><script src="sfx.js?v=1"></script>
 <script>(function(){var f=window.fieldErr;if(f)window.fieldErr=function(){try{errSound()}catch(_){};return f.apply(this,arguments)}})()</script>
 <style>/* scroll smoothness: no live blur behind cards, steady background layer */
 .card{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,18,12,.88)}
@@ -303,6 +303,8 @@ html.pg-in .card{animation:pg-rise .85s cubic-bezier(.2,.7,.2,1) .34s backwards}
 .trl-gate-in p{margin:0;font-size:.68rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:#c4d3ca}
 .trl-gate-in p.trl-disc{max-width:300px;margin:-12px auto 0;font-size:.6rem;font-weight:400;letter-spacing:.03em;line-height:1.5;text-transform:none;color:#8aa093}
 p.trl-disc{margin:12px 0 0;font-size:.62rem;line-height:1.5;letter-spacing:.03em;text-align:center;color:#8aa093;order:5}
+.trl-credit{margin-top:4px;order:6}.trl-credit b{font-weight:700;color:#aebfb5}
+.trl-gate-in p.trl-credit{margin:10px auto 0;padding-top:10px;border-top:1px solid rgba(138,160,147,.18);order:6}
 @media(prefers-reduced-motion:reduce){.trl-gate,.trl-gate-btn,.trl-gate-btn i{animation:none!important}.trl-gate.out{opacity:0}}
 /* trailer window: 40px of space under the frame, so it never sits on the bottom edge */
 dialog.trl{padding-bottom:40px!important}
@@ -398,7 +400,7 @@ dialog.trl{border-radius:0;outline:0}
 (function(){try{
   if(typeof HTMLDialogElement!=='function'||new URLSearchParams(location.search).has('edit')||sessionStorage.getItem('tp_trailer')==='1')return;
   var g=document.createElement('div');g.className='trl-gate';g.setAttribute('role','dialog');g.setAttribute('aria-label','Avengers: Doomsday block screening');
-  g.innerHTML='<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p></div>';
+  g.innerHTML='<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p><p class="trl-disc trl-credit">Designed by <b>Michael Ablong</b><br>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</p></div>';
   document.body.appendChild(g);document.documentElement.classList.add('trl-open');
   setTimeout(function(){if(!window.__trlReady&&g.parentNode){g.parentNode.removeChild(g);document.documentElement.classList.remove('trl-open')}},8000);   // safety net: never leave the page locked if the main script fails
 }catch(_){}})();</script><div class="wrap">
@@ -462,7 +464,7 @@ dialog.trl{border-radius:0;outline:0}
     <p class="mut small" style="margin:-4px 0 10px">Each ticket is printed with the name of the person who will watch the movie. Ticket 1 uses the buyer's name above. Buying for other people? You can change each ticket's name once, after your payment is approved.</p>
     <p class="gcall" id="gnote" hidden><b>Required:</b> enter the full name of each guest below, exactly as it should appear on their ticket. Every name must be filled in before you can continue.</p>
     <div class="hrow g1row">
-      <p class="mut" style="margin:0"><span class="gchk" aria-hidden="true">✓</span>Ticket 1: <b style="color:var(--ink)">The buyer</b> (<span id="t1">name entered above</span>) <span class="edtag">Can be changed once in Step 4</span></p>
+      <p class="mut" style="margin:0"><span class="gchk" aria-hidden="true">✓</span>Ticket 1: <b style="color:var(--ink)">The buyer</b> (<span id="t1">name entered above</span>) <span class="edtag">Can be changed once after approval (Step 4)</span></p>
     </div>
     <div id="hl"></div>
     <div class="note disc" id="discnote">
@@ -660,6 +662,7 @@ $('f').onsubmit = async e => {
     <div class="trl-lg"><img class="trl-l2" src="2002-theme.png" alt="DWCL Divinians Batch 2002" onerror="this.style.display='none'"><img class="trl-cin" src="cinema-logo.webp" alt="A. Bichara Silverscreens Entertainment Center"></div></div>
     <p class="trl-pr"><svg viewBox="0 0 48 24" width="40" height="20" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M3 6h42" stroke="#e8f1ec" stroke-width="3"/><rect x="3" y="6" width="19" height="14" rx="5" fill="#ff3b5c" stroke="#e8f1ec" stroke-width="2.5"/><rect x="26" y="6" width="19" height="14" rx="5" fill="#27d3ff" stroke="#e8f1ec" stroke-width="2.5"/></svg><span>Experience it in stunning <em>3D</em> at Cinema 4</span></p>
     <p class="trl-disc">Avengers: Doomsday and related marks &copy; Marvel Studios / Disney. A fundraising event by DWCL Batch 2002 in collaboration with A. Bichara Silverscreens. Not affiliated with or endorsed by Marvel or Disney.</p>
+    <p class="trl-disc trl-credit">Designed by <b>Michael Ablong</b><br>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</p>
     <svg class="trl-hud glow" id="trlg" aria-hidden="true"></svg><svg class="trl-hud" id="trlh2" aria-hidden="true"></svg><svg class="trl-hud dots" id="trld" aria-hidden="true"></svg>
   </div>
 </dialog>
@@ -905,7 +908,7 @@ $('f').onsubmit = async e => {
   var g = document.querySelector('.trl-gate');
   if (!g) {
   var g = document.createElement('div'); g.className = 'trl-gate'; g.setAttribute('role', 'dialog'); g.setAttribute('aria-label', 'Avengers: Doomsday block screening');
-  g.innerHTML = '<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p></div>';
+  g.innerHTML = '<div class="trl-gate-in"><img src="doomsday-logo-sm.webp" alt="Marvel Studios Avengers: Doomsday"><div class="trl-gate-sub">DWCL Batch 2002 Special Block Screening</div><button type="button" class="trl-gate-btn" id="trlenter" aria-label="Tap to enter"><i></i><i></i><span>Tap to<br>enter</span></button><p>Sound on for the full experience</p><p class="trl-disc">Avengers: Doomsday &copy; Marvel Studios / Disney. Not affiliated with or endorsed by Marvel or Disney.</p><p class="trl-disc trl-credit">Designed by <b>Michael Ablong</b><br>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</p></div>';
   document.body.appendChild(g);
   }
   document.documentElement.classList.add('trl-open'); window.__trlReady = true;

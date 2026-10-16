@@ -163,3 +163,17 @@ function fieldErr(el, text, anchor) {
   try { el.focus({ preventScroll: true }); } catch (_) {}
   return false;
 }
+
+/* ---------- site credit (shown at the bottom of every page) ---------- */
+(function () {
+  if (window.__credit) return; window.__credit = 1;
+  var css = '.site-credit{margin:26px auto 8px;padding:14px 12px 0;border-top:1px solid rgba(138,160,147,.18);text-align:center;font-size:.62rem;line-height:1.7;letter-spacing:.03em;color:#8aa093;max-width:520px;font-weight:400;text-transform:none}.site-credit b{font-weight:700;color:#aebfb5}.site-credit span{display:block}';
+  var html = '<div class="site-credit" id="siteCredit"><span>Designed by <b>Michael Ablong</b></span><span>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</span></div>';
+  function add() {
+    if (document.getElementById('siteCredit')) return;
+    var w = document.querySelector('.wrap'); if (!w) return;
+    var s = document.createElement('style'); s.textContent = css; document.head.appendChild(s);
+    w.insertAdjacentHTML('beforeend', html);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add); else add();
+})();
