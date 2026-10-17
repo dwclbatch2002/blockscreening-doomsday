@@ -167,8 +167,8 @@ function fieldErr(el, text, anchor) {
 /* ---------- site credit (shown at the bottom of every page) ---------- */
 (function () {
   if (window.__credit) return; window.__credit = 1;
-  var css = '.site-credit{margin:26px auto 8px;padding:14px 12px 0;border-top:1px solid rgba(138,160,147,.18);text-align:center;font-size:.62rem;line-height:1.7;letter-spacing:.03em;color:#8aa093;max-width:520px;font-weight:400;text-transform:none}.site-credit b{font-weight:700;color:#aebfb5}.site-credit span{display:block}';
-  var html = '<div class="site-credit" id="siteCredit"><span>Designed by <b>Michael Ablong</b></span><span>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</span></div>';
+  var css = '.site-credit{display:flex;flex-direction:column;align-items:center;gap:6px;box-sizing:border-box;width:100%;max-width:none;margin:26px auto 8px;padding:14px 12px 0;border-top:1px solid rgba(138,160,147,.18);text-align:center;font-size:.62rem;line-height:1.7;letter-spacing:.03em;color:#8aa093;font-weight:400;text-transform:none}.site-credit b{font-weight:700;color:#aebfb5}.site-credit .sc-by span{display:block}.site-credit .sc-l{order:-1;font-size:.64rem}.site-credit a{color:#aebfb5;text-decoration:underline;text-underline-offset:2px}.site-credit a:hover{color:#fff}@media(min-width:700px){.site-credit{flex-direction:row;justify-content:space-between;gap:20px;padding:16px 20px 0;text-align:left}.site-credit .sc-l{order:2;text-align:right}}';
+  var html = '<div class="site-credit" id="siteCredit"><div class="sc-by"><span>Designed by <b>Michael Ablong</b></span><span>&copy; 2026 <b>MAB Concepts</b> &middot; All rights reserved</span></div><div class="sc-l"><a href="privacy.html">Privacy Notice</a> &middot; <a href="mailto:dwclbatch2002@gmail.com">Contact</a></div></div>';
   function add() {
     if (document.getElementById('siteCredit')) return;
     var w = document.querySelector('.wrap'); if (!w) return;
